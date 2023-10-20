@@ -1,0 +1,63 @@
+version: 0.0.6
+jobId: "1234"
+jobName: On Prem Test
+jobType: Source Aligned Data Product
+alias: abc
+discoveryPort:
+  name: On Prem Test
+inputPorts:
+  - alias: Local_Storage_On_Prem_Data_Set_1
+    description: Local Storage On Prem Data Set
+    tags: []
+    extra: {}
+    syncType: pull
+    type: s3-csv
+    dataSetUrn: urn:dv:dataset:94136140-7933-4fbb-9270-a7fc96a79118
+    filter: ""
+    projection: []
+    persistDataFrame: false
+    entity:
+      advanceOptions:
+        mergeSchema: false
+productState:
+  alias: abc
+  refreshInterval: 0 12 * * *
+  retentionVersions: ""
+  updateStrategy: Overwrite
+  logicalSchema:
+    properties:
+      Reference_Transaction_ID:
+        type: STRING
+        description: ""
+      Merchant_Ref_ID:
+        type: STRING
+        description: ""
+      Transaction_Date:
+        type: STRING
+        description: ""
+      PG_Mode:
+        type: STRING
+        description: ""
+  enforceSchemaMethod: ""
+  enforceSchema: false
+  addRunIdColumn: false
+  enableDataReconciliation: false
+  isProfilingEnabled: false
+  tableName: flyte
+  stateStoreType: mysql_mariadb
+transformation:
+  - alias: Spark_SQL_1
+    type: SQL
+    description: spark_sql
+    query: select Reference_Transaction_ID,Merchant_Ref_ID,Transaction_Date,PG_Mode
+      from flyte
+    sequenceNo: 2
+    references:
+      - alias: Local_Storage_On_Prem_Data_Set_1
+        sqlReference: flyte
+controlPort:
+  dataQualityRules: {}
+outputPort:
+  subscriptionChannels:
+    - channelType: Postgres
+      queryType: SQL
