@@ -1,4 +1,4 @@
-version: 0.0.1
+version: 0.0.3
 jobId: "128"
 jobName: TestMultiDomain copy
 jobType: Source Aligned Data Product
@@ -6,16 +6,15 @@ alias: load_data_to_iceberge_new
 discoveryPort:
   name: TestMultiDomain copy
 inputPorts:
-  - alias: Weather_1
-    description: Weather
+  - alias: weather_day_1
+    description: weather day
     tags: []
     extra: {}
     syncType: pull
     type: s3-csv
-    dataSetUrn: ""
+    dataSetUrn: urn:dv:dataset:3a0494b4-86e9-430f-afcb-877a0d9bea95
     filter: ""
     projection: []
-    dataProductUrn: ""
     persistDataFrame: false
     entity:
       advanceOptions:
@@ -27,13 +26,13 @@ productState:
   enforceSchemaMethod: Warning
   catalogType: glue
   stepName: load data to iceberge new
-  inputDataFrame: Weather$1
+  inputDataFrame: Spark$SQL$1
   tableName: s3source.tablename
   warehousePath: s3://bp-spark-sql-library-test-acc/
   catalogName: testdb
   writeMode: Overwrite
   type: loadDataIceberg
-  sequence: 2
+  sequence: 3
   alias: load_data_to_iceberge_new
   refreshInterval: 0 12 * * *
   retentionVersions: ""
@@ -43,7 +42,15 @@ productState:
   stateStoreType: iceberg
   updateStrategy: Overwrite
   isStateManagement: false
-transformation: []
+transformation:
+  - alias: Spark_SQL_1
+    type: SQL
+    description: sql
+    query: select * from temp
+    sequenceNo: 2
+    references:
+      - alias: weather_day_1
+        sqlReference: temp
 controlPort:
   dataQualityRules: {}
 outputPort:
