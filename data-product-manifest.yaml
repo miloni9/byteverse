@@ -1,18 +1,18 @@
-version: 0.0.6
-jobId: "1234"
-jobName: On Prem Test
+version: 0.0.9
+jobId: "123"
+jobName: Weather Logistic Regression DP
 jobType: Source Aligned Data Product
-alias: abc
+alias: Write_to_redshift
 discoveryPort:
-  name: On Prem Test
+  name: Weather Logistic Regression DP
 inputPorts:
-  - alias: Local_Storage_On_Prem_Data_Set_1
-    description: Local Storage On Prem Data Set
+  - alias: weather_day_1
+    description: weather day
     tags: []
     extra: {}
     syncType: pull
     type: s3-csv
-    dataSetUrn: urn:dv:dataset:94136140-7933-4fbb-9270-a7fc96a79118
+    dataSetUrn: urn:dv:dataset:3a0494b4-86e9-430f-afcb-877a0d9bea95
     filter: ""
     projection: []
     persistDataFrame: false
@@ -20,41 +20,38 @@ inputPorts:
       advanceOptions:
         mergeSchema: false
 productState:
-  alias: abc
+  persistDataFrame: false
+  enableDataReconciliation: false
+  enforceSchema: false
+  stepName: Write to redshift
+  connection: redshift
+  query: weather_lr
+  temporaryPathS3: s3://byte-etl-externaldemo/pyspark_serverless_test/temp/weather_lr
+  type: readRedshiftTableByQuery
+  isStateManagement: true
+  sequence: 3
+  alias: Write_to_redshift
   refreshInterval: 0 12 * * *
   retentionVersions: ""
-  updateStrategy: Overwrite
-  logicalSchema:
-    properties:
-      Reference_Transaction_ID:
-        type: STRING
-        description: ""
-      Merchant_Ref_ID:
-        type: STRING
-        description: ""
-      Transaction_Date:
-        type: STRING
-        description: ""
-      PG_Mode:
-        type: STRING
-        description: ""
+  logicalSchema: ""
   enforceSchemaMethod: ""
-  enforceSchema: false
-  addRunIdColumn: false
-  enableDataReconciliation: false
   isProfilingEnabled: false
-  tableName: flyte
-  stateStoreType: mysql_mariadb
 transformation:
-  - alias: Spark_SQL_1
-    type: SQL
-    description: spark_sql
-    query: select Reference_Transaction_ID,Merchant_Ref_ID,Transaction_Date,PG_Mode
-      from flyte
-    sequenceNo: 2
+  - alias: EMR_PySpark_1
+    arguments:
+      - s3://byte-etl-externaldemo/weather_data/20230626110117.csv
+    pythonFilePath: s3://bp-spark-sql-library-test-acc/custom-jobs/CustomPythonJobWriteParquet.py
+    optional:
+      pythonEnvTarGZPath: s3://byte-etl-externaldemo/pyspark_serverless_test/pyspark_venv.tar.gz
+    type: customPySparkEMRServerless
+    sequence: 2
     references:
-      - alias: Local_Storage_On_Prem_Data_Set_1
-        sqlReference: flyte
+      - alias: weather_day_1
+        sqlReference: weather
+      - alias: PMS_Transactions_1
+        sqlReference: pms_transactions
+      - alias: PMS_Master_1
+        sqlReference: pms_master
 controlPort:
   dataQualityRules: {}
 outputPort:
