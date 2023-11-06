@@ -1,4 +1,4 @@
-version: 0.0.17
+version: 0.0.18
 jobId: "123"
 jobName: Weather Logistic Regression DP
 jobType: Source Aligned Data Product
@@ -35,7 +35,14 @@ productState:
   alias: Write_to_redshift2
   refreshInterval: 0 12 * * *
   retentionVersions: ""
-  logicalSchema: ""
+  logicalSchema:
+    properties:
+      Actual:
+        type: STRING
+        description: ""
+      Predicted:
+        type: STRING
+        description: ""
   enforceSchemaMethod: ""
   isProfilingEnabled: false
 transformation:
