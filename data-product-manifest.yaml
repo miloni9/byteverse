@@ -1,10 +1,10 @@
-version: 0.0.18
+version: 0.0.20
 jobId: "123"
-jobName: Weather Logistic Regression DP
+jobName: Weather Logistic Regression DP To Redshift
 jobType: Source Aligned Data Product
 alias: Write_to_redshift2
 discoveryPort:
-  name: Weather Logistic Regression DP
+  name: Weather Logistic Regression DP To Redshift
 inputPorts:
   - alias: weather_day_1
     description: weather day
