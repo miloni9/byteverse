@@ -1,8 +1,8 @@
-version: 0.0.4
+version: 0.0.5
 jobId: "152"
 jobName: Weather API Daily Test
 jobType: Source Aligned Data Product
-alias: Load_final_weather_data_daily
+alias: Load_final_weather_data_daily_test
 discoveryPort:
   name: Weather API Daily Test
 inputPorts:
@@ -25,7 +25,7 @@ productState:
   enforceSchema: true
   enforceSchemaMethod: Warning
   catalogType: glue
-  stepName: Load final weather data daily
+  stepName: Load final weather data daily test
   inputDataFrame: Spark$SQL$1
   tableName: glue.weather_daily_test_new
   warehousePath: s3://bp-spark-sql-library-test-acc/weather_daily_test_new
@@ -33,7 +33,7 @@ productState:
   writeMode: Append
   type: loadDataIceberg
   sequence: 3
-  alias: Load_final_weather_data_daily
+  alias: Load_final_weather_data_daily_test
   refreshInterval: 0 12 * * *
   retentionVersions: ""
   logicalSchema:
@@ -132,7 +132,7 @@ productState:
 transformation:
   - alias: Spark_SQL_1
     type: SQL
-    description: Read all data
+    description: Read all data test
     query: select * from weather
     sequenceNo: 2
     references:
@@ -149,7 +149,7 @@ controlPort:
           - column: Country
             expression: ==
             number: 1
-        referenceAlias: Load_final_weather_data_daily
+        referenceAlias: Load_final_weather_data_daily_test
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
