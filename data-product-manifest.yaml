@@ -1,18 +1,18 @@
-version: 0.0.3
-jobId: "128"
-jobName: TestMultiDomain copy
+version: 0.0.4
+jobId: "152"
+jobName: Weather API Daily Test
 jobType: Source Aligned Data Product
-alias: load_data_to_iceberge_new
+alias: Load_final_weather_data_daily
 discoveryPort:
-  name: TestMultiDomain copy
+  name: Weather API Daily Test
 inputPorts:
-  - alias: weather_day_1
-    description: weather day
+  - alias: Weather_2
+    description: Weather
     tags: []
     extra: {}
     syncType: pull
     type: s3-csv
-    dataSetUrn: urn:dv:dataset:3a0494b4-86e9-430f-afcb-877a0d9bea95
+    dataSetUrn: urn:dv:dataset:f4814824-5819-44ba-ac1d-4dc9a279a58a
     filter: ""
     projection: []
     persistDataFrame: false
@@ -21,38 +21,135 @@ inputPorts:
         mergeSchema: false
 productState:
   persistDataFrame: false
-  enableDataReconciliation: true
-  enforceSchema: false
+  enableDataReconciliation: false
+  enforceSchema: true
   enforceSchemaMethod: Warning
   catalogType: glue
-  stepName: load data to iceberge new
+  stepName: Load final weather data daily
   inputDataFrame: Spark$SQL$1
-  tableName: s3source.tablename
-  warehousePath: s3://bp-spark-sql-library-test-acc/
-  catalogName: testdb
-  writeMode: Overwrite
+  tableName: glue.weather_daily_test_new
+  warehousePath: s3://bp-spark-sql-library-test-acc/weather_daily_test_new
+  catalogName: glue
+  writeMode: Append
   type: loadDataIceberg
   sequence: 3
-  alias: load_data_to_iceberge_new
+  alias: Load_final_weather_data_daily
   refreshInterval: 0 12 * * *
   retentionVersions: ""
   logicalSchema:
-    properties: {}
-  isProfilingEnabled: true
+    properties:
+      City:
+        type: STRING
+        description: ""
+      Region:
+        type: STRING
+        description: ""
+      Country:
+        type: STRING
+        description: ""
+      Latitude:
+        type: STRING
+        description: ""
+      Longitude:
+        type: STRING
+        description: ""
+      Timezone:
+        type: STRING
+        description: ""
+      Local Time:
+        type: STRING
+        description: ""
+      Cloud ID:
+        type: STRING
+        description: ""
+      Feels like Celcius:
+        type: STRING
+        description: ""
+      Feels like fahrenheit:
+        type: STRING
+        description: ""
+      Gust speed in kph:
+        type: STRING
+        description: ""
+      Gust speed in mph:
+        type: STRING
+        description: ""
+      Humidity:
+        type: STRING
+        description: ""
+      Is day time?:
+        type: STRING
+        description: ""
+      Last update:
+        type: STRING
+        description: ""
+      Last updated time in epoch:
+        type: STRING
+        description: ""
+      Precipitation in inch:
+        type: STRING
+        description: ""
+      Precipitation in mm:
+        type: STRING
+        description: ""
+      Pressure:
+        type: STRING
+        description: ""
+      Precipitation in mb:
+        type: STRING
+        description: ""
+      Temperature in celcius:
+        type: STRING
+        description: ""
+      Temperature in fahrenheit:
+        type: STRING
+        description: ""
+      UV:
+        type: STRING
+        description: ""
+      Visibility in km:
+        type: STRING
+        description: ""
+      Visibility in miles:
+        type: STRING
+        description: ""
+      Wind Degree:
+        type: STRING
+        description: ""
+      Wind Direction:
+        type: STRING
+        description: ""
+      Wind in kph:
+        type: STRING
+        description: ""
+      Wind in mph:
+        type: STRING
+        description: ""
+  isProfilingEnabled: false
   stateStoreType: iceberg
-  updateStrategy: Overwrite
+  updateStrategy: Append
   isStateManagement: false
 transformation:
   - alias: Spark_SQL_1
     type: SQL
-    description: sql
-    query: select * from temp
+    description: Read all data
+    query: select * from weather
     sequenceNo: 2
     references:
-      - alias: weather_day_1
-        sqlReference: temp
+      - alias: Weather_2
+        sqlReference: weather
 controlPort:
-  dataQualityRules: {}
+  dataQualityRules:
+    NullValueCheck:
+      productState:
+        checks:
+          - column: City
+            expression: ==
+            number: 1
+          - column: Country
+            expression: ==
+            number: 1
+        referenceAlias: Load_final_weather_data_daily
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
