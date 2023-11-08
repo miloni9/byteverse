@@ -1,10 +1,10 @@
-version: 0.0.5
+version: 0.0.6
 jobId: "152"
-jobName: Weather API Daily Test
+jobName: Weather API Daily Test With Compatibility
 jobType: Source Aligned Data Product
 alias: Load_final_weather_data_daily_test
 discoveryPort:
-  name: Weather API Daily Test
+  name: Weather API Daily Test With Compatibility
 inputPorts:
   - alias: Weather_2
     description: Weather
@@ -27,10 +27,10 @@ productState:
   catalogType: glue
   stepName: Load final weather data daily test
   inputDataFrame: Spark$SQL$1
-  tableName: glue.weather_daily_test_new
+  tableName: s3source.weather_daily_test_new
   warehousePath: s3://bp-spark-sql-library-test-acc/weather_daily_test_new
-  catalogName: glue
-  writeMode: Append
+  catalogName: s3source
+  writeMode: Overwrite
   type: loadDataIceberg
   sequence: 3
   alias: Load_final_weather_data_daily_test
@@ -127,7 +127,7 @@ productState:
         description: ""
   isProfilingEnabled: false
   stateStoreType: iceberg
-  updateStrategy: Append
+  updateStrategy: Overwrite
   isStateManagement: false
 transformation:
   - alias: Spark_SQL_1
