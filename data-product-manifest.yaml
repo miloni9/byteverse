@@ -1,4 +1,4 @@
-version: 0.0.4
+version: 0.0.5
 jobId: "163"
 jobName: Test Connection - with Iceberg - Miloni
 jobType: Source Aligned Data Product
@@ -124,9 +124,14 @@ productState:
     enforceSchema: true
     enforceSchemaMethod: Warning
     catalogType: glue
+    timestampColumn: Timezone
+    primaryKey:
+      - Cloud ID
+    partitionColumns:
+      - Timezone
     loggingOptions:
       printSchema: true
-  refreshInterval: None
+  refreshInterval: 0 12 * * *
 transformation:
   - alias: Spark_SQL_1
     type: SQL
