@@ -1,10 +1,10 @@
-version: 0.0.16
+version: 0.0.17
 jobId: "163"
 jobName: Test Connection - with Iceberg - Miloni
 jobType: Source Aligned Data Product
-alias: write_to_ice2
+alias: write_to_ice
 discoveryPort:
-  name: Test Connection - with Iceberg 2 - Miloni
+  name: Test Connection - with Iceberg - Miloni
 inputPorts:
   - alias: Weather_5
     description: Weather
@@ -21,7 +21,7 @@ inputPorts:
         mergeSchema: false
 productState:
   isDynamic: true
-  alias: write_to_ice2
+  alias: write_to_ice
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -127,7 +127,7 @@ productState:
     loggingOptions:
       printSchema: true
       count: true
-  refreshInterval: 0 12 * * *
+  refreshInterval: None
 transformation:
   - alias: Spark_SQL_1
     type: SQL
