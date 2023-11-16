@@ -1,18 +1,18 @@
-version: 0.0.6
-jobId: "1234"
-jobName: On Prem Test
+version: 0.0.5
+jobId: "165"
+jobName: Test Connection with Redshift -Miloni
 jobType: Source Aligned Data Product
-alias: abc
+alias: step_write
 discoveryPort:
-  name: On Prem Test
+  name: Test Connection with Redshift -Miloni
 inputPorts:
-  - alias: Local_Storage_On_Prem_Data_Set_1
-    description: Local Storage On Prem Data Set
+  - alias: Weather_23
+    description: Weather
     tags: []
     extra: {}
     syncType: pull
     type: s3-csv
-    dataSetUrn: urn:dv:dataset:94136140-7933-4fbb-9270-a7fc96a79118
+    dataSetUrn: urn:dv:dataset:f4814824-5819-44ba-ac1d-4dc9a279a58a
     filter: ""
     projection: []
     persistDataFrame: false
@@ -20,41 +20,118 @@ inputPorts:
       advanceOptions:
         mergeSchema: false
 productState:
-  alias: abc
-  refreshInterval: 0 12 * * *
+  isDynamic: true
+  alias: step_write
   retentionVersions: ""
-  updateStrategy: Overwrite
   logicalSchema:
     properties:
-      Reference_Transaction_ID:
+      City:
         type: STRING
         description: ""
-      Merchant_Ref_ID:
+      Region:
         type: STRING
         description: ""
-      Transaction_Date:
+      Country:
         type: STRING
         description: ""
-      PG_Mode:
+      Latitude:
         type: STRING
         description: ""
-  enforceSchemaMethod: ""
-  enforceSchema: false
-  addRunIdColumn: false
-  enableDataReconciliation: false
+      Longitude:
+        type: STRING
+        description: ""
+      Timezone:
+        type: STRING
+        description: ""
+      Local Time:
+        type: STRING
+        description: ""
+      Cloud ID:
+        type: STRING
+        description: ""
+      Feels like Celcius:
+        type: STRING
+        description: ""
+      Feels like fahrenheit:
+        type: STRING
+        description: ""
+      Gust speed in kph:
+        type: STRING
+        description: ""
+      Gust speed in mph:
+        type: STRING
+        description: ""
+      Humidity:
+        type: STRING
+        description: ""
+      Is day time?:
+        type: STRING
+        description: ""
+      Last update:
+        type: STRING
+        description: ""
+      Last updated time in epoch:
+        type: STRING
+        description: ""
+      Precipitation in inch:
+        type: STRING
+        description: ""
+      Precipitation in mm:
+        type: STRING
+        description: ""
+      Pressure:
+        type: STRING
+        description: ""
+      Precipitation in mb:
+        type: STRING
+        description: ""
+      Temperature in celcius:
+        type: STRING
+        description: ""
+      Temperature in fahrenheit:
+        type: STRING
+        description: ""
+      UV:
+        type: STRING
+        description: ""
+      Visibility in km:
+        type: STRING
+        description: ""
+      Visibility in miles:
+        type: STRING
+        description: ""
+      Wind Degree:
+        type: STRING
+        description: ""
+      Wind Direction:
+        type: STRING
+        description: ""
+      Wind in kph:
+        type: STRING
+        description: ""
+      Wind in mph:
+        type: STRING
+        description: ""
+  stateStoreType: saveTableDB
   isProfilingEnabled: false
-  tableName: flyte
-  stateStoreType: mysql_mariadb
+  updateStrategy: Overwrite
+  connection: MySQL_121
+  tableName: weather_123_123
+  optional:
+    persistDataFrame: false
+    addRunIdColumn: false
+    enableDataReconciliation: false
+    enforceSchema: false
+  refreshInterval: None
 transformation:
   - alias: Spark_SQL_1
     type: SQL
-    description: spark_sql
-    query: select Reference_Transaction_ID,Merchant_Ref_ID,Transaction_Date,PG_Mode
-      from flyte
+    description: step123
+    query: select city,region,lat,lon,tz_id,temp_c from temp
     sequenceNo: 2
     references:
-      - alias: Local_Storage_On_Prem_Data_Set_1
-        sqlReference: flyte
+      - alias: Weather_23
+        sqlReference: temp
 controlPort:
   dataQualityRules: {}
 outputPort:
