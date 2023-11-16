@@ -1,4 +1,4 @@
-version: 0.0.2
+version: 0.0.3
 jobId: "163"
 jobName: Test Connection - with Iceberg - Miloni
 jobType: Source Aligned Data Product
@@ -26,7 +26,7 @@ productState:
   logicalSchema: ""
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
-  updateStrategy: Overwrite
+  updateStrategy: Append
   tableName: s3source.weather_123_321
   warehousePath: s3://bp-spark-sql-library-test-acc/
   catalogName: glue
