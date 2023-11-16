@@ -115,7 +115,7 @@ productState:
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: s3source.weather_123_321
+  tableName: s3source.weather_123_3212
   warehousePath: s3://bp-spark-sql-library-test-acc/
   catalogName: glue
   optional:
