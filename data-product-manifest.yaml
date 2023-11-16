@@ -1,12 +1,12 @@
-version: 0.0.18
-jobId: "163"
-jobName: Test Connection - with Iceberg - Miloni
+version: 0.0.6
+jobId: "165"
+jobName: Test Connection with mysql -Miloni
 jobType: Source Aligned Data Product
-alias: write_to_ice
+alias: step_write
 discoveryPort:
-  name: Test Connection - with Iceberg - Miloni
+  name: Test Connection with mysql -Miloni
 inputPorts:
-  - alias: Weather_5
+  - alias: Weather_23
     description: Weather
     tags: []
     extra: {}
@@ -21,7 +21,7 @@ inputPorts:
         mergeSchema: false
 productState:
   isDynamic: true
-  alias: write_to_ice
+  alias: step_write
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -112,30 +112,25 @@ productState:
       Wind in mph:
         type: STRING
         description: ""
-  stateStoreType: loadDataIceberg
+  stateStoreType: saveTableDB
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: s3source.weather_123_3212
-  warehousePath: s3://bp-spark-sql-library-test-acc/
-  catalogName: glue
+  connection: MySQL_121
+  tableName: weather_123_123
   optional:
     persistDataFrame: false
+    addRunIdColumn: false
     enableDataReconciliation: false
-    enforceSchema: true
-    enforceSchemaMethod: Warning
-    catalogType: glue
-    loggingOptions:
-      printSchema: true
-      count: true
-  refreshInterval: None
+    enforceSchema: false
+  refreshInterval: 0 12 * * *
 transformation:
   - alias: Spark_SQL_1
     type: SQL
-    description: select view
-    query: select * from temp
+    description: step123
+    query: select city,region,lat,lon,tz_id,temp_c from temp
     sequenceNo: 2
     references:
-      - alias: Weather_5
+      - alias: Weather_23
         sqlReference: temp
 controlPort:
   dataQualityRules: {}
