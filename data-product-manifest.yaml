@@ -1,4 +1,4 @@
-version: 0.0.9
+version: 0.0.11
 jobId: "163"
 jobName: Test Connection - with Iceberg - Miloni
 jobType: Source Aligned Data Product
