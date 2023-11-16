@@ -1,12 +1,12 @@
-version: 0.0.15
+version: 0.0.16
 jobId: "163"
-jobName: Test Connection - with Iceberg 2- Miloni
+jobName: Test Connection - with Iceberg - Miloni
 jobType: Source Aligned Data Product
-alias: write_to_ice
+alias: write_to_ice2
 discoveryPort:
-  name: Test Connection - with Iceberg 2- Miloni
+  name: Test Connection - with Iceberg - Miloni
 inputPorts:
-  - alias: Weather_9
+  - alias: Weather_5
     description: Weather
     tags: []
     extra: {}
@@ -21,7 +21,7 @@ inputPorts:
         mergeSchema: false
 productState:
   isDynamic: true
-  alias: write_to_ice
+  alias: write_to_ice2
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -135,7 +135,7 @@ transformation:
     query: select * from temp
     sequenceNo: 2
     references:
-      - alias: Weather_9
+      - alias: Weather_5
         sqlReference: temp
 controlPort:
   dataQualityRules: {}
