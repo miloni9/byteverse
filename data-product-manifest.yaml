@@ -1,4 +1,4 @@
-version: 0.0.3
+version: 0.0.4
 jobId: "163"
 jobName: Test Connection - with Iceberg - Miloni
 jobType: Source Aligned Data Product
@@ -6,13 +6,13 @@ alias: write_to_ice
 discoveryPort:
   name: Test Connection - with Iceberg - Miloni
 inputPorts:
-  - alias: weather_day_1
-    description: weather day
+  - alias: Weather_5
+    description: Weather
     tags: []
     extra: {}
     syncType: pull
     type: s3-csv
-    dataSetUrn: urn:dv:dataset:3a0494b4-86e9-430f-afcb-877a0d9bea95
+    dataSetUrn: urn:dv:dataset:f4814824-5819-44ba-ac1d-4dc9a279a58a
     filter: ""
     projection: []
     persistDataFrame: false
@@ -23,7 +23,95 @@ productState:
   isDynamic: true
   alias: write_to_ice
   retentionVersions: ""
-  logicalSchema: ""
+  logicalSchema:
+    properties:
+      City:
+        type: STRING
+        description: ""
+      Region:
+        type: STRING
+        description: ""
+      Country:
+        type: STRING
+        description: ""
+      Latitude:
+        type: STRING
+        description: ""
+      Longitude:
+        type: STRING
+        description: ""
+      Timezone:
+        type: STRING
+        description: ""
+      Local Time:
+        type: STRING
+        description: ""
+      Cloud ID:
+        type: STRING
+        description: ""
+      Feels like Celcius:
+        type: STRING
+        description: ""
+      Feels like fahrenheit:
+        type: STRING
+        description: ""
+      Gust speed in kph:
+        type: STRING
+        description: ""
+      Gust speed in mph:
+        type: STRING
+        description: ""
+      Humidity:
+        type: STRING
+        description: ""
+      Is day time?:
+        type: STRING
+        description: ""
+      Last update:
+        type: STRING
+        description: ""
+      Last updated time in epoch:
+        type: STRING
+        description: ""
+      Precipitation in inch:
+        type: STRING
+        description: ""
+      Precipitation in mm:
+        type: STRING
+        description: ""
+      Pressure:
+        type: STRING
+        description: ""
+      Precipitation in mb:
+        type: STRING
+        description: ""
+      Temperature in celcius:
+        type: STRING
+        description: ""
+      Temperature in fahrenheit:
+        type: STRING
+        description: ""
+      UV:
+        type: STRING
+        description: ""
+      Visibility in km:
+        type: STRING
+        description: ""
+      Visibility in miles:
+        type: STRING
+        description: ""
+      Wind Degree:
+        type: STRING
+        description: ""
+      Wind Direction:
+        type: STRING
+        description: ""
+      Wind in kph:
+        type: STRING
+        description: ""
+      Wind in mph:
+        type: STRING
+        description: ""
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Append
@@ -38,7 +126,7 @@ productState:
     catalogType: glue
     loggingOptions:
       printSchema: true
-  refreshInterval: 0 12 * * *
+  refreshInterval: None
 transformation:
   - alias: Spark_SQL_1
     type: SQL
@@ -46,7 +134,7 @@ transformation:
     query: select * from temp
     sequenceNo: 2
     references:
-      - alias: weather_day_1
+      - alias: Weather_5
         sqlReference: temp
 controlPort:
   dataQualityRules: {}
