@@ -4,7 +4,7 @@ jobName: Test Connection - with Iceberg - Miloni
 jobType: Source Aligned Data Product
 alias: write_to_ice2
 discoveryPort:
-  name: Test Connection - with Iceberg - Miloni
+  name: Test Connection - with Iceberg 2 - Miloni
 inputPorts:
   - alias: Weather_5
     description: Weather
