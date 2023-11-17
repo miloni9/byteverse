@@ -1,18 +1,18 @@
-version: 0.0.22
-jobId: "123"
-jobName: Weather Logistic Regression DP To Redshift
+version: 0.0.1
+jobId: "166"
+jobName: Test Pyspark - State mngt iceberg-Miloni
 jobType: Source Aligned Data Product
-alias: Write_to_redshift2
+alias: Iceberg_read
 discoveryPort:
-  name: Weather Logistic Regression DP To Redshift
+  name: Test Pyspark - State mngt iceberg-Miloni
 inputPorts:
-  - alias: weather_day_1
-    description: weather day
+  - alias: Weather_1
+    description: Weather
     tags: []
     extra: {}
     syncType: pull
     type: s3-csv
-    dataSetUrn: urn:dv:dataset:3a0494b4-86e9-430f-afcb-877a0d9bea95
+    dataSetUrn: urn:dv:dataset:f4814824-5819-44ba-ac1d-4dc9a279a58a
     filter: ""
     projection: []
     persistDataFrame: false
@@ -20,45 +20,44 @@ inputPorts:
       advanceOptions:
         mergeSchema: false
 productState:
-  printSchema: true
-  persistDataFrame: false
-  enableDataReconciliation: false
-  enforceSchema: false
-  stepName: Write to redshift2
-  connection: Redshift
-  query: select * from weather_lr
-  endPoint: s3.us-east-1.amazonaws.com
-  temporaryPathS3: s3://byte-etl-externaldemo/pyspark_serverless_test/temp/weather_lr
-  type: readRedshiftTableByQuery
-  isStateManagement: true
-  sequence: 3
-  alias: Write_to_redshift2
-  refreshInterval: 0 12 * * *
+  isDynamic: true
+  alias: Iceberg_read
   retentionVersions: ""
-  logicalSchema:
-    properties:
-      Actual:
-        type: STRING
-        description: ""
-      Predicted:
-        type: STRING
-        description: ""
-  enforceSchemaMethod: ""
+  logicalSchema: ""
+  stateStoreType: loadDataIceberg
   isProfilingEnabled: false
+  updateStrategy: Overwrite
+  tableName: s3source.weather_lg
+  warehousePath: s3://bp-spark-sql-library-test-acc/
+  catalogName: glue
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: true
+    enforceSchemaMethod: Warning
+    catalogType: glue
+  refreshInterval: 0 12 * * *
 transformation:
   - alias: EMR_PySpark_1
     arguments:
-      - s3://byte-etl-externaldemo/weather_data/20230626103841.csv
+      - s3://byte-etl-externaldemo/weather_data/##process_date##*.csv
     pythonFilePath: s3://bp-spark-sql-library-test-acc/custom-jobs/CustomPythonJobWriteParquet.py
     optional:
       pythonEnvTarGZPath: s3://byte-etl-externaldemo/pyspark_serverless_test/pyspark_venv.tar.gz
     type: customPySparkEMRServerless
     sequence: 2
     references:
-      - alias: weather_day_1
-        sqlReference: weather
+      - alias: Weather_1
+        sqlReference: ""
 controlPort:
-  dataQualityRules: {}
+  dataQualityRules:
+    NullValueCheck:
+      productState:
+        checks:
+          - column: city
+            expression: ==
+            number: 0
+        referenceAlias: Iceberg_read
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
