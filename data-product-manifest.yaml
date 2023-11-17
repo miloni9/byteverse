@@ -1,4 +1,4 @@
-version: 0.0.20
+version: 0.0.22
 jobId: "123"
 jobName: Weather Logistic Regression DP To Redshift
 jobType: Source Aligned Data Product
@@ -25,7 +25,7 @@ productState:
   enableDataReconciliation: false
   enforceSchema: false
   stepName: Write to redshift2
-  connection: redshift
+  connection: Redshift
   query: select * from weather_lr
   endPoint: s3.us-east-1.amazonaws.com
   temporaryPathS3: s3://byte-etl-externaldemo/pyspark_serverless_test/temp/weather_lr
@@ -57,10 +57,6 @@ transformation:
     references:
       - alias: weather_day_1
         sqlReference: weather
-      - alias: PMS_Transactions_1
-        sqlReference: pms_transactions
-      - alias: PMS_Master_1
-        sqlReference: pms_master
 controlPort:
   dataQualityRules: {}
 outputPort:
