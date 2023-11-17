@@ -1,8 +1,8 @@
-version: 0.0.1
+version: 0.0.2
 jobId: "166"
 jobName: Test Pyspark - State mngt iceberg-Miloni
 jobType: Source Aligned Data Product
-alias: Iceberg_read
+alias: read
 discoveryPort:
   name: Test Pyspark - State mngt iceberg-Miloni
 inputPorts:
@@ -20,23 +20,29 @@ inputPorts:
       advanceOptions:
         mergeSchema: false
 productState:
-  isDynamic: true
-  alias: Iceberg_read
-  retentionVersions: ""
-  logicalSchema: ""
-  stateStoreType: loadDataIceberg
-  isProfilingEnabled: false
-  updateStrategy: Overwrite
-  tableName: s3source.weather_lg
+  persistDataFrame: false
+  catalogType: glue
+  enforceSchema: false
+  stepName: read
+  tableName: s3source.weather_lr
   warehousePath: s3://bp-spark-sql-library-test-acc/
   catalogName: glue
-  optional:
-    persistDataFrame: false
-    enableDataReconciliation: false
-    enforceSchema: true
-    enforceSchemaMethod: Warning
-    catalogType: glue
+  type: readDataIceberg
+  isStateManagement: true
+  sequence: 3
+  alias: read
   refreshInterval: 0 12 * * *
+  retentionVersions: ""
+  logicalSchema:
+    properties:
+      Actual:
+        type: STRING
+        description: ""
+      Predicted:
+        type: STRING
+        description: ""
+  enforceSchemaMethod: ""
+  isProfilingEnabled: false
 transformation:
   - alias: EMR_PySpark_1
     arguments:
@@ -50,14 +56,7 @@ transformation:
       - alias: Weather_1
         sqlReference: ""
 controlPort:
-  dataQualityRules:
-    NullValueCheck:
-      productState:
-        checks:
-          - column: city
-            expression: ==
-            number: 0
-        referenceAlias: Iceberg_read
+  dataQualityRules: {}
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
