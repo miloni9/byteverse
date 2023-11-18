@@ -1,4 +1,4 @@
-version: 0.0.3
+version: 0.0.4
 jobId: "166"
 jobName: Test Pyspark - State mngt iceberg-Miloni
 jobType: Source Aligned Data Product
@@ -47,7 +47,7 @@ transformation:
   - alias: EMR_PySpark_1
     arguments:
       - s3://byte-etl-externaldemo/weather_data/20230626103841.csv
-    pythonFilePath: s3://bp-spark-sql-library-test-acc/custom-jobs/CustomPythonJobWriteParquet.py
+    pythonFilePath: s3://bp-spark-sql-library-test-acc/custom-jobs/CustomPythonJobWriteIceWithReg.py
     optional:
       pythonEnvTarGZPath: s3://byte-etl-externaldemo/pyspark_serverless_test/pyspark_venv.tar.gz
     type: customPySparkEMRServerless
