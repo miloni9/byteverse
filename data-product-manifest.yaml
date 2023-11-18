@@ -1,4 +1,4 @@
-version: 0.0.2
+version: 0.0.3
 jobId: "166"
 jobName: Test Pyspark - State mngt iceberg-Miloni
 jobType: Source Aligned Data Product
@@ -6,13 +6,13 @@ alias: read
 discoveryPort:
   name: Test Pyspark - State mngt iceberg-Miloni
 inputPorts:
-  - alias: Weather_1
-    description: Weather
+  - alias: daily_weather
+    description: weather day
     tags: []
     extra: {}
     syncType: pull
     type: s3-csv
-    dataSetUrn: urn:dv:dataset:f4814824-5819-44ba-ac1d-4dc9a279a58a
+    dataSetUrn: urn:dv:dataset:3a0494b4-86e9-430f-afcb-877a0d9bea95
     filter: ""
     projection: []
     persistDataFrame: false
@@ -31,7 +31,7 @@ productState:
   isStateManagement: true
   sequence: 3
   alias: read
-  refreshInterval: 0 12 * * *
+  refreshInterval: None
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -46,14 +46,14 @@ productState:
 transformation:
   - alias: EMR_PySpark_1
     arguments:
-      - s3://byte-etl-externaldemo/weather_data/##process_date##*.csv
+      - s3://byte-etl-externaldemo/weather_data/20230626103841.csv
     pythonFilePath: s3://bp-spark-sql-library-test-acc/custom-jobs/CustomPythonJobWriteParquet.py
     optional:
       pythonEnvTarGZPath: s3://byte-etl-externaldemo/pyspark_serverless_test/pyspark_venv.tar.gz
     type: customPySparkEMRServerless
     sequence: 2
     references:
-      - alias: Weather_1
+      - alias: daily_weather
         sqlReference: ""
 controlPort:
   dataQualityRules: {}
