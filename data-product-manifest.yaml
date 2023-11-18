@@ -1,12 +1,12 @@
-version: 0.0.4
-jobId: "166"
-jobName: Test Pyspark - State mngt iceberg-Miloni
+version: 0.0.23
+jobId: "123"
+jobName: Weather Logistic Regression DP To Redshift
 jobType: Source Aligned Data Product
-alias: read
+alias: Write_to_redshift2
 discoveryPort:
-  name: Test Pyspark - State mngt iceberg-Miloni
+  name: Weather Logistic Regression DP To Redshift
 inputPorts:
-  - alias: daily_weather
+  - alias: weather_day_1
     description: weather day
     tags: []
     extra: {}
@@ -20,18 +20,20 @@ inputPorts:
       advanceOptions:
         mergeSchema: false
 productState:
+  printSchema: true
   persistDataFrame: false
-  catalogType: glue
+  enableDataReconciliation: false
   enforceSchema: false
-  stepName: read
-  tableName: s3source.weather_lr
-  warehousePath: s3://bp-spark-sql-library-test-acc/
-  catalogName: glue
-  type: readDataIceberg
+  stepName: Write to redshift2
+  connection: Redshift
+  query: select * from weather_lr
+  endPoint: s3.us-east-1.amazonaws.com
+  temporaryPathS3: s3://byte-etl-externaldemo/pyspark_serverless_test/temp/weather_lr
+  type: readRedshiftTableByQuery
   isStateManagement: true
   sequence: 3
-  alias: read
-  refreshInterval: None
+  alias: Write_to_redshift2
+  refreshInterval: 0 12 * * *
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -42,21 +44,26 @@ productState:
         type: STRING
         description: ""
   enforceSchemaMethod: ""
-  isProfilingEnabled: false
+  isProfilingEnabled: true
 transformation:
   - alias: EMR_PySpark_1
     arguments:
       - s3://byte-etl-externaldemo/weather_data/20230626103841.csv
-    pythonFilePath: s3://bp-spark-sql-library-test-acc/custom-jobs/CustomPythonJobWriteIceWithReg.py
+    pythonFilePath: s3://bp-spark-sql-library-test-acc/custom-jobs/CustomPythonJobWriteParquet.py
     optional:
       pythonEnvTarGZPath: s3://byte-etl-externaldemo/pyspark_serverless_test/pyspark_venv.tar.gz
     type: customPySparkEMRServerless
     sequence: 2
     references:
-      - alias: daily_weather
-        sqlReference: ""
+      - alias: weather_day_1
+        sqlReference: weather
 controlPort:
-  dataQualityRules: {}
+  dataQualityRules:
+    RecordCountCheck:
+      productState:
+        expression: ">="
+        number: 1
+        referenceAlias: Write_to_redshift2
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
