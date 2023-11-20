@@ -1,18 +1,18 @@
-version: 0.0.4
-jobId: "167"
-jobName: Weather Logistic Regression DP To Redshift with variable
+version: 0.0.2
+jobId: "14"
+jobName: Weather with Regression
 jobType: Source Aligned Data Product
-alias: Write_to_redshift23
+alias: redshift_write_
 discoveryPort:
-  name: Weather Logistic Regression DP To Redshift with variable
+  name: Weather with Regression
 inputPorts:
-  - alias: weather_date_variable_1
-    description: weather date variable
+  - alias: Weather_data_prediction
+    description: Weather
     tags: []
     extra: {}
     syncType: pull
     type: s3-csv
-    dataSetUrn: urn:dv:dataset:9f773b3e-6970-41aa-9c48-cdd10ad77a8d
+    dataSetUrn: urn:dv:dataset:a57500cd-e699-4403-a577-6f0000fbf71c
     filter: ""
     projection: []
     persistDataFrame: false
@@ -20,11 +20,10 @@ inputPorts:
       advanceOptions:
         mergeSchema: false
 productState:
-  printSchema: true
   persistDataFrame: false
   enableDataReconciliation: false
   enforceSchema: false
-  stepName: Write to redshift23
+  stepName: "redshift write "
   connection: Redshift
   query: select * from weather_lr
   endPoint: s3.us-east-1.amazonaws.com
@@ -32,38 +31,26 @@ productState:
   type: readRedshiftTableByQuery
   isStateManagement: true
   sequence: 3
-  alias: Write_to_redshift23
+  alias: redshift_write_
   refreshInterval: None
   retentionVersions: ""
-  logicalSchema:
-    properties:
-      Actual:
-        type: STRING
-        description: ""
-      Predicted:
-        type: STRING
-        description: ""
+  logicalSchema: ""
   enforceSchemaMethod: ""
-  isProfilingEnabled: true
+  isProfilingEnabled: false
 transformation:
-  - alias: EMR_PySpark_1
+  - alias: EMR_PySpark_job
     arguments:
       - s3://byte-etl-externaldemo/weather_data/##process_date##.csv
-    pythonFilePath: s3://bp-spark-sql-library-test-acc/custom-jobs/CustomPythonJobWriteParquet.py
+    pythonFilePath: s3://bp-spark-sql-library-test-acc/custom-jobs/CustomPythonJobWriteRedshiftWithReg.py
     optional:
       pythonEnvTarGZPath: s3://byte-etl-externaldemo/pyspark_serverless_test/pyspark_venv.tar.gz
     type: customPySparkEMRServerless
     sequence: 2
     references:
-      - alias: weather_date_variable_1
-        sqlReference: weather
+      - alias: Weather_data_prediction
+        sqlReference: ""
 controlPort:
-  dataQualityRules:
-    RecordCountCheck:
-      productState:
-        expression: ">="
-        number: 1
-        referenceAlias: Write_to_redshift23
+  dataQualityRules: {}
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
