@@ -1,4 +1,4 @@
-version: 0.0.2
+version: 0.0.6
 jobId: "14"
 jobName: Weather with Regression
 jobType: Source Aligned Data Product
@@ -32,16 +32,16 @@ productState:
   isStateManagement: true
   sequence: 3
   alias: redshift_write_
-  refreshInterval: None
+  refreshInterval: 0 12 * * *
   retentionVersions: ""
   logicalSchema: ""
   enforceSchemaMethod: ""
-  isProfilingEnabled: false
+  isProfilingEnabled: true
 transformation:
   - alias: EMR_PySpark_job
     arguments:
       - s3://byte-etl-externaldemo/weather_data/##process_date##.csv
-    pythonFilePath: s3://bp-spark-sql-library-test-acc/custom-jobs/CustomPythonJobWriteRedshiftWithReg.py
+    pythonFilePath: s3://bp-spark-sql-library-test-acc/custom-jobs/CustomPythonJobWriteParquet.py
     optional:
       pythonEnvTarGZPath: s3://byte-etl-externaldemo/pyspark_serverless_test/pyspark_venv.tar.gz
     type: customPySparkEMRServerless
