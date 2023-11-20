@@ -1,18 +1,18 @@
-version: 0.0.5
-jobId: "165"
-jobName: Test Connection with Redshift -Miloni
+version: 0.0.3
+jobId: "167"
+jobName: Weather Logistic Regression DP To Redshift with variable
 jobType: Source Aligned Data Product
-alias: step_write
+alias: Write_to_redshift2
 discoveryPort:
-  name: Test Connection with Redshift -Miloni
+  name: Weather Logistic Regression DP To Redshift with variable
 inputPorts:
-  - alias: Weather_23
-    description: Weather
+  - alias: weather_date_variable_1
+    description: weather date variable
     tags: []
     extra: {}
     syncType: pull
     type: s3-csv
-    dataSetUrn: urn:dv:dataset:f4814824-5819-44ba-ac1d-4dc9a279a58a
+    dataSetUrn: urn:dv:dataset:9f773b3e-6970-41aa-9c48-cdd10ad77a8d
     filter: ""
     projection: []
     persistDataFrame: false
@@ -20,120 +20,50 @@ inputPorts:
       advanceOptions:
         mergeSchema: false
 productState:
-  isDynamic: true
-  alias: step_write
+  printSchema: true
+  persistDataFrame: false
+  enableDataReconciliation: false
+  enforceSchema: false
+  stepName: Write to redshift2
+  connection: Redshift
+  query: select * from weather_lr
+  endPoint: s3.us-east-1.amazonaws.com
+  temporaryPathS3: s3://byte-etl-externaldemo/pyspark_serverless_test/temp/weather_lr
+  type: readRedshiftTableByQuery
+  isStateManagement: true
+  sequence: 3
+  alias: Write_to_redshift2
+  refreshInterval: 0 12 * * *
   retentionVersions: ""
   logicalSchema:
     properties:
-      City:
+      Actual:
         type: STRING
         description: ""
-      Region:
+      Predicted:
         type: STRING
         description: ""
-      Country:
-        type: STRING
-        description: ""
-      Latitude:
-        type: STRING
-        description: ""
-      Longitude:
-        type: STRING
-        description: ""
-      Timezone:
-        type: STRING
-        description: ""
-      Local Time:
-        type: STRING
-        description: ""
-      Cloud ID:
-        type: STRING
-        description: ""
-      Feels like Celcius:
-        type: STRING
-        description: ""
-      Feels like fahrenheit:
-        type: STRING
-        description: ""
-      Gust speed in kph:
-        type: STRING
-        description: ""
-      Gust speed in mph:
-        type: STRING
-        description: ""
-      Humidity:
-        type: STRING
-        description: ""
-      Is day time?:
-        type: STRING
-        description: ""
-      Last update:
-        type: STRING
-        description: ""
-      Last updated time in epoch:
-        type: STRING
-        description: ""
-      Precipitation in inch:
-        type: STRING
-        description: ""
-      Precipitation in mm:
-        type: STRING
-        description: ""
-      Pressure:
-        type: STRING
-        description: ""
-      Precipitation in mb:
-        type: STRING
-        description: ""
-      Temperature in celcius:
-        type: STRING
-        description: ""
-      Temperature in fahrenheit:
-        type: STRING
-        description: ""
-      UV:
-        type: STRING
-        description: ""
-      Visibility in km:
-        type: STRING
-        description: ""
-      Visibility in miles:
-        type: STRING
-        description: ""
-      Wind Degree:
-        type: STRING
-        description: ""
-      Wind Direction:
-        type: STRING
-        description: ""
-      Wind in kph:
-        type: STRING
-        description: ""
-      Wind in mph:
-        type: STRING
-        description: ""
-  stateStoreType: saveTableDB
-  isProfilingEnabled: false
-  updateStrategy: Overwrite
-  connection: MySQL_121
-  tableName: weather_123_123
-  optional:
-    persistDataFrame: false
-    addRunIdColumn: false
-    enableDataReconciliation: false
-    enforceSchema: false
-  refreshInterval: None
+  enforceSchemaMethod: ""
+  isProfilingEnabled: true
 transformation:
-  - alias: Spark_SQL_1
-    type: SQL
-    description: step123
-    query: select city,region,lat,lon,tz_id,temp_c from temp
-    sequenceNo: 2
+  - alias: EMR_PySpark_1
+    arguments:
+      - s3://byte-etl-externaldemo/weather_data/##process_date##.csv
+    pythonFilePath: s3://bp-spark-sql-library-test-acc/custom-jobs/CustomPythonJobWriteParquet.py
+    optional:
+      pythonEnvTarGZPath: s3://byte-etl-externaldemo/pyspark_serverless_test/pyspark_venv.tar.gz
+    type: customPySparkEMRServerless
+    sequence: 2
     references:
-      - alias: Weather_23
-        sqlReference: temp
+      - alias: weather_date_variable_1
+        sqlReference: weather
 controlPort:
-  dataQualityRules: {}
+  dataQualityRules:
+    RecordCountCheck:
+      productState:
+        expression: ">="
+        number: 1
+        referenceAlias: Write_to_redshift2
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
