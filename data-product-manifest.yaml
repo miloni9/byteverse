@@ -1,4 +1,4 @@
-version: 0.0.7
+version: 0.0.8
 jobId: "14"
 jobName: Weather with Regression
 jobType: Source Aligned Data Product
@@ -57,7 +57,12 @@ transformation:
       - alias: Weather_data_prediction
         sqlReference: ""
 controlPort:
-  dataQualityRules: {}
+  dataQualityRules:
+    RecordCountCheck:
+      productState:
+        expression: ">="
+        number: 1
+        referenceAlias: redshift_write_
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
