@@ -1,4 +1,4 @@
-version: 0.0.6
+version: 0.0.7
 jobId: "14"
 jobName: Weather with Regression
 jobType: Source Aligned Data Product
@@ -34,7 +34,14 @@ productState:
   alias: redshift_write_
   refreshInterval: 0 12 * * *
   retentionVersions: ""
-  logicalSchema: ""
+  logicalSchema:
+    properties:
+      Actual:
+        type: STRING
+        description: ""
+      Predicted:
+        type: STRING
+        description: ""
   enforceSchemaMethod: ""
   isProfilingEnabled: true
 transformation:
