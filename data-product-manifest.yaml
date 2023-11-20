@@ -1,8 +1,8 @@
-version: 0.0.3
+version: 0.0.4
 jobId: "167"
 jobName: Weather Logistic Regression DP To Redshift with variable
 jobType: Source Aligned Data Product
-alias: Write_to_redshift2
+alias: Write_to_redshift23
 discoveryPort:
   name: Weather Logistic Regression DP To Redshift with variable
 inputPorts:
@@ -24,7 +24,7 @@ productState:
   persistDataFrame: false
   enableDataReconciliation: false
   enforceSchema: false
-  stepName: Write to redshift2
+  stepName: Write to redshift23
   connection: Redshift
   query: select * from weather_lr
   endPoint: s3.us-east-1.amazonaws.com
@@ -32,8 +32,8 @@ productState:
   type: readRedshiftTableByQuery
   isStateManagement: true
   sequence: 3
-  alias: Write_to_redshift2
-  refreshInterval: 0 12 * * *
+  alias: Write_to_redshift23
+  refreshInterval: None
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -63,7 +63,7 @@ controlPort:
       productState:
         expression: ">="
         number: 1
-        referenceAlias: Write_to_redshift2
+        referenceAlias: Write_to_redshift23
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
