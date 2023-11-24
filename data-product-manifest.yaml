@@ -1,4 +1,4 @@
-version: 0.0.2
+version: 0.0.3
 jobId: "720"
 jobName: DP Weather Data Prediction - python
 jobType: Source Aligned Data Product
@@ -43,7 +43,7 @@ productState:
         type: STRING
         description: ""
   enforceSchemaMethod: ""
-  isProfilingEnabled: false
+  isProfilingEnabled: true
 transformation:
   - alias: EMR_PySpark_1
     arguments:
@@ -57,7 +57,12 @@ transformation:
       - alias: Weather_Daily_1
         sqlReference: ""
 controlPort:
-  dataQualityRules: {}
+  dataQualityRules:
+    RecordCountCheck:
+      productState:
+        expression: ">="
+        number: 1
+        referenceAlias: State_Management
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
