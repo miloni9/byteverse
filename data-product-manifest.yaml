@@ -1,18 +1,18 @@
-version: 0.0.23
-jobId: "123"
-jobName: Weather Logistic Regression DP To Redshift
+version: 0.0.2
+jobId: "720"
+jobName: DP Weather Data Prediction - python
 jobType: Source Aligned Data Product
-alias: Write_to_redshift2
+alias: State_Management
 discoveryPort:
-  name: Weather Logistic Regression DP To Redshift
+  name: DP Weather Data Prediction - python
 inputPorts:
-  - alias: weather_day_1
-    description: weather day
+  - alias: Weather_Daily_1
+    description: Weather Daily
     tags: []
     extra: {}
     syncType: pull
     type: s3-csv
-    dataSetUrn: urn:dv:dataset:3a0494b4-86e9-430f-afcb-877a0d9bea95
+    dataSetUrn: urn:dv:dataset:218e32e9-aa80-459d-8308-d78af89421b6
     filter: ""
     projection: []
     persistDataFrame: false
@@ -20,19 +20,18 @@ inputPorts:
       advanceOptions:
         mergeSchema: false
 productState:
-  printSchema: true
   persistDataFrame: false
   enableDataReconciliation: false
   enforceSchema: false
-  stepName: Write to redshift2
-  connection: Redshift
-  query: select * from weather_lr
-  endPoint: s3.us-east-1.amazonaws.com
-  temporaryPathS3: s3://byte-etl-externaldemo/pyspark_serverless_test/temp/weather_lr
+  stepName: State Management
+  connection: MSIL_Redshift_Connection
+  query: select * from weather_lr_test
+  endPoint: s3.ap-south-1.amazonaws.com
+  temporaryPathS3: s3://dlp-platform-engine-bucket/data/weather_lr
   type: readRedshiftTableByQuery
   isStateManagement: true
   sequence: 3
-  alias: Write_to_redshift2
+  alias: State_Management
   refreshInterval: 0 12 * * *
   retentionVersions: ""
   logicalSchema:
@@ -44,26 +43,21 @@ productState:
         type: STRING
         description: ""
   enforceSchemaMethod: ""
-  isProfilingEnabled: true
+  isProfilingEnabled: false
 transformation:
   - alias: EMR_PySpark_1
     arguments:
-      - s3://byte-etl-externaldemo/weather_data/20230626103841.csv
-    pythonFilePath: s3://bp-spark-sql-library-test-acc/custom-jobs/CustomPythonJobWriteParquet.py
+      - s3://dlp-platform-engine-bucket/weather_data/##process_date##.csv
+    pythonFilePath: s3://dlp-platform-engine-bucket/custom-job/script/ParquetToRedshift.py
     optional:
-      pythonEnvTarGZPath: s3://byte-etl-externaldemo/pyspark_serverless_test/pyspark_venv.tar.gz
+      pythonEnvTarGZPath: s3://dlp-platform-engine-bucket/custom-job/python-env/pyspark_venv_all.tar.gz
     type: customPySparkEMRServerless
     sequence: 2
     references:
-      - alias: weather_day_1
-        sqlReference: weather
+      - alias: Weather_Daily_1
+        sqlReference: ""
 controlPort:
-  dataQualityRules:
-    RecordCountCheck:
-      productState:
-        expression: ">="
-        number: 1
-        referenceAlias: Write_to_redshift2
+  dataQualityRules: {}
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
