@@ -1,136 +1,49 @@
-version: 0.0.6
-jobId: "165"
-jobName: Test Connection with mysql -Miloni
+version: 0.0.5
+jobId: "185"
+jobName: Test Connection redshift connections- Miloni
 jobType: Source Aligned Data Product
-alias: step_write
+alias: step_3
 discoveryPort:
-  name: Test Connection with mysql -Miloni
+  name: Test Connection redshift connections- Miloni
 inputPorts:
-  - alias: Weather_23
-    description: Weather
-    tags: []
-    extra: {}
-    syncType: pull
-    type: s3-csv
-    dataSetUrn: urn:dv:dataset:f4814824-5819-44ba-ac1d-4dc9a279a58a
-    filter: ""
-    projection: []
-    persistDataFrame: false
-    entity:
-      advanceOptions:
-        mergeSchema: false
+  - alias: redshift_1
+    isDynamic: true
+    connection: Redshift
+    query: public.encrypted_data_123
+    endPoint: s3.us-east-1.amazonaws.com
+    temporaryPathS3: s3://byte-etl-externaldemo/pyspark_serverless_test/temp/weather_lr
+    optional:
+      s3connections: S3 with User
+      persistDataFrame: false
+      enableDataReconciliation: false
+      enforceSchema: false
+      dataSetUrn: urn:dv:dataset:1ca7de25-0867-4777-b80e-0db2833b6f01
+    type: readRedshiftTableByQuery
 productState:
-  isDynamic: true
-  alias: step_write
-  retentionVersions: ""
-  logicalSchema:
-    properties:
-      City:
-        type: STRING
-        description: ""
-      Region:
-        type: STRING
-        description: ""
-      Country:
-        type: STRING
-        description: ""
-      Latitude:
-        type: STRING
-        description: ""
-      Longitude:
-        type: STRING
-        description: ""
-      Timezone:
-        type: STRING
-        description: ""
-      Local Time:
-        type: STRING
-        description: ""
-      Cloud ID:
-        type: STRING
-        description: ""
-      Feels like Celcius:
-        type: STRING
-        description: ""
-      Feels like fahrenheit:
-        type: STRING
-        description: ""
-      Gust speed in kph:
-        type: STRING
-        description: ""
-      Gust speed in mph:
-        type: STRING
-        description: ""
-      Humidity:
-        type: STRING
-        description: ""
-      Is day time?:
-        type: STRING
-        description: ""
-      Last update:
-        type: STRING
-        description: ""
-      Last updated time in epoch:
-        type: STRING
-        description: ""
-      Precipitation in inch:
-        type: STRING
-        description: ""
-      Precipitation in mm:
-        type: STRING
-        description: ""
-      Pressure:
-        type: STRING
-        description: ""
-      Precipitation in mb:
-        type: STRING
-        description: ""
-      Temperature in celcius:
-        type: STRING
-        description: ""
-      Temperature in fahrenheit:
-        type: STRING
-        description: ""
-      UV:
-        type: STRING
-        description: ""
-      Visibility in km:
-        type: STRING
-        description: ""
-      Visibility in miles:
-        type: STRING
-        description: ""
-      Wind Degree:
-        type: STRING
-        description: ""
-      Wind Direction:
-        type: STRING
-        description: ""
-      Wind in kph:
-        type: STRING
-        description: ""
-      Wind in mph:
-        type: STRING
-        description: ""
-  stateStoreType: saveTableDB
-  isProfilingEnabled: false
-  updateStrategy: Overwrite
-  connection: MySQL_121
-  tableName: weather_123_123
-  optional:
-    persistDataFrame: false
-    addRunIdColumn: false
-    enableDataReconciliation: false
-    enforceSchema: false
+  mergeSchema: true
+  persistDataFrame: false
+  enableDataReconciliation: false
+  enforceSchema: false
+  connection: S3 with User
+  stepName: step 3
+  path: s3://byte-etl-externaldemo/weather_data_all_parquet/
+  type: inputParquet
+  isStateManagement: true
+  sequence: 3
+  alias: step_3
   refreshInterval: 0 12 * * *
+  retentionVersions: ""
+  logicalSchema: ""
+  enforceSchemaMethod: ""
+  isProfilingEnabled: false
 transformation:
   - alias: Spark_SQL_1
     type: SQL
-    description: step123
-    query: select city,region,lat,lon,tz_id,temp_c from temp
+    description: step name
+    query: select * from temp
     sequenceNo: 2
     references:
-      - alias: Weather_23
+      - alias: redshift_1
         sqlReference: temp
 controlPort:
   dataQualityRules: {}
