@@ -1,4 +1,4 @@
-version: 0.0.8
+version: 0.0.9
 jobId: "185"
 jobName: Test Connection redshift connections- Miloni
 jobType: Source Aligned Data Product
@@ -9,17 +9,15 @@ inputPorts:
   - alias: redshift_1
     isDynamic: true
     connection: Redshift
-    query: public.encrypted_data_123
+    query: select * from public.billing_1223
     endPoint: s3.us-east-1.amazonaws.com
     temporaryPathS3: s3://byte-etl-externaldemo/pyspark_serverless_test/temp/weather_lr
     optional:
-      s3connections: S3 with User
+      s3connections: s3 with Role
       persistDataFrame: false
       enableDataReconciliation: false
       enforceSchema: false
       dataSetUrn: urn:dv:dataset:1ca7de25-0867-4777-b80e-0db2833b6f01
-      loggingOptions:
-        printSchema: true
     type: readRedshiftTableByQuery
 productState:
   isDynamic: true
@@ -52,7 +50,7 @@ transformation:
     sequenceNo: 2
     references:
       - alias: redshift_1
-        sqlReference: temp
+        sqlReference: ""
 controlPort:
   dataQualityRules: {}
 outputPort:
