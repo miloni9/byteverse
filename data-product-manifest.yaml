@@ -1,4 +1,4 @@
-version: 0.0.9
+version: 0.0.10
 jobId: "185"
 jobName: Test Connection redshift connections- Miloni
 jobType: Source Aligned Data Product
@@ -50,7 +50,7 @@ transformation:
     sequenceNo: 2
     references:
       - alias: redshift_1
-        sqlReference: ""
+        sqlReference: temp
 controlPort:
   dataQualityRules: {}
 outputPort:
