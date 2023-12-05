@@ -1,4 +1,4 @@
-version: 0.0.10
+version: 0.0.12
 jobId: "185"
 jobName: Test Connection redshift connections- Miloni
 jobType: Source Aligned Data Product
@@ -18,6 +18,8 @@ inputPorts:
       enableDataReconciliation: false
       enforceSchema: false
       dataSetUrn: urn:dv:dataset:1ca7de25-0867-4777-b80e-0db2833b6f01
+      loggingOptions:
+        printSchema: true
     type: readRedshiftTableByQuery
 productState:
   isDynamic: true
@@ -25,7 +27,28 @@ productState:
   retentionVersions: ""
   logicalSchema:
     properties:
-      x:
+      city:
+        type: STRING
+        description: ""
+      region:
+        type: STRING
+        description: ""
+      lat:
+        type: STRING
+        description: ""
+      lon:
+        type: STRING
+        description: ""
+      tz_id:
+        type: STRING
+        description: ""
+      temp_c:
+        type: STRING
+        description: ""
+      last_updated:
+        type: STRING
+        description: ""
+      last_updated_epoch:
         type: STRING
         description: ""
   stateStoreType: loadDataIceberg
