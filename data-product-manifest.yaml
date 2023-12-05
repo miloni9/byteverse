@@ -1,68 +1,53 @@
-version: 0.0.8
-jobId: "14"
-jobName: Weather with Regression
-jobType: Source Aligned Data Product
-alias: redshift_write_
+version: 0.0.1
+jobId: "189"
+jobName: redshift truncate insert miloni
+jobType: DataSets
+alias: s3
 discoveryPort:
-  name: Weather with Regression
+  name: redshift truncate insert miloni
 inputPorts:
-  - alias: Weather_data_prediction
-    description: Weather
-    tags: []
-    extra: {}
-    syncType: pull
-    type: s3-csv
-    dataSetUrn: urn:dv:dataset:a57500cd-e699-4403-a577-6f0000fbf71c
-    filter: ""
-    projection: []
-    persistDataFrame: false
-    entity:
-      advanceOptions:
-        mergeSchema: false
-productState:
-  persistDataFrame: false
-  enableDataReconciliation: false
-  enforceSchema: false
-  stepName: "redshift write "
-  connection: Redshift
-  query: select * from weather_lr
-  endPoint: s3.us-east-1.amazonaws.com
-  temporaryPathS3: s3://byte-etl-externaldemo/pyspark_serverless_test/temp/weather_lr
-  type: readRedshiftTableByQuery
-  isStateManagement: true
-  sequence: 3
-  alias: redshift_write_
-  refreshInterval: 0 12 * * *
-  retentionVersions: ""
-  logicalSchema:
-    properties:
-      Actual:
-        type: STRING
-        description: ""
-      Predicted:
-        type: STRING
-        description: ""
-  enforceSchemaMethod: ""
-  isProfilingEnabled: true
-transformation:
-  - alias: EMR_PySpark_job
-    arguments:
-      - s3://byte-etl-externaldemo/weather_data/##process_date##.csv
-    pythonFilePath: s3://bp-spark-sql-library-test-acc/custom-jobs/CustomPythonJobWriteParquet.py
+  - alias: Parquet_1
+    isDynamic: true
+    path: s3://byte-etl-externaldemo/weather_test_billing_parquet/
     optional:
-      pythonEnvTarGZPath: s3://byte-etl-externaldemo/pyspark_serverless_test/pyspark_venv.tar.gz
-    type: customPySparkEMRServerless
-    sequence: 2
+      persistDataFrame: false
+      advanceOptions:
+        mergeSchema: true
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: S3 with User
+      dataSetUrn: ""
+      dataProductUrn: ""
+    type: inputParquet
+productState:
+  isDynamic: true
+  alias: s3
+  retentionVersions: ""
+  logicalSchema: ""
+  stateStoreType: writeDataFrameToRedshiftTable
+  isProfilingEnabled: false
+  updateStrategy: TruncateAndOverwrite
+  connection: Redshift
+  tableName: public.billing_1223
+  endPoint: s3.us-east-1.amazonaws.com
+  temporaryPathS3: s3a://bp-spark-sql-library-test-acc/testRedshiftUpload1/
+  optional:
+    persistDataFrame: false
+    addRunIdColumn: false
+    enableDataReconciliation: false
+    enforceSchema: false
+  refreshInterval: 0 12 * * *
+transformation:
+  - alias: Spark_SQL_1
+    type: SQL
+    description: s2
+    query: select * from temp
+    sequenceNo: 2
     references:
-      - alias: Weather_data_prediction
-        sqlReference: ""
+      - alias: Parquet_1
+        sqlReference: temp
 controlPort:
-  dataQualityRules:
-    RecordCountCheck:
-      productState:
-        expression: ">="
-        number: 1
-        referenceAlias: redshift_write_
+  dataQualityRules: {}
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
