@@ -1,50 +1,57 @@
-version: 0.0.1
-jobId: "189"
-jobName: redshift truncate insert miloni
-jobType: DataSets
+version: 0.0.8
+jobId: "185"
+jobName: Test Connection redshift connections- Miloni
+jobType: Source Aligned Data Product
 alias: s3
 discoveryPort:
-  name: redshift truncate insert miloni
+  name: Test Connection redshift connections- Miloni
 inputPorts:
-  - alias: Parquet_1
+  - alias: redshift_1
     isDynamic: true
-    path: s3://byte-etl-externaldemo/weather_test_billing_parquet/
+    connection: Redshift
+    query: public.encrypted_data_123
+    endPoint: s3.us-east-1.amazonaws.com
+    temporaryPathS3: s3://byte-etl-externaldemo/pyspark_serverless_test/temp/weather_lr
     optional:
+      s3connections: S3 with User
       persistDataFrame: false
-      advanceOptions:
-        mergeSchema: true
       enableDataReconciliation: false
       enforceSchema: false
-      connection: S3 with User
-      dataSetUrn: ""
-      dataProductUrn: ""
-    type: inputParquet
+      dataSetUrn: urn:dv:dataset:1ca7de25-0867-4777-b80e-0db2833b6f01
+      loggingOptions:
+        printSchema: true
+    type: readRedshiftTableByQuery
 productState:
   isDynamic: true
   alias: s3
   retentionVersions: ""
-  logicalSchema: ""
-  stateStoreType: writeDataFrameToRedshiftTable
+  logicalSchema:
+    properties:
+      x:
+        type: STRING
+        description: ""
+  stateStoreType: loadDataIceberg
   isProfilingEnabled: false
-  updateStrategy: TruncateAndOverwrite
-  connection: Redshift
-  tableName: public.billing_1223
-  endPoint: s3.us-east-1.amazonaws.com
-  temporaryPathS3: s3a://bp-spark-sql-library-test-acc/testRedshiftUpload1/
+  updateStrategy: Overwrite
+  tableName: s3source.tablename
+  warehousePath: s3://bp-spark-sql-library-test-acc/
+  catalogName: glue
   optional:
     persistDataFrame: false
-    addRunIdColumn: false
     enableDataReconciliation: false
-    enforceSchema: false
+    enforceSchema: true
+    enforceSchemaMethod: Warning
+    catalogType: glue
+    connection: S3 with User
   refreshInterval: 0 12 * * *
 transformation:
   - alias: Spark_SQL_1
     type: SQL
-    description: s2
+    description: step name
     query: select * from temp
     sequenceNo: 2
     references:
-      - alias: Parquet_1
+      - alias: redshift_1
         sqlReference: temp
 controlPort:
   dataQualityRules: {}
