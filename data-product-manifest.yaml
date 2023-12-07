@@ -1,4 +1,4 @@
-version: 0.0.1
+version: 0.0.2
 jobId: "195"
 jobName: test ice and delta - miloni
 jobType: Source Aligned Data Product
@@ -6,16 +6,6 @@ alias: s3tep
 discoveryPort:
   name: test ice and delta - miloni
 inputPorts:
-  - alias: Delta_Data_Set_1
-    isDynamic: true
-    tableLocation: s3://byte-etl-spark-testcase-temp/delta/sample_delta_insert.parquet
-    optional:
-      persistDataFrame: false
-      enableDataReconciliation: false
-      enforceSchema: false
-      connection: s3 with Role
-      dataSetUrn: urn:dv:dataset:402e845e-183a-4a1f-92e8-7e5fd7cbb522
-    type: readDeltaTable
   - alias: Iceberg_Data_Set_1
     isDynamic: true
     tableName: tableName
@@ -28,6 +18,16 @@ inputPorts:
       connection: "Test-Delete "
       dataSetUrn: urn:dv:dataset:3a0a839c-07f6-41ae-a01d-4acd2ebd0dd5
     type: readDataIceberg
+  - alias: delta_test_1
+    isDynamic: true
+    tableLocation: s3://byte-etl-spark-testcase-temp/delta/sample_delta_test3
+    optional:
+      persistDataFrame: false
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: delta
+      dataSetUrn: urn:dv:dataset:416fb77d-fb1a-4c54-ac56-b92772eb5192
+    type: readDeltaTable
 productState:
   isDynamic: true
   alias: s3tep
@@ -137,10 +137,10 @@ transformation:
     query: select * from delta d left join iceberg i on i.tz_id=d.tz_id
     sequenceNo: 3
     references:
-      - alias: Delta_Data_Set_1
-        sqlReference: delta
       - alias: Iceberg_Data_Set_1
         sqlReference: iceberg
+      - alias: delta_test_1
+        sqlReference: ""
 controlPort:
   dataQualityRules: {}
 outputPort:
