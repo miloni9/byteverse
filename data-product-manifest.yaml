@@ -1,8 +1,8 @@
-version: 0.0.4
+version: 0.0.5
 jobId: "194"
 jobName: Delta Test SADP - Miloni
 jobType: Source Aligned Data Product
-alias: s3
+alias: Delta_Test
 discoveryPort:
   name: Delta Test SADP - Miloni
 inputPorts:
@@ -20,7 +20,7 @@ inputPorts:
     type: inputDelimited
 productState:
   isDynamic: true
-  alias: s3
+  alias: Delta_Test
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -137,7 +137,7 @@ controlPort:
       productState:
         expression: ">="
         number: 0
-        referenceAlias: s3
+        referenceAlias: Delta_Test
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
