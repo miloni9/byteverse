@@ -1,26 +1,36 @@
-version: 0.0.5
-jobId: "194"
-jobName: Delta Test SADP - Miloni
+version: 0.0.1
+jobId: "195"
+jobName: test ice and delta - miloni
 jobType: Source Aligned Data Product
-alias: Delta_Test
+alias: s3tep
 discoveryPort:
-  name: Delta Test SADP - Miloni
+  name: test ice and delta - miloni
 inputPorts:
-  - alias: weather_day_1
+  - alias: Delta_Data_Set_1
     isDynamic: true
-    path: s3://byte-etl-externaldemo/weather_data/20230626103841.csv
+    tableLocation: s3://byte-etl-spark-testcase-temp/delta/sample_delta_insert.parquet
     optional:
       persistDataFrame: false
-      advanceOptions:
-        delimiter: ","
       enableDataReconciliation: false
       enforceSchema: false
-      connection: S3 Data Connection
-      dataSetUrn: urn:dv:dataset:3a0494b4-86e9-430f-afcb-877a0d9bea95
-    type: inputDelimited
+      connection: s3 with Role
+      dataSetUrn: urn:dv:dataset:402e845e-183a-4a1f-92e8-7e5fd7cbb522
+    type: readDeltaTable
+  - alias: Iceberg_Data_Set_1
+    isDynamic: true
+    tableName: tableName
+    warehousePath: warehousePaht
+    catalogName: catalogName
+    optional:
+      persistDataFrame: false
+      catalogType: glue
+      enforceSchema: false
+      connection: "Test-Delete "
+      dataSetUrn: urn:dv:dataset:3a0a839c-07f6-41ae-a01d-4acd2ebd0dd5
+    type: readDataIceberg
 productState:
   isDynamic: true
-  alias: Delta_Test
+  alias: s3tep
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -112,32 +122,27 @@ productState:
         type: STRING
         description: ""
   stateStoreType: writeDataFrameToDeltaTable
-  isProfilingEnabled: true
+  isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableWritePath: s3://byte-etl-spark-testcase-temp/delta/sample_delta_test3
+  tableWritePath: s3://byte-etl-spark-testcase-temp/delta/sample_delta_test4
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: true
-    loggingOptions:
-      count: true
+    enforceSchema: false
   refreshInterval: 0 12 * * *
 transformation:
   - alias: Spark_SQL_1
     type: SQL
-    description: temp
-    query: select * from temp
-    sequenceNo: 2
+    description: sql 2
+    query: select * from delta d left join iceberg i on i.tz_id=d.tz_id
+    sequenceNo: 3
     references:
-      - alias: weather_day_1
-        sqlReference: temp
+      - alias: Delta_Data_Set_1
+        sqlReference: delta
+      - alias: Iceberg_Data_Set_1
+        sqlReference: iceberg
 controlPort:
-  dataQualityRules:
-    RecordCountCheck:
-      productState:
-        expression: ">="
-        number: 0
-        referenceAlias: Delta_Test
+  dataQualityRules: {}
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
