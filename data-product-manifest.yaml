@@ -1,23 +1,11 @@
-version: 0.0.3
+version: 0.0.9
 jobId: "195"
-jobName: test ice and delta - miloni
+jobName: Join test Iceberg Delta Miloni
 jobType: Source Aligned Data Product
 alias: s3tep
 discoveryPort:
-  name: test ice and delta - miloni
+  name: Join test Iceberg Delta Miloni
 inputPorts:
-  - alias: Iceberg_Data_Set_1
-    isDynamic: true
-    tableName: tableName
-    warehousePath: warehousePaht
-    catalogName: catalogName
-    optional:
-      persistDataFrame: false
-      catalogType: glue
-      enforceSchema: false
-      connection: "Test-Delete "
-      dataSetUrn: urn:dv:dataset:3a0a839c-07f6-41ae-a01d-4acd2ebd0dd5
-    type: readDataIceberg
   - alias: delta_test_1
     isDynamic: true
     tableLocation: s3://byte-etl-spark-testcase-temp/delta/sample_delta_test3
@@ -28,6 +16,18 @@ inputPorts:
       connection: delta
       dataSetUrn: urn:dv:dataset:416fb77d-fb1a-4c54-ac56-b92772eb5192
     type: readDeltaTable
+  - alias: iceberg_1
+    isDynamic: true
+    tableName: s3source.weather_123_3212
+    warehousePath: s3://bp-spark-sql-library-test-acc/
+    catalogName: glue
+    optional:
+      persistDataFrame: false
+      catalogType: glue
+      enforceSchema: false
+      connection: iceberg
+      dataSetUrn: urn:dv:dataset:9e94c0ac-5d8c-45c4-8ba5-2dcdaad2fa77
+    type: readDataIceberg
 productState:
   isDynamic: true
   alias: s3tep
@@ -129,18 +129,20 @@ productState:
     persistDataFrame: false
     enableDataReconciliation: false
     enforceSchema: false
-  refreshInterval: 0 12 * * *
+  refreshInterval: 0 0 30 2 *
 transformation:
   - alias: Spark_SQL_1
     type: SQL
     description: sql 2
-    query: select * from delta d left join iceberg i on i.tz_id=d.tz_id
+    query: select
+      d.city,  d.region,  d.country,  d.lat,  d.lon,  d.tz_id,  d.localtime,  d.cloud,  d.feelslike_c,  d.feelslike_f,  d.gust_kph,  d.gust_mph,  d.humidity,  d.is_day,  d.last_updated,  d.last_updated_epoch,  d.precip_in,  d.precip_mm,  d.pressure_in,  d.pressure_mb,  d.temp_c,  d.temp_f,  d.uv,  d.vis_km,  d.vis_miles,  d.wind_degree,  d.wind_dir,  d.wind_kph,  d.wind_mph
+      from delta d left join iceberg i on i.tz_id=d.tz_id
     sequenceNo: 3
     references:
-      - alias: Iceberg_Data_Set_1
-        sqlReference: iceberg
       - alias: delta_test_1
         sqlReference: delta
+      - alias: iceberg_1
+        sqlReference: iceberg
 controlPort:
   dataQualityRules: {}
 outputPort:
