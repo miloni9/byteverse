@@ -1,26 +1,23 @@
-version: 0.0.12
-jobId: "185"
-jobName: Test Connection redshift connections- Miloni
+version: 0.0.4
+jobId: "194"
+jobName: Delta Test SADP - Miloni
 jobType: Source Aligned Data Product
 alias: s3
 discoveryPort:
-  name: Test Connection redshift connections- Miloni
+  name: Delta Test SADP - Miloni
 inputPorts:
-  - alias: redshift_1
+  - alias: weather_day_1
     isDynamic: true
-    connection: Redshift
-    query: select * from public.billing_1223
-    endPoint: s3.us-east-1.amazonaws.com
-    temporaryPathS3: s3://byte-etl-externaldemo/pyspark_serverless_test/temp/weather_lr
+    path: s3://byte-etl-externaldemo/weather_data/20230626103841.csv
     optional:
-      s3connections: s3 with Role
       persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
       enableDataReconciliation: false
       enforceSchema: false
-      dataSetUrn: urn:dv:dataset:1ca7de25-0867-4777-b80e-0db2833b6f01
-      loggingOptions:
-        printSchema: true
-    type: readRedshiftTableByQuery
+      connection: S3 Data Connection
+      dataSetUrn: urn:dv:dataset:3a0494b4-86e9-430f-afcb-877a0d9bea95
+    type: inputDelimited
 productState:
   isDynamic: true
   alias: s3
@@ -33,6 +30,9 @@ productState:
       region:
         type: STRING
         description: ""
+      country:
+        type: STRING
+        description: ""
       lat:
         type: STRING
         description: ""
@@ -42,7 +42,28 @@ productState:
       tz_id:
         type: STRING
         description: ""
-      temp_c:
+      localtime:
+        type: STRING
+        description: ""
+      cloud:
+        type: STRING
+        description: ""
+      feelslike_c:
+        type: STRING
+        description: ""
+      feelslike_f:
+        type: STRING
+        description: ""
+      gust_kph:
+        type: STRING
+        description: ""
+      gust_mph:
+        type: STRING
+        description: ""
+      humidity:
+        type: STRING
+        description: ""
+      is_day:
         type: STRING
         description: ""
       last_updated:
@@ -51,31 +72,72 @@ productState:
       last_updated_epoch:
         type: STRING
         description: ""
-  stateStoreType: loadDataIceberg
-  isProfilingEnabled: false
+      precip_in:
+        type: STRING
+        description: ""
+      precip_mm:
+        type: STRING
+        description: ""
+      pressure_in:
+        type: STRING
+        description: ""
+      pressure_mb:
+        type: STRING
+        description: ""
+      temp_c:
+        type: STRING
+        description: ""
+      temp_f:
+        type: STRING
+        description: ""
+      uv:
+        type: STRING
+        description: ""
+      vis_km:
+        type: STRING
+        description: ""
+      vis_miles:
+        type: STRING
+        description: ""
+      wind_degree:
+        type: STRING
+        description: ""
+      wind_dir:
+        type: STRING
+        description: ""
+      wind_kph:
+        type: STRING
+        description: ""
+      wind_mph:
+        type: STRING
+        description: ""
+  stateStoreType: writeDataFrameToDeltaTable
+  isProfilingEnabled: true
   updateStrategy: Overwrite
-  tableName: s3source.tablename
-  warehousePath: s3://bp-spark-sql-library-test-acc/
-  catalogName: glue
+  tableWritePath: s3://byte-etl-spark-testcase-temp/delta/sample_delta_test3
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
     enforceSchema: true
-    enforceSchemaMethod: Warning
-    catalogType: glue
-    connection: S3 with User
+    loggingOptions:
+      count: true
   refreshInterval: 0 12 * * *
 transformation:
   - alias: Spark_SQL_1
     type: SQL
-    description: step name
+    description: temp
     query: select * from temp
     sequenceNo: 2
     references:
-      - alias: redshift_1
+      - alias: weather_day_1
         sqlReference: temp
 controlPort:
-  dataQualityRules: {}
+  dataQualityRules:
+    RecordCountCheck:
+      productState:
+        expression: ">="
+        number: 0
+        referenceAlias: s3
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
