@@ -1,4 +1,4 @@
-version: 0.0.2
+version: 0.0.3
 jobId: "195"
 jobName: test ice and delta - miloni
 jobType: Source Aligned Data Product
@@ -140,7 +140,7 @@ transformation:
       - alias: Iceberg_Data_Set_1
         sqlReference: iceberg
       - alias: delta_test_1
-        sqlReference: ""
+        sqlReference: delta
 controlPort:
   dataQualityRules: {}
 outputPort:
