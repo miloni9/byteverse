@@ -1,68 +1,313 @@
-version: 0.0.3
-jobId: "720"
-jobName: DP Weather Data Prediction - python
-jobType: Source Aligned Data Product
-alias: State_Management
+version: 0.0.1
+jobId: "198"
+jobName: "Secondary Sales  cost - ADP "
+jobType: Aggregated Data Product
+alias: step_to_write
 discoveryPort:
-  name: DP Weather Data Prediction - python
+  name: "Secondary Sales  cost - ADP "
 inputPorts:
-  - alias: Weather_Daily_1
-    description: Weather Daily
-    tags: []
-    extra: {}
-    syncType: pull
-    type: s3-csv
-    dataSetUrn: urn:dv:dataset:218e32e9-aa80-459d-8308-d78af89421b6
+  - alias: Secondary_Sales_Cost_Testing_1
+    isDynamic: true
+    dataProductUrn: urn:dv:dataproduct:7bb3e3a9-972d-4115-8310-fd3bf7059ee6
+    projection: ""
     filter: ""
-    projection: []
-    persistDataFrame: false
-    entity:
+    warehousePath: "***s3StateBucket***"
+    type: readDataIceberg
+    catalogName: glue
+    optional:
+      persistDataFrame: false
       advanceOptions:
-        mergeSchema: false
+        endPoint: s3.undefined.amazonaws.com
+        accessKey: abc
+        secretKey: abc
+      dataProductUrn: urn:dv:dataproduct:7bb3e3a9-972d-4115-8310-fd3bf7059ee6
+    tableName: select * from
+      glue.***catalogReference***.`7bb3e3a9-972d-4115-8310-fd3bf7059ee6`
 productState:
-  persistDataFrame: false
-  enableDataReconciliation: false
-  enforceSchema: false
-  stepName: State Management
-  connection: MSIL_Redshift_Connection
-  query: select * from weather_lr_test
-  endPoint: s3.ap-south-1.amazonaws.com
-  temporaryPathS3: s3://dlp-platform-engine-bucket/data/weather_lr
-  type: readRedshiftTableByQuery
-  isStateManagement: true
-  sequence: 3
-  alias: State_Management
-  refreshInterval: 0 12 * * *
+  isDynamic: true
+  alias: step_to_write
   retentionVersions: ""
   logicalSchema:
     properties:
-      Actual:
+      pk_id:
         type: STRING
         description: ""
-      Predicted:
+      granularity:
         type: STRING
         description: ""
-  enforceSchemaMethod: ""
-  isProfilingEnabled: true
+      rowid:
+        type: STRING
+        description: ""
+      formatting:
+        type: STRING
+        description: ""
+      createddate:
+        type: STRING
+        description: ""
+      modifieddate:
+        type: STRING
+        description: ""
+      createdby:
+        type: STRING
+        description: ""
+      modifiedby:
+        type: STRING
+        description: ""
+      createdip:
+        type: STRING
+        description: ""
+      modifiedip:
+        type: STRING
+        description: ""
+      region:
+        type: STRING
+        description: ""
+      zsmcode:
+        type: STRING
+        description: ""
+      zsmname:
+        type: STRING
+        description: ""
+      ahcode:
+        type: STRING
+        description: ""
+      ahname:
+        type: STRING
+        description: ""
+      asmcode:
+        type: STRING
+        description: ""
+      asmname:
+        type: STRING
+        description: ""
+      socode:
+        type: STRING
+        description: ""
+      soname:
+        type: STRING
+        description: ""
+      statename:
+        type: STRING
+        description: ""
+      town:
+        type: STRING
+        description: ""
+      stockistcode:
+        type: STRING
+        description: ""
+      stockistname:
+        type: STRING
+        description: ""
+      stockisttype:
+        type: STRING
+        description: ""
+      ssmcode:
+        type: STRING
+        description: ""
+      ssmname:
+        type: STRING
+        description: ""
+      ssmclass:
+        type: STRING
+        description: ""
+      ssmsubclass:
+        type: STRING
+        description: ""
+      ssmcompcode:
+        type: STRING
+        description: ""
+      ssmstatus:
+        type: STRING
+        description: ""
+      retailerid:
+        type: STRING
+        description: ""
+      retailercode:
+        type: STRING
+        description: ""
+      retailername:
+        type: STRING
+        description: ""
+      nature_of_business:
+        type: STRING
+        description: ""
+      type_of_outlet:
+        type: STRING
+        description: ""
+      outlet_class:
+        type: STRING
+        description: ""
+      rtrcmpcode:
+        type: STRING
+        description: ""
+      reachcode:
+        type: STRING
+        description: ""
+      giscode:
+        type: STRING
+        description: ""
+      gsttinnumber:
+        type: STRING
+        description: ""
+      year:
+        type: STRING
+        description: ""
+      month:
+        type: STRING
+        description: ""
+      billno:
+        type: STRING
+        description: ""
+      billdate:
+        type: DATETIME
+        description: ""
+      bgcode:
+        type: STRING
+        description: ""
+      bgname:
+        type: STRING
+        description: ""
+      categoryid:
+        type: STRING
+        description: ""
+      categorycode:
+        type: STRING
+        description: ""
+      category:
+        type: STRING
+        description: ""
+      asbrandid:
+        type: STRING
+        description: ""
+      brandcode:
+        type: STRING
+        description: ""
+      brand:
+        type: STRING
+        description: ""
+      variantid:
+        type: STRING
+        description: ""
+      variantcode:
+        type: STRING
+        description: ""
+      variant:
+        type: STRING
+        description: ""
+      skuid:
+        type: STRING
+        description: ""
+      skucode:
+        type: STRING
+        description: ""
+      sku:
+        type: STRING
+        description: ""
+      productid:
+        type: STRING
+        description: ""
+      productcode:
+        type: STRING
+        description: ""
+      productname:
+        type: STRING
+        description: ""
+      batchno:
+        type: STRING
+        description: ""
+      productupc:
+        type: STRING
+        description: ""
+      drishtiorderno:
+        type: STRING
+        description: ""
+      pono:
+        type: STRING
+        description: ""
+      podate:
+        type: DATETIME
+        description: ""
+      sfaorderno:
+        type: STRING
+        description: ""
+      sfaordate:
+        type: DATETIME
+        description: ""
+      sfalat:
+        type: STRING
+        description: ""
+      sfalng:
+        type: STRING
+        description: ""
+      starttime:
+        type: STRING
+        description: ""
+      endtime:
+        type: STRING
+        description: ""
+      pcs:
+        type: STRING
+        description: ""
+      cases:
+        type: STRING
+        description: ""
+      value_ptr:
+        type: STRING
+        description: ""
+      salesvalue:
+        type: STRING
+        description: ""
+      value_pts:
+        type: STRING
+        description: ""
+      newproduct:
+        type: STRING
+        description: ""
+      test:
+        type: STRING
+        description: ""
+      state:
+        type: STRING
+        description: ""
+      district:
+        type: STRING
+        description: ""
+      focusbrand:
+        type: STRING
+        description: ""
+      design:
+        type: STRING
+        description: ""
+      bucode:
+        type: STRING
+        description: ""
+      buname:
+        type: STRING
+        description: ""
+  stateStoreType: loadDataIceberg
+  isProfilingEnabled: false
+  updateStrategy: Overwrite
+  tableName: s3source.sales_duplicate
+  warehousePath: s3://cost-testing-s3/
+  catalogName: glue
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: true
+    enforceSchemaMethod: Warning
+    catalogType: glue
+  refreshInterval: 0 12 * * *
 transformation:
-  - alias: EMR_PySpark_1
-    arguments:
-      - s3://dlp-platform-engine-bucket/weather_data/##process_date##.csv
-    pythonFilePath: s3://dlp-platform-engine-bucket/custom-job/script/ParquetToRedshift.py
-    optional:
-      pythonEnvTarGZPath: s3://dlp-platform-engine-bucket/custom-job/python-env/pyspark_venv_all.tar.gz
-    type: customPySparkEMRServerless
-    sequence: 2
+  - alias: Spark_SQL_1
+    type: SQL
+    description: sql 3
+    query: select * from temp
+    sequenceNo: 2
     references:
-      - alias: Weather_Daily_1
-        sqlReference: ""
+      - alias: Secondary_Sales_Cost_Testing_1
+        sqlReference: temp
 controlPort:
-  dataQualityRules:
-    RecordCountCheck:
-      productState:
-        expression: ">="
-        number: 1
-        referenceAlias: State_Management
+  dataQualityRules: {}
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
