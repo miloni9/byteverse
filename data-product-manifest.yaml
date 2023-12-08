@@ -1,8 +1,8 @@
-version: 0.0.1
+version: 0.0.2
 jobId: "197"
 jobName: Secondary Sales Cost Testing
 jobType: Source Aligned Data Product
-alias: Load_all_data
+alias: Load_all_data_for_sale
 discoveryPort:
   name: Secondary Sales Cost Testing
 inputPorts:
@@ -19,7 +19,7 @@ inputPorts:
     type: inputParquet
 productState:
   isDynamic: true
-  alias: Load_all_data
+  alias: Load_all_data_for_sale
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -311,7 +311,7 @@ controlPort:
           - column: statename
             expression: ==
             number: 1
-        referenceAlias: Load_all_data
+        referenceAlias: Load_all_data_for_sale
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
