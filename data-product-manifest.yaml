@@ -1,150 +1,317 @@
-version: 0.0.9
-jobId: "195"
-jobName: Join test Iceberg Delta Miloni
+version: 0.0.1
+jobId: "197"
+jobName: Secondary Sales Cost Testing
 jobType: Source Aligned Data Product
-alias: s3tep
+alias: Load_all_data
 discoveryPort:
-  name: Join test Iceberg Delta Miloni
+  name: Secondary Sales Cost Testing
 inputPorts:
-  - alias: delta_test_1
+  - alias: Secondary_Sales_1
     isDynamic: true
-    tableLocation: s3://byte-etl-spark-testcase-temp/delta/sample_delta_test3
+    path: s3://bp-spark-sql-library-test-acc/secondary_sales_parquet/
     optional:
       persistDataFrame: false
+      advanceOptions:
+        mergeSchema: true
       enableDataReconciliation: false
       enforceSchema: false
-      connection: delta
-      dataSetUrn: urn:dv:dataset:416fb77d-fb1a-4c54-ac56-b92772eb5192
-    type: readDeltaTable
-  - alias: iceberg_1
-    isDynamic: true
-    tableName: s3source.weather_123_3212
-    warehousePath: s3://bp-spark-sql-library-test-acc/
-    catalogName: glue
-    optional:
-      persistDataFrame: false
-      catalogType: glue
-      enforceSchema: false
-      connection: iceberg
-      dataSetUrn: urn:dv:dataset:9e94c0ac-5d8c-45c4-8ba5-2dcdaad2fa77
-    type: readDataIceberg
+      dataSetUrn: urn:dv:dataset:5a075ca4-46b2-4988-ba1b-16c0cdf30f4f
+    type: inputParquet
 productState:
   isDynamic: true
-  alias: s3tep
+  alias: Load_all_data
   retentionVersions: ""
   logicalSchema:
     properties:
-      city:
+      pk_id:
+        type: STRING
+        description: ""
+      granularity:
+        type: STRING
+        description: ""
+      rowid:
+        type: STRING
+        description: ""
+      formatting:
+        type: STRING
+        description: ""
+      createddate:
+        type: STRING
+        description: ""
+      modifieddate:
+        type: STRING
+        description: ""
+      createdby:
+        type: STRING
+        description: ""
+      modifiedby:
+        type: STRING
+        description: ""
+      createdip:
+        type: STRING
+        description: ""
+      modifiedip:
         type: STRING
         description: ""
       region:
         type: STRING
         description: ""
-      country:
+      zsmcode:
         type: STRING
         description: ""
-      lat:
+      zsmname:
         type: STRING
         description: ""
-      lon:
+      ahcode:
         type: STRING
         description: ""
-      tz_id:
+      ahname:
         type: STRING
         description: ""
-      localtime:
+      asmcode:
         type: STRING
         description: ""
-      cloud:
+      asmname:
         type: STRING
         description: ""
-      feelslike_c:
+      socode:
         type: STRING
         description: ""
-      feelslike_f:
+      soname:
         type: STRING
         description: ""
-      gust_kph:
+      statename:
         type: STRING
         description: ""
-      gust_mph:
+      town:
         type: STRING
         description: ""
-      humidity:
+      stockistcode:
         type: STRING
         description: ""
-      is_day:
+      stockistname:
         type: STRING
         description: ""
-      last_updated:
+      stockisttype:
         type: STRING
         description: ""
-      last_updated_epoch:
+      ssmcode:
         type: STRING
         description: ""
-      precip_in:
+      ssmname:
         type: STRING
         description: ""
-      precip_mm:
+      ssmclass:
         type: STRING
         description: ""
-      pressure_in:
+      ssmsubclass:
         type: STRING
         description: ""
-      pressure_mb:
+      ssmcompcode:
         type: STRING
         description: ""
-      temp_c:
+      ssmstatus:
         type: STRING
         description: ""
-      temp_f:
+      retailerid:
         type: STRING
         description: ""
-      uv:
+      retailercode:
         type: STRING
         description: ""
-      vis_km:
+      retailername:
         type: STRING
         description: ""
-      vis_miles:
+      nature_of_business:
         type: STRING
         description: ""
-      wind_degree:
+      type_of_outlet:
         type: STRING
         description: ""
-      wind_dir:
+      outlet_class:
         type: STRING
         description: ""
-      wind_kph:
+      rtrcmpcode:
         type: STRING
         description: ""
-      wind_mph:
+      reachcode:
         type: STRING
         description: ""
-  stateStoreType: writeDataFrameToDeltaTable
+      giscode:
+        type: STRING
+        description: ""
+      gsttinnumber:
+        type: STRING
+        description: ""
+      year:
+        type: STRING
+        description: ""
+      month:
+        type: STRING
+        description: ""
+      billno:
+        type: STRING
+        description: ""
+      billdate:
+        type: DATETIME
+        description: ""
+      bgcode:
+        type: STRING
+        description: ""
+      bgname:
+        type: STRING
+        description: ""
+      categoryid:
+        type: STRING
+        description: ""
+      categorycode:
+        type: STRING
+        description: ""
+      category:
+        type: STRING
+        description: ""
+      asbrandid:
+        type: STRING
+        description: ""
+      brandcode:
+        type: STRING
+        description: ""
+      brand:
+        type: STRING
+        description: ""
+      variantid:
+        type: STRING
+        description: ""
+      variantcode:
+        type: STRING
+        description: ""
+      variant:
+        type: STRING
+        description: ""
+      skuid:
+        type: STRING
+        description: ""
+      skucode:
+        type: STRING
+        description: ""
+      sku:
+        type: STRING
+        description: ""
+      productid:
+        type: STRING
+        description: ""
+      productcode:
+        type: STRING
+        description: ""
+      productname:
+        type: STRING
+        description: ""
+      batchno:
+        type: STRING
+        description: ""
+      productupc:
+        type: STRING
+        description: ""
+      drishtiorderno:
+        type: STRING
+        description: ""
+      pono:
+        type: STRING
+        description: ""
+      podate:
+        type: DATETIME
+        description: ""
+      sfaorderno:
+        type: STRING
+        description: ""
+      sfaordate:
+        type: DATETIME
+        description: ""
+      sfalat:
+        type: STRING
+        description: ""
+      sfalng:
+        type: STRING
+        description: ""
+      starttime:
+        type: STRING
+        description: ""
+      endtime:
+        type: STRING
+        description: ""
+      pcs:
+        type: STRING
+        description: ""
+      cases:
+        type: STRING
+        description: ""
+      value_ptr:
+        type: STRING
+        description: ""
+      salesvalue:
+        type: STRING
+        description: ""
+      value_pts:
+        type: STRING
+        description: ""
+      newproduct:
+        type: STRING
+        description: ""
+      test:
+        type: STRING
+        description: ""
+      state:
+        type: STRING
+        description: ""
+      district:
+        type: STRING
+        description: ""
+      focusbrand:
+        type: STRING
+        description: ""
+      design:
+        type: STRING
+        description: ""
+      bucode:
+        type: STRING
+        description: ""
+      buname:
+        type: STRING
+        description: ""
+  stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableWritePath: s3://byte-etl-spark-testcase-temp/delta/sample_delta_test4
+  tableName: s3source.secondary_sales_cost_testing
+  warehousePath: s3://cost-testing-s3
+  catalogName: s3Source
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
     enforceSchema: false
-  refreshInterval: 0 0 30 2 *
+    enforceSchemaMethod: Warning
+    catalogType: glue
+  refreshInterval: 0 10 * * *
 transformation:
   - alias: Spark_SQL_1
     type: SQL
-    description: sql 2
-    query: select
-      d.city,  d.region,  d.country,  d.lat,  d.lon,  d.tz_id,  d.localtime,  d.cloud,  d.feelslike_c,  d.feelslike_f,  d.gust_kph,  d.gust_mph,  d.humidity,  d.is_day,  d.last_updated,  d.last_updated_epoch,  d.precip_in,  d.precip_mm,  d.pressure_in,  d.pressure_mb,  d.temp_c,  d.temp_f,  d.uv,  d.vis_km,  d.vis_miles,  d.wind_degree,  d.wind_dir,  d.wind_kph,  d.wind_mph
-      from delta d left join iceberg i on i.tz_id=d.tz_id
-    sequenceNo: 3
+    description: Read all data
+    query: select * from secondary_sales
+    sequenceNo: 2
     references:
-      - alias: delta_test_1
-        sqlReference: delta
-      - alias: iceberg_1
-        sqlReference: iceberg
+      - alias: Secondary_Sales_1
+        sqlReference: secondary_sales
 controlPort:
-  dataQualityRules: {}
+  dataQualityRules:
+    NullValueCheck:
+      productState:
+        checks:
+          - column: retailername
+            expression: ==
+            number: 1
+          - column: statename
+            expression: ==
+            number: 1
+        referenceAlias: Load_all_data
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
