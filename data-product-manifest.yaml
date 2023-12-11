@@ -1,8 +1,8 @@
-version: 0.0.4
+version: 0.0.5
 jobId: "197"
 jobName: Secondary Sales Cost Testing
 jobType: Source Aligned Data Product
-alias: Load_all_data_for_sale_test
+alias: Load_all_data_for_sale_test2
 discoveryPort:
   name: Secondary Sales Cost Testing
 inputPorts:
@@ -19,7 +19,7 @@ inputPorts:
     type: inputParquet
 productState:
   isDynamic: true
-  alias: Load_all_data_for_sale_test
+  alias: Load_all_data_for_sale_test2
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -290,7 +290,7 @@ productState:
     enforceSchema: false
     enforceSchemaMethod: Warning
     catalogType: glue
-  refreshInterval: "0 12 * * * "
+  refreshInterval: 0 12 * * *
 transformation:
   - alias: Spark_SQL_1
     type: SQL
@@ -311,7 +311,7 @@ controlPort:
           - column: statename
             expression: ==
             number: 1
-        referenceAlias: Load_all_data_for_sale_test
+        referenceAlias: Load_all_data_for_sale_test2
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
