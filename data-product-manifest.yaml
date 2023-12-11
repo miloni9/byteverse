@@ -1,52 +1,317 @@
-version: 0.0.5
-jobId: "185"
-jobName: Test Connection redshift connections- Miloni
+version: 0.0.4
+jobId: "197"
+jobName: Secondary Sales Cost Testing
 jobType: Source Aligned Data Product
-alias: step_3
+alias: Load_all_data_for_sale_test
 discoveryPort:
-  name: Test Connection redshift connections- Miloni
+  name: Secondary Sales Cost Testing
 inputPorts:
-  - alias: redshift_1
+  - alias: Secondary_Sales_1
     isDynamic: true
-    connection: Redshift
-    query: public.encrypted_data_123
-    endPoint: s3.us-east-1.amazonaws.com
-    temporaryPathS3: s3://byte-etl-externaldemo/pyspark_serverless_test/temp/weather_lr
+    path: s3://bp-spark-sql-library-test-acc/secondary_sales_parquet/
     optional:
-      s3connections: S3 with User
       persistDataFrame: false
+      advanceOptions:
+        mergeSchema: true
       enableDataReconciliation: false
       enforceSchema: false
-      dataSetUrn: urn:dv:dataset:1ca7de25-0867-4777-b80e-0db2833b6f01
-    type: readRedshiftTableByQuery
+      dataSetUrn: urn:dv:dataset:5a075ca4-46b2-4988-ba1b-16c0cdf30f4f
+    type: inputParquet
 productState:
-  mergeSchema: true
-  persistDataFrame: false
-  enableDataReconciliation: false
-  enforceSchema: false
-  connection: S3 with User
-  stepName: step 3
-  path: s3://byte-etl-externaldemo/weather_data_all_parquet/
-  type: inputParquet
-  isStateManagement: true
-  sequence: 3
-  alias: step_3
-  refreshInterval: 0 12 * * *
+  isDynamic: true
+  alias: Load_all_data_for_sale_test
   retentionVersions: ""
-  logicalSchema: ""
-  enforceSchemaMethod: ""
+  logicalSchema:
+    properties:
+      pk_id:
+        type: STRING
+        description: ""
+      granularity:
+        type: STRING
+        description: ""
+      rowid:
+        type: STRING
+        description: ""
+      formatting:
+        type: STRING
+        description: ""
+      createddate:
+        type: STRING
+        description: ""
+      modifieddate:
+        type: STRING
+        description: ""
+      createdby:
+        type: STRING
+        description: ""
+      modifiedby:
+        type: STRING
+        description: ""
+      createdip:
+        type: STRING
+        description: ""
+      modifiedip:
+        type: STRING
+        description: ""
+      region:
+        type: STRING
+        description: ""
+      zsmcode:
+        type: STRING
+        description: ""
+      zsmname:
+        type: STRING
+        description: ""
+      ahcode:
+        type: STRING
+        description: ""
+      ahname:
+        type: STRING
+        description: ""
+      asmcode:
+        type: STRING
+        description: ""
+      asmname:
+        type: STRING
+        description: ""
+      socode:
+        type: STRING
+        description: ""
+      soname:
+        type: STRING
+        description: ""
+      statename:
+        type: STRING
+        description: ""
+      town:
+        type: STRING
+        description: ""
+      stockistcode:
+        type: STRING
+        description: ""
+      stockistname:
+        type: STRING
+        description: ""
+      stockisttype:
+        type: STRING
+        description: ""
+      ssmcode:
+        type: STRING
+        description: ""
+      ssmname:
+        type: STRING
+        description: ""
+      ssmclass:
+        type: STRING
+        description: ""
+      ssmsubclass:
+        type: STRING
+        description: ""
+      ssmcompcode:
+        type: STRING
+        description: ""
+      ssmstatus:
+        type: STRING
+        description: ""
+      retailerid:
+        type: STRING
+        description: ""
+      retailercode:
+        type: STRING
+        description: ""
+      retailername:
+        type: STRING
+        description: ""
+      nature_of_business:
+        type: STRING
+        description: ""
+      type_of_outlet:
+        type: STRING
+        description: ""
+      outlet_class:
+        type: STRING
+        description: ""
+      rtrcmpcode:
+        type: STRING
+        description: ""
+      reachcode:
+        type: STRING
+        description: ""
+      giscode:
+        type: STRING
+        description: ""
+      gsttinnumber:
+        type: STRING
+        description: ""
+      year:
+        type: STRING
+        description: ""
+      month:
+        type: STRING
+        description: ""
+      billno:
+        type: STRING
+        description: ""
+      billdate:
+        type: DATETIME
+        description: ""
+      bgcode:
+        type: STRING
+        description: ""
+      bgname:
+        type: STRING
+        description: ""
+      categoryid:
+        type: STRING
+        description: ""
+      categorycode:
+        type: STRING
+        description: ""
+      category:
+        type: STRING
+        description: ""
+      asbrandid:
+        type: STRING
+        description: ""
+      brandcode:
+        type: STRING
+        description: ""
+      brand:
+        type: STRING
+        description: ""
+      variantid:
+        type: STRING
+        description: ""
+      variantcode:
+        type: STRING
+        description: ""
+      variant:
+        type: STRING
+        description: ""
+      skuid:
+        type: STRING
+        description: ""
+      skucode:
+        type: STRING
+        description: ""
+      sku:
+        type: STRING
+        description: ""
+      productid:
+        type: STRING
+        description: ""
+      productcode:
+        type: STRING
+        description: ""
+      productname:
+        type: STRING
+        description: ""
+      batchno:
+        type: STRING
+        description: ""
+      productupc:
+        type: STRING
+        description: ""
+      drishtiorderno:
+        type: STRING
+        description: ""
+      pono:
+        type: STRING
+        description: ""
+      podate:
+        type: DATETIME
+        description: ""
+      sfaorderno:
+        type: STRING
+        description: ""
+      sfaordate:
+        type: DATETIME
+        description: ""
+      sfalat:
+        type: STRING
+        description: ""
+      sfalng:
+        type: STRING
+        description: ""
+      starttime:
+        type: STRING
+        description: ""
+      endtime:
+        type: STRING
+        description: ""
+      pcs:
+        type: STRING
+        description: ""
+      cases:
+        type: STRING
+        description: ""
+      value_ptr:
+        type: STRING
+        description: ""
+      salesvalue:
+        type: STRING
+        description: ""
+      value_pts:
+        type: STRING
+        description: ""
+      newproduct:
+        type: STRING
+        description: ""
+      test:
+        type: STRING
+        description: ""
+      state:
+        type: STRING
+        description: ""
+      district:
+        type: STRING
+        description: ""
+      focusbrand:
+        type: STRING
+        description: ""
+      design:
+        type: STRING
+        description: ""
+      bucode:
+        type: STRING
+        description: ""
+      buname:
+        type: STRING
+        description: ""
+  stateStoreType: loadDataIceberg
   isProfilingEnabled: false
+  updateStrategy: Overwrite
+  tableName: s3source.secondary_sales_cost_testing
+  warehousePath: s3://cost-testing-s3
+  catalogName: s3Source
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: false
+    enforceSchemaMethod: Warning
+    catalogType: glue
+  refreshInterval: "0 12 * * * "
 transformation:
   - alias: Spark_SQL_1
     type: SQL
-    description: step name
-    query: select * from temp
+    description: Read all data
+    query: select * from secondary_sales
     sequenceNo: 2
     references:
-      - alias: redshift_1
-        sqlReference: temp
+      - alias: Secondary_Sales_1
+        sqlReference: secondary_sales
 controlPort:
-  dataQualityRules: {}
+  dataQualityRules:
+    NullValueCheck:
+      productState:
+        checks:
+          - column: retailername
+            expression: ==
+            number: 1
+          - column: statename
+            expression: ==
+            number: 1
+        referenceAlias: Load_all_data_for_sale_test
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
