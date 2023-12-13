@@ -1,8 +1,8 @@
-version: 0.0.3
+version: 0.0.4
 jobId: "203"
 jobName: Delta Read SADP
 jobType: Source Aligned Data Product
-alias: write_to_ice
+alias: write_to_iceb
 discoveryPort:
   name: Delta Read SADP
 inputPorts:
@@ -20,7 +20,7 @@ inputPorts:
     type: readDeltaTable
 productState:
   isDynamic: true
-  alias: write_to_ice
+  alias: write_to_iceb
   retentionVersions: ""
   logicalSchema:
     properties:
