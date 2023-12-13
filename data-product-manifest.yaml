@@ -1,4 +1,4 @@
-version: 0.0.6
+version: 0.0.7
 jobId: "203"
 jobName: Delta Read SADP
 jobType: Source Aligned Data Product
@@ -6,13 +6,13 @@ alias: write_to_iceb
 discoveryPort:
   name: Delta Read SADP
 inputPorts:
-  - alias: Delta_Read_New_2
+  - alias: Delta_Read_New_1
     isDynamic: true
     tableLocation: s3://byte-etl-spark-testcase-temp/delta/incremental_delta_write
     optional:
       persistDataFrame: false
       readDeltaOptions:
-        startingTimestamp: 2023-12-13 00:00:00
+        startingTimestamp: "##process_day##"
       enableDataReconciliation: false
       enforceSchema: false
       connection: delta
@@ -131,8 +131,8 @@ transformation:
     query: select * from temp
     sequenceNo: 2
     references:
-      - alias: Delta_Read_New_2
-        sqlReference: temp
+      - alias: Delta_Read_New_1
+        sqlReference: ""
 controlPort:
   dataQualityRules: {}
 outputPort:
