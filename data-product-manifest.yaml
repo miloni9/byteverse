@@ -1,4 +1,4 @@
-version: 0.0.2
+version: 0.0.3
 jobId: "203"
 jobName: Delta Read SADP
 jobType: Source Aligned Data Product
@@ -22,7 +22,95 @@ productState:
   isDynamic: true
   alias: write_to_ice
   retentionVersions: ""
-  logicalSchema: ""
+  logicalSchema:
+    properties:
+      city:
+        type: STRING
+        description: ""
+      region:
+        type: STRING
+        description: ""
+      country:
+        type: STRING
+        description: ""
+      lat:
+        type: STRING
+        description: ""
+      lon:
+        type: STRING
+        description: ""
+      tz_id:
+        type: STRING
+        description: ""
+      localtime:
+        type: STRING
+        description: ""
+      cloud:
+        type: STRING
+        description: ""
+      feelslike_c:
+        type: STRING
+        description: ""
+      feelslike_f:
+        type: STRING
+        description: ""
+      gust_kph:
+        type: STRING
+        description: ""
+      gust_mph:
+        type: STRING
+        description: ""
+      humidity:
+        type: STRING
+        description: ""
+      is_day:
+        type: STRING
+        description: ""
+      last_updated:
+        type: STRING
+        description: ""
+      last_updated_epoch:
+        type: STRING
+        description: ""
+      precip_in:
+        type: STRING
+        description: ""
+      precip_mm:
+        type: STRING
+        description: ""
+      pressure_in:
+        type: STRING
+        description: ""
+      pressure_mb:
+        type: STRING
+        description: ""
+      temp_c:
+        type: STRING
+        description: ""
+      temp_f:
+        type: STRING
+        description: ""
+      uv:
+        type: STRING
+        description: ""
+      vis_km:
+        type: STRING
+        description: ""
+      vis_miles:
+        type: STRING
+        description: ""
+      wind_degree:
+        type: STRING
+        description: ""
+      wind_dir:
+        type: STRING
+        description: ""
+      wind_kph:
+        type: STRING
+        description: ""
+      wind_mph:
+        type: STRING
+        description: ""
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
