@@ -1,4 +1,4 @@
-version: 0.0.5
+version: 0.0.6
 jobId: "203"
 jobName: Delta Read SADP
 jobType: Source Aligned Data Product
@@ -132,7 +132,7 @@ transformation:
     sequenceNo: 2
     references:
       - alias: Delta_Read_New_2
-        sqlReference: ""
+        sqlReference: temp
 controlPort:
   dataQualityRules: {}
 outputPort:
