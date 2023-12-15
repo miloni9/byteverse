@@ -1,10 +1,10 @@
-version: 0.0.1
+version: 0.0.2
 jobId: "212"
-jobName: sadp and adp to adp - miloni
+jobName: sadp to adp - miloni
 jobType: Aggregated Data Product
 alias: step_3_adp
 discoveryPort:
-  name: sadp and adp to adp - miloni
+  name: sadp to adp - miloni
 inputPorts:
   - alias: weather_sadp_-_miloni_1
     isDynamic: true
