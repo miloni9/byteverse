@@ -1,10 +1,10 @@
-version: 0.0.4
-jobId: "215"
-jobName: ADP to ADP different domain - miloni
+version: 0.0.1
+jobId: "216"
+jobName: adp to adp - miloni
 jobType: Aggregated Data Product
-alias: step_4_
+alias: step_3_ice_sadp
 discoveryPort:
-  name: ADP to ADP different domain - miloni
+  name: adp to adp - miloni
 inputPorts:
   - alias: sadp_to_adp_-_miloni_1
     isDynamic: true
@@ -22,25 +22,9 @@ inputPorts:
         secretKey: abc
       dataProductUrn: urn:dv:dataproduct:3ff3fae9-3041-439b-b553-cb985481ee10
     tableName: select * from glue.***catalogReference***.s3Source.sadp_weather
-  - alias: SADP_to_SADP_Sale_to_operation_1
-    isDynamic: true
-    dataProductUrn: urn:dv:dataproduct:da1c8de3-1330-4441-83d8-2ef3ef4944f0
-    projection: ""
-    filter: ""
-    warehousePath: "***s3StateBucket***"
-    type: readDataIceberg
-    catalogName: glue
-    optional:
-      persistDataFrame: false
-      advanceOptions:
-        endPoint: s3.undefined.amazonaws.com
-        accessKey: abc
-        secretKey: abc
-      dataProductUrn: urn:dv:dataproduct:da1c8de3-1330-4441-83d8-2ef3ef4944f0
-    tableName: select * from glue.***catalogReference***.s3Source.delta_sadp_2
 productState:
   isDynamic: true
-  alias: step_4_
+  alias: step_3_ice_sadp
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -134,7 +118,7 @@ productState:
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: s3Source.adp_sadp_operation
+  tableName: s3Source.sadp_adp_weather
   warehousePath: s3://bp-spark-sql-library-test-acc/
   catalogName: glue
   optional:
@@ -147,13 +131,11 @@ productState:
 transformation:
   - alias: Spark_SQL_1
     type: SQL
-    description: step 3
-    query: select * from adp
-    sequenceNo: 3
+    description: sadp step 2
+    query: select * from sadp
+    sequenceNo: 2
     references:
       - alias: sadp_to_adp_-_miloni_1
-        sqlReference: adp
-      - alias: SADP_to_SADP_Sale_to_operation_1
         sqlReference: sadp
 controlPort:
   dataQualityRules: {}
