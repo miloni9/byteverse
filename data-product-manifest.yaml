@@ -1,8 +1,8 @@
-version: 0.0.3
+version: 0.0.4
 jobId: "215"
 jobName: ADP to ADP different domain - miloni
 jobType: Aggregated Data Product
-alias: ""
+alias: step_4_
 discoveryPort:
   name: ADP to ADP different domain - miloni
 inputPorts:
@@ -40,21 +40,110 @@ inputPorts:
     tableName: select * from glue.***catalogReference***.s3Source.delta_sadp_2
 productState:
   isDynamic: true
-  alias: ""
+  alias: step_4_
   retentionVersions: ""
-  logicalSchema: ""
+  logicalSchema:
+    properties:
+      City:
+        type: STRING
+        description: ""
+      Region:
+        type: STRING
+        description: ""
+      Country:
+        type: STRING
+        description: ""
+      Latitude:
+        type: STRING
+        description: ""
+      Longitude:
+        type: STRING
+        description: ""
+      Timezone:
+        type: STRING
+        description: ""
+      Local Time:
+        type: STRING
+        description: ""
+      Cloud ID:
+        type: STRING
+        description: ""
+      Feels like Celcius:
+        type: STRING
+        description: ""
+      Feels like fahrenheit:
+        type: STRING
+        description: ""
+      Gust speed in kph:
+        type: STRING
+        description: ""
+      Gust speed in mph:
+        type: STRING
+        description: ""
+      Humidity:
+        type: STRING
+        description: ""
+      Is day time?:
+        type: STRING
+        description: ""
+      Last update:
+        type: STRING
+        description: ""
+      Last updated time in epoch:
+        type: STRING
+        description: ""
+      Precipitation in inch:
+        type: STRING
+        description: ""
+      Precipitation in mm:
+        type: STRING
+        description: ""
+      Pressure:
+        type: STRING
+        description: ""
+      Precipitation in mb:
+        type: STRING
+        description: ""
+      Temperature in celcius:
+        type: STRING
+        description: ""
+      Temperature in fahrenheit:
+        type: STRING
+        description: ""
+      UV:
+        type: STRING
+        description: ""
+      Visibility in km:
+        type: STRING
+        description: ""
+      Visibility in miles:
+        type: STRING
+        description: ""
+      Wind Degree:
+        type: STRING
+        description: ""
+      Wind Direction:
+        type: STRING
+        description: ""
+      Wind in kph:
+        type: STRING
+        description: ""
+      Wind in mph:
+        type: STRING
+        description: ""
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
-  tableName: ""
-  warehousePath: ""
-  catalogName: ""
+  updateStrategy: Overwrite
+  tableName: s3Source.adp_sadp_operation
+  warehousePath: s3://bp-spark-sql-library-test-acc/
+  catalogName: glue
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
     enforceSchema: true
     enforceSchemaMethod: Warning
     catalogType: glue
-  refreshInterval: 0 0 30 6 *
+  refreshInterval: 0 0 30 2 *
 transformation:
   - alias: Spark_SQL_1
     type: SQL
