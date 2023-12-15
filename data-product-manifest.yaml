@@ -1,138 +1,54 @@
-version: 0.0.7
-jobId: "203"
-jobName: Delta Read SADP
+version: 0.0.4
+jobId: "208"
+jobName: SADP to SADP Sale to operation
 jobType: Source Aligned Data Product
-alias: write_to_iceb
+alias: step_3
 discoveryPort:
-  name: Delta Read SADP
+  name: SADP to SADP Sale to operation
 inputPorts:
-  - alias: Delta_Read_New_1
+  - alias: Test_Connection_-_with_Iceberg_2_-_Miloni_1
     isDynamic: true
-    tableLocation: s3://byte-etl-spark-testcase-temp/delta/incremental_delta_write
+    dataProductUrn: urn:dv:dataproduct:d4e755ac-acae-4d10-a4cf-09472205afac
+    projection: ""
+    filter: ""
+    warehousePath: "***s3StateBucket***"
+    type: readDataIceberg
+    catalogName: glue
     optional:
       persistDataFrame: false
-      readDeltaOptions:
-        startingTimestamp: "##process_day##"
-      enableDataReconciliation: false
-      enforceSchema: false
-      connection: delta
-      dataSetUrn: urn:dv:dataset:64aff34a-087f-4a32-bbfa-6d8a501f3c1a
-    type: readDeltaTable
+      advanceOptions:
+        endPoint: s3.undefined.amazonaws.com
+        accessKey: abc
+        secretKey: abc
+      dataProductUrn: urn:dv:dataproduct:d4e755ac-acae-4d10-a4cf-09472205afac
+    tableName: select * from glue.***catalogReference***.s3source.weather_123_3212
 productState:
   isDynamic: true
-  alias: write_to_iceb
+  alias: step_3
   retentionVersions: ""
-  logicalSchema:
-    properties:
-      city:
-        type: STRING
-        description: ""
-      region:
-        type: STRING
-        description: ""
-      country:
-        type: STRING
-        description: ""
-      lat:
-        type: STRING
-        description: ""
-      lon:
-        type: STRING
-        description: ""
-      tz_id:
-        type: STRING
-        description: ""
-      localtime:
-        type: STRING
-        description: ""
-      cloud:
-        type: STRING
-        description: ""
-      feelslike_c:
-        type: STRING
-        description: ""
-      feelslike_f:
-        type: STRING
-        description: ""
-      gust_kph:
-        type: STRING
-        description: ""
-      gust_mph:
-        type: STRING
-        description: ""
-      humidity:
-        type: STRING
-        description: ""
-      is_day:
-        type: STRING
-        description: ""
-      last_updated:
-        type: STRING
-        description: ""
-      last_updated_epoch:
-        type: STRING
-        description: ""
-      precip_in:
-        type: STRING
-        description: ""
-      precip_mm:
-        type: STRING
-        description: ""
-      pressure_in:
-        type: STRING
-        description: ""
-      pressure_mb:
-        type: STRING
-        description: ""
-      temp_c:
-        type: STRING
-        description: ""
-      temp_f:
-        type: STRING
-        description: ""
-      uv:
-        type: STRING
-        description: ""
-      vis_km:
-        type: STRING
-        description: ""
-      vis_miles:
-        type: STRING
-        description: ""
-      wind_degree:
-        type: STRING
-        description: ""
-      wind_dir:
-        type: STRING
-        description: ""
-      wind_kph:
-        type: STRING
-        description: ""
-      wind_mph:
-        type: STRING
-        description: ""
+  logicalSchema: ""
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: s3source.ice_weather
-  warehousePath: s3://byte-etl-externaldemo/weather_test_delta_ice/
-  catalogName: s3source
+  tableName: s3Source.delta_sadp_2
+  warehousePath: s3://byte-etl-externaldemo/sadp_delta_ice/
+  catalogName: glue
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
     enforceSchema: false
     enforceSchemaMethod: Warning
     catalogType: glue
-  refreshInterval: None
+  refreshInterval: 0 0 30 2 *
 transformation:
   - alias: Spark_SQL_1
     type: SQL
-    description: sql delta
-    query: select * from temp
+    description: "step 2 "
+    query: select * from sadp
     sequenceNo: 2
     references:
-      - alias: Delta_Read_New_1
-        sqlReference: ""
+      - alias: Test_Connection_-_with_Iceberg_2_-_Miloni_1
+        sqlReference: sadp
 controlPort:
   dataQualityRules: {}
 outputPort:
