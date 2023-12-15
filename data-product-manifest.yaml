@@ -1,8 +1,8 @@
-version: 0.0.1
+version: 0.0.2
 jobId: "216"
 jobName: adp to adp - miloni
 jobType: Aggregated Data Product
-alias: step_3_ice_sadp
+alias: step_3_ice_adp
 discoveryPort:
   name: adp to adp - miloni
 inputPorts:
@@ -24,7 +24,7 @@ inputPorts:
     tableName: select * from glue.***catalogReference***.s3Source.sadp_weather
 productState:
   isDynamic: true
-  alias: step_3_ice_sadp
+  alias: step_3_ice_adp
   retentionVersions: ""
   logicalSchema:
     properties:
