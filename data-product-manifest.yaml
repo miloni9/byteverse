@@ -1,4 +1,4 @@
-version: 0.0.6
+version: 0.0.7
 jobId: "208"
 jobName: SADP to SADP Sale to operation
 jobType: Source Aligned Data Product
@@ -127,7 +127,7 @@ productState:
     enforceSchema: false
     enforceSchemaMethod: Warning
     catalogType: glue
-  refreshInterval: 0 0 30 2 *
+  refreshInterval: None
 transformation:
   - alias: Spark_SQL_1
     type: SQL
