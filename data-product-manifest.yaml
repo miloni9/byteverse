@@ -1,10 +1,10 @@
-version: 0.0.2
-jobId: "210"
-jobName: ADP with SADP -Miloni
+version: 0.0.1
+jobId: "211"
+jobName: weather sadp - miloni
 jobType: Source Aligned Data Product
-alias: step_3_to_adp
+alias: step_3_ice_sadp
 discoveryPort:
-  name: ADP with SADP -Miloni
+  name: weather sadp - miloni
 inputPorts:
   - alias: Weather_API_Daily_1
     isDynamic: true
@@ -24,7 +24,7 @@ inputPorts:
     tableName: select * from glue.***catalogReference***.weather_daily
 productState:
   isDynamic: true
-  alias: step_3_to_adp
+  alias: step_3_ice_sadp
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -118,8 +118,8 @@ productState:
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: s3Source.adp_weather
-  warehousePath: s3://bp-spark-sql-library-test-acc/adp
+  tableName: s3Source.weather_sadp
+  warehousePath: s3://bp-spark-sql-library-test-acc/
   catalogName: glue
   optional:
     persistDataFrame: false
@@ -127,7 +127,7 @@ productState:
     enforceSchema: true
     enforceSchemaMethod: Warning
     catalogType: glue
-  refreshInterval: 0 0 30 2 *
+  refreshInterval: 0 0 20 3 *
 transformation:
   - alias: Spark_SQL_1
     type: SQL
