@@ -1,14 +1,14 @@
-version: 0.0.5
-jobId: "208"
-jobName: SADP to SADP Sale to operation
+version: 0.0.2
+jobId: "210"
+jobName: ADP with SADP -Miloni
 jobType: Source Aligned Data Product
-alias: step_3
+alias: step_3_to_adp
 discoveryPort:
-  name: SADP to SADP Sale to operation
+  name: ADP with SADP -Miloni
 inputPorts:
-  - alias: Test_Connection_-_with_Iceberg_2_-_Miloni_1
+  - alias: Weather_API_Daily_1
     isDynamic: true
-    dataProductUrn: urn:dv:dataproduct:d4e755ac-acae-4d10-a4cf-09472205afac
+    dataProductUrn: urn:dv:dataproduct:75836ba4-cce4-4d25-bc3d-cb96d397f7f4
     projection: ""
     filter: ""
     warehousePath: "***s3StateBucket***"
@@ -20,11 +20,11 @@ inputPorts:
         endPoint: s3.undefined.amazonaws.com
         accessKey: abc
         secretKey: abc
-      dataProductUrn: urn:dv:dataproduct:d4e755ac-acae-4d10-a4cf-09472205afac
-    tableName: select * from glue.***catalogReference***.s3source.weather_123_3212
+      dataProductUrn: urn:dv:dataproduct:75836ba4-cce4-4d25-bc3d-cb96d397f7f4
+    tableName: select * from glue.***catalogReference***.weather_daily
 productState:
   isDynamic: true
-  alias: step_3
+  alias: step_3_to_adp
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -118,24 +118,24 @@ productState:
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: s3Source.delta_sadp_2
-  warehousePath: s3://byte-etl-externaldemo/sadp_delta_ice/
+  tableName: s3Source.adp_weather
+  warehousePath: s3://bp-spark-sql-library-test-acc/adp
   catalogName: glue
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: false
+    enforceSchema: true
     enforceSchemaMethod: Warning
     catalogType: glue
   refreshInterval: 0 0 30 2 *
 transformation:
   - alias: Spark_SQL_1
     type: SQL
-    description: "step 2 "
+    description: step 2
     query: select * from sadp
     sequenceNo: 2
     references:
-      - alias: Test_Connection_-_with_Iceberg_2_-_Miloni_1
+      - alias: Weather_API_Daily_1
         sqlReference: sadp
 controlPort:
   dataQualityRules: {}
