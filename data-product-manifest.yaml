@@ -1,317 +1,162 @@
 version: 0.0.5
-jobId: "197"
-jobName: Secondary Sales Cost Testing
-jobType: Source Aligned Data Product
-alias: Load_all_data_for_sale_test2
+jobId: "215"
+jobName: ADP to ADP different domain - miloni
+jobType: Aggregated Data Product
+alias: step_4_
 discoveryPort:
-  name: Secondary Sales Cost Testing
+  name: ADP to ADP different domain - miloni
 inputPorts:
-  - alias: Secondary_Sales_1
+  - alias: sadp_to_adp_-_miloni_1
     isDynamic: true
-    path: s3://bp-spark-sql-library-test-acc/secondary_sales_parquet/
+    dataProductUrn: urn:dv:dataproduct:3ff3fae9-3041-439b-b553-cb985481ee10
+    projection: ""
+    filter: ""
+    warehousePath: "***s3StateBucket***"
+    type: readDataIceberg
+    catalogName: glue
     optional:
       persistDataFrame: false
       advanceOptions:
-        mergeSchema: true
-      enableDataReconciliation: false
-      enforceSchema: false
-      dataSetUrn: urn:dv:dataset:5a075ca4-46b2-4988-ba1b-16c0cdf30f4f
-    type: inputParquet
+        endPoint: s3.undefined.amazonaws.com
+        accessKey: abc
+        secretKey: abc
+      dataProductUrn: urn:dv:dataproduct:3ff3fae9-3041-439b-b553-cb985481ee10
+    tableName: select * from glue.s3Source.sadp_weather
+  - alias: SADP_to_SADP_Sale_to_operation_1
+    isDynamic: true
+    dataProductUrn: urn:dv:dataproduct:da1c8de3-1330-4441-83d8-2ef3ef4944f0
+    projection: ""
+    filter: ""
+    warehousePath: "***s3StateBucket***"
+    type: readDataIceberg
+    catalogName: glue
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        endPoint: s3.undefined.amazonaws.com
+        accessKey: abc
+        secretKey: abc
+      dataProductUrn: urn:dv:dataproduct:da1c8de3-1330-4441-83d8-2ef3ef4944f0
+    tableName: select * from glue.s3Source.delta_sadp_2
 productState:
   isDynamic: true
-  alias: Load_all_data_for_sale_test2
+  alias: step_4_
   retentionVersions: ""
   logicalSchema:
     properties:
-      pk_id:
+      City:
         type: STRING
         description: ""
-      granularity:
+      Region:
         type: STRING
         description: ""
-      rowid:
+      Country:
         type: STRING
         description: ""
-      formatting:
+      Latitude:
         type: STRING
         description: ""
-      createddate:
+      Longitude:
         type: STRING
         description: ""
-      modifieddate:
+      Timezone:
         type: STRING
         description: ""
-      createdby:
+      Local Time:
         type: STRING
         description: ""
-      modifiedby:
+      Cloud ID:
         type: STRING
         description: ""
-      createdip:
+      Feels like Celcius:
         type: STRING
         description: ""
-      modifiedip:
+      Feels like fahrenheit:
         type: STRING
         description: ""
-      region:
+      Gust speed in kph:
         type: STRING
         description: ""
-      zsmcode:
+      Gust speed in mph:
         type: STRING
         description: ""
-      zsmname:
+      Humidity:
         type: STRING
         description: ""
-      ahcode:
+      Is day time?:
         type: STRING
         description: ""
-      ahname:
+      Last update:
         type: STRING
         description: ""
-      asmcode:
+      Last updated time in epoch:
         type: STRING
         description: ""
-      asmname:
+      Precipitation in inch:
         type: STRING
         description: ""
-      socode:
+      Precipitation in mm:
         type: STRING
         description: ""
-      soname:
+      Pressure:
         type: STRING
         description: ""
-      statename:
+      Precipitation in mb:
         type: STRING
         description: ""
-      town:
+      Temperature in celcius:
         type: STRING
         description: ""
-      stockistcode:
+      Temperature in fahrenheit:
         type: STRING
         description: ""
-      stockistname:
+      UV:
         type: STRING
         description: ""
-      stockisttype:
+      Visibility in km:
         type: STRING
         description: ""
-      ssmcode:
+      Visibility in miles:
         type: STRING
         description: ""
-      ssmname:
+      Wind Degree:
         type: STRING
         description: ""
-      ssmclass:
+      Wind Direction:
         type: STRING
         description: ""
-      ssmsubclass:
+      Wind in kph:
         type: STRING
         description: ""
-      ssmcompcode:
-        type: STRING
-        description: ""
-      ssmstatus:
-        type: STRING
-        description: ""
-      retailerid:
-        type: STRING
-        description: ""
-      retailercode:
-        type: STRING
-        description: ""
-      retailername:
-        type: STRING
-        description: ""
-      nature_of_business:
-        type: STRING
-        description: ""
-      type_of_outlet:
-        type: STRING
-        description: ""
-      outlet_class:
-        type: STRING
-        description: ""
-      rtrcmpcode:
-        type: STRING
-        description: ""
-      reachcode:
-        type: STRING
-        description: ""
-      giscode:
-        type: STRING
-        description: ""
-      gsttinnumber:
-        type: STRING
-        description: ""
-      year:
-        type: STRING
-        description: ""
-      month:
-        type: STRING
-        description: ""
-      billno:
-        type: STRING
-        description: ""
-      billdate:
-        type: DATETIME
-        description: ""
-      bgcode:
-        type: STRING
-        description: ""
-      bgname:
-        type: STRING
-        description: ""
-      categoryid:
-        type: STRING
-        description: ""
-      categorycode:
-        type: STRING
-        description: ""
-      category:
-        type: STRING
-        description: ""
-      asbrandid:
-        type: STRING
-        description: ""
-      brandcode:
-        type: STRING
-        description: ""
-      brand:
-        type: STRING
-        description: ""
-      variantid:
-        type: STRING
-        description: ""
-      variantcode:
-        type: STRING
-        description: ""
-      variant:
-        type: STRING
-        description: ""
-      skuid:
-        type: STRING
-        description: ""
-      skucode:
-        type: STRING
-        description: ""
-      sku:
-        type: STRING
-        description: ""
-      productid:
-        type: STRING
-        description: ""
-      productcode:
-        type: STRING
-        description: ""
-      productname:
-        type: STRING
-        description: ""
-      batchno:
-        type: STRING
-        description: ""
-      productupc:
-        type: STRING
-        description: ""
-      drishtiorderno:
-        type: STRING
-        description: ""
-      pono:
-        type: STRING
-        description: ""
-      podate:
-        type: DATETIME
-        description: ""
-      sfaorderno:
-        type: STRING
-        description: ""
-      sfaordate:
-        type: DATETIME
-        description: ""
-      sfalat:
-        type: STRING
-        description: ""
-      sfalng:
-        type: STRING
-        description: ""
-      starttime:
-        type: STRING
-        description: ""
-      endtime:
-        type: STRING
-        description: ""
-      pcs:
-        type: STRING
-        description: ""
-      cases:
-        type: STRING
-        description: ""
-      value_ptr:
-        type: STRING
-        description: ""
-      salesvalue:
-        type: STRING
-        description: ""
-      value_pts:
-        type: STRING
-        description: ""
-      newproduct:
-        type: STRING
-        description: ""
-      test:
-        type: STRING
-        description: ""
-      state:
-        type: STRING
-        description: ""
-      district:
-        type: STRING
-        description: ""
-      focusbrand:
-        type: STRING
-        description: ""
-      design:
-        type: STRING
-        description: ""
-      bucode:
-        type: STRING
-        description: ""
-      buname:
+      Wind in mph:
         type: STRING
         description: ""
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: s3source.secondary_sales_cost_testing
-  warehousePath: s3://cost-testing-s3
-  catalogName: s3Source
+  tableName: s3Source.adp_sadp_operation
+  warehousePath: s3://bp-spark-sql-library-test-acc/
+  catalogName: glue
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: false
+    enforceSchema: true
     enforceSchemaMethod: Warning
     catalogType: glue
-  refreshInterval: 0 12 * * *
+  refreshInterval: 0 0 30 2 *
 transformation:
   - alias: Spark_SQL_1
     type: SQL
-    description: Read all data
-    query: select * from secondary_sales
-    sequenceNo: 2
+    description: step 3
+    query: select * from adp
+    sequenceNo: 3
     references:
-      - alias: Secondary_Sales_1
-        sqlReference: secondary_sales
+      - alias: sadp_to_adp_-_miloni_1
+        sqlReference: adp
+      - alias: SADP_to_SADP_Sale_to_operation_1
+        sqlReference: sadp
 controlPort:
-  dataQualityRules:
-    NullValueCheck:
-      productState:
-        checks:
-          - column: retailername
-            expression: ==
-            number: 1
-          - column: statename
-            expression: ==
-            number: 1
-        referenceAlias: Load_all_data_for_sale_test2
+  dataQualityRules: {}
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
