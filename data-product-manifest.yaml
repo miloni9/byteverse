@@ -1,14 +1,14 @@
-version: 0.0.5
-jobId: "215"
-jobName: ADP to ADP different domain - miloni
-jobType: Aggregated Data Product
-alias: step_4_
+version: 0.0.2
+jobId: "211"
+jobName: weather sadp - miloni
+jobType: Source Aligned Data Product
+alias: step_3_ice_sadp
 discoveryPort:
-  name: ADP to ADP different domain - miloni
+  name: weather sadp - miloni
 inputPorts:
-  - alias: sadp_to_adp_-_miloni_1
+  - alias: Weather_API_Daily_1
     isDynamic: true
-    dataProductUrn: urn:dv:dataproduct:3ff3fae9-3041-439b-b553-cb985481ee10
+    dataProductUrn: urn:dv:dataproduct:75836ba4-cce4-4d25-bc3d-cb96d397f7f4
     projection: ""
     filter: ""
     warehousePath: "***s3StateBucket***"
@@ -20,27 +20,11 @@ inputPorts:
         endPoint: s3.undefined.amazonaws.com
         accessKey: abc
         secretKey: abc
-      dataProductUrn: urn:dv:dataproduct:3ff3fae9-3041-439b-b553-cb985481ee10
-    tableName: select * from glue.s3Source.sadp_weather
-  - alias: SADP_to_SADP_Sale_to_operation_1
-    isDynamic: true
-    dataProductUrn: urn:dv:dataproduct:da1c8de3-1330-4441-83d8-2ef3ef4944f0
-    projection: ""
-    filter: ""
-    warehousePath: "***s3StateBucket***"
-    type: readDataIceberg
-    catalogName: glue
-    optional:
-      persistDataFrame: false
-      advanceOptions:
-        endPoint: s3.undefined.amazonaws.com
-        accessKey: abc
-        secretKey: abc
-      dataProductUrn: urn:dv:dataproduct:da1c8de3-1330-4441-83d8-2ef3ef4944f0
-    tableName: select * from glue.s3Source.delta_sadp_2
+      dataProductUrn: urn:dv:dataproduct:75836ba4-cce4-4d25-bc3d-cb96d397f7f4
+    tableName: select * from glue.***catalogReference***.weather_daily
 productState:
   isDynamic: true
-  alias: step_4_
+  alias: step_3_ice_sadp
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -134,7 +118,7 @@ productState:
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: s3Source.adp_sadp_operation
+  tableName: s3Source.weather_sadp
   warehousePath: s3://bp-spark-sql-library-test-acc/
   catalogName: glue
   optional:
@@ -143,17 +127,15 @@ productState:
     enforceSchema: true
     enforceSchemaMethod: Warning
     catalogType: glue
-  refreshInterval: 0 0 30 2 *
+  refreshInterval: None
 transformation:
   - alias: Spark_SQL_1
     type: SQL
-    description: step 3
-    query: select * from adp
-    sequenceNo: 3
+    description: step 2
+    query: select * from sadp
+    sequenceNo: 2
     references:
-      - alias: sadp_to_adp_-_miloni_1
-        sqlReference: adp
-      - alias: SADP_to_SADP_Sale_to_operation_1
+      - alias: Weather_API_Daily_1
         sqlReference: sadp
 controlPort:
   dataQualityRules: {}
