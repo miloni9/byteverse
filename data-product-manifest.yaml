@@ -1,14 +1,14 @@
-version: 0.0.2
-jobId: "216"
-jobName: adp to adp - miloni
-jobType: Aggregated Data Product
-alias: step_3_ice_adp
+version: 0.0.6
+jobId: "208"
+jobName: SADP to SADP Sale to operation
+jobType: Source Aligned Data Product
+alias: step_3
 discoveryPort:
-  name: adp to adp - miloni
+  name: SADP to SADP Sale to operation
 inputPorts:
-  - alias: sadp_to_adp_-_miloni_1
+  - alias: Test_Connection_-_with_Iceberg_2_-_Miloni_1
     isDynamic: true
-    dataProductUrn: urn:dv:dataproduct:3ff3fae9-3041-439b-b553-cb985481ee10
+    dataProductUrn: urn:dv:dataproduct:d4e755ac-acae-4d10-a4cf-09472205afac
     projection: ""
     filter: ""
     warehousePath: "***s3StateBucket***"
@@ -20,11 +20,11 @@ inputPorts:
         endPoint: s3.undefined.amazonaws.com
         accessKey: abc
         secretKey: abc
-      dataProductUrn: urn:dv:dataproduct:3ff3fae9-3041-439b-b553-cb985481ee10
-    tableName: select * from glue.***catalogReference***.s3Source.sadp_weather
+      dataProductUrn: urn:dv:dataproduct:d4e755ac-acae-4d10-a4cf-09472205afac
+    tableName: select * from glue.s3source.weather_123_3212
 productState:
   isDynamic: true
-  alias: step_3_ice_adp
+  alias: step_3
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -118,24 +118,24 @@ productState:
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: s3Source.sadp_adp_weather
-  warehousePath: s3://bp-spark-sql-library-test-acc/
+  tableName: s3Source.delta_sadp_2
+  warehousePath: s3://byte-etl-externaldemo/sadp_delta_ice/
   catalogName: glue
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: true
+    enforceSchema: false
     enforceSchemaMethod: Warning
     catalogType: glue
   refreshInterval: 0 0 30 2 *
 transformation:
   - alias: Spark_SQL_1
     type: SQL
-    description: sadp step 2
+    description: "step 2 "
     query: select * from sadp
     sequenceNo: 2
     references:
-      - alias: sadp_to_adp_-_miloni_1
+      - alias: Test_Connection_-_with_Iceberg_2_-_Miloni_1
         sqlReference: sadp
 controlPort:
   dataQualityRules: {}
