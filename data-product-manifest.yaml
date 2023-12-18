@@ -1,60 +1,142 @@
-version: 0.0.6
-jobId: "1234"
-jobName: On Prem Test
+version: 0.0.4
+jobId: "211"
+jobName: weather sadp - miloni
 jobType: Source Aligned Data Product
-alias: abc
+alias: step_3_ice_sadp
 discoveryPort:
-  name: On Prem Test
+  name: weather sadp - miloni
 inputPorts:
-  - alias: Local_Storage_On_Prem_Data_Set_1
-    description: Local Storage On Prem Data Set
-    tags: []
-    extra: {}
-    syncType: pull
-    type: s3-csv
-    dataSetUrn: urn:dv:dataset:94136140-7933-4fbb-9270-a7fc96a79118
+  - alias: Weather_API_Daily_1
+    isDynamic: true
+    dataProductUrn: urn:dv:dataproduct:75836ba4-cce4-4d25-bc3d-cb96d397f7f4
+    projection: ""
     filter: ""
-    projection: []
-    persistDataFrame: false
-    entity:
+    warehousePath: "***s3StateBucket***"
+    type: readDataIceberg
+    catalogName: glue
+    optional:
+      persistDataFrame: false
       advanceOptions:
-        mergeSchema: false
+        endPoint: s3.undefined.amazonaws.com
+        accessKey: abc
+        secretKey: abc
+      dataProductUrn: urn:dv:dataproduct:75836ba4-cce4-4d25-bc3d-cb96d397f7f4
+    tableName: select * from glue.***catalogReference***.weather_daily
 productState:
-  alias: abc
-  refreshInterval: 0 12 * * *
+  isDynamic: true
+  alias: step_3_ice_sadp
   retentionVersions: ""
-  updateStrategy: Overwrite
   logicalSchema:
     properties:
-      Reference_Transaction_ID:
+      City:
         type: STRING
         description: ""
-      Merchant_Ref_ID:
+      Region:
         type: STRING
         description: ""
-      Transaction_Date:
+      Country:
         type: STRING
         description: ""
-      PG_Mode:
+      Latitude:
         type: STRING
         description: ""
-  enforceSchemaMethod: ""
-  enforceSchema: false
-  addRunIdColumn: false
-  enableDataReconciliation: false
+      Longitude:
+        type: STRING
+        description: ""
+      Timezone:
+        type: STRING
+        description: ""
+      Local Time:
+        type: STRING
+        description: ""
+      Cloud ID:
+        type: STRING
+        description: ""
+      Feels like Celcius:
+        type: STRING
+        description: ""
+      Feels like fahrenheit:
+        type: STRING
+        description: ""
+      Gust speed in kph:
+        type: STRING
+        description: ""
+      Gust speed in mph:
+        type: STRING
+        description: ""
+      Humidity:
+        type: STRING
+        description: ""
+      Is day time?:
+        type: STRING
+        description: ""
+      Last update:
+        type: STRING
+        description: ""
+      Last updated time in epoch:
+        type: STRING
+        description: ""
+      Precipitation in inch:
+        type: STRING
+        description: ""
+      Precipitation in mm:
+        type: STRING
+        description: ""
+      Pressure:
+        type: STRING
+        description: ""
+      Precipitation in mb:
+        type: STRING
+        description: ""
+      Temperature in celcius:
+        type: STRING
+        description: ""
+      Temperature in fahrenheit:
+        type: STRING
+        description: ""
+      UV:
+        type: STRING
+        description: ""
+      Visibility in km:
+        type: STRING
+        description: ""
+      Visibility in miles:
+        type: STRING
+        description: ""
+      Wind Degree:
+        type: STRING
+        description: ""
+      Wind Direction:
+        type: STRING
+        description: ""
+      Wind in kph:
+        type: STRING
+        description: ""
+      Wind in mph:
+        type: STRING
+        description: ""
+  stateStoreType: loadDataIceberg
   isProfilingEnabled: false
-  tableName: flyte
-  stateStoreType: mysql_mariadb
+  updateStrategy: Overwrite
+  tableName: s3Source.weather_sadp
+  warehousePath: s3://bp-spark-sql-library-test-acc/
+  catalogName: glue
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: true
+    enforceSchemaMethod: Warning
+    catalogType: glue
+  refreshInterval: None
 transformation:
   - alias: Spark_SQL_1
     type: SQL
-    description: spark_sql
-    query: select Reference_Transaction_ID,Merchant_Ref_ID,Transaction_Date,PG_Mode
-      from flyte
+    description: step 2
+    query: select * from sadp
     sequenceNo: 2
     references:
-      - alias: Local_Storage_On_Prem_Data_Set_1
-        sqlReference: flyte
+      - alias: Weather_API_Daily_1
+        sqlReference: sadp
 controlPort:
   dataQualityRules: {}
 outputPort:
