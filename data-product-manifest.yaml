@@ -1,63 +1,57 @@
-version: 0.0.6
-jobId: "1234"
-jobName: On Prem Test
+version: 0.0.4
+jobId: "768"
+jobName: Weather with connection
 jobType: Source Aligned Data Product
-alias: abc
+alias: s3
 discoveryPort:
-  name: On Prem Test
+  name: Weather with connection
 inputPorts:
-  - alias: Local_Storage_On_Prem_Data_Set_1
-    description: Local Storage On Prem Data Set
-    tags: []
-    extra: {}
-    syncType: pull
-    type: s3-csv
-    dataSetUrn: urn:dv:dataset:94136140-7933-4fbb-9270-a7fc96a79118
-    filter: ""
-    projection: []
-    persistDataFrame: false
-    entity:
+  - alias: Weather_Data_Demo_-_Connection_1
+    isDynamic: true
+    path: s3://dlp-platform-engine-bucket/weather_data/202306300001481.csv
+    optional:
+      persistDataFrame: false
       advanceOptions:
-        mergeSchema: false
+        header: true
+        delimiter: ","
+        multiline: false
+        inferSchema: true
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: Test Connection - Role
+      dataSetUrn: urn:dv:dataset:277aa434-75ed-413a-9a79-3f47d8691918
+    type: inputDelimited
 productState:
-  alias: abc
-  refreshInterval: 0 12 * * *
+  isDynamic: true
+  alias: s3
   retentionVersions: ""
-  updateStrategy: Overwrite
-  logicalSchema:
-    properties:
-      Reference_Transaction_ID:
-        type: STRING
-        description: ""
-      Merchant_Ref_ID:
-        type: STRING
-        description: ""
-      Transaction_Date:
-        type: STRING
-        description: ""
-      PG_Mode:
-        type: STRING
-        description: ""
-  enforceSchemaMethod: ""
-  enforceSchema: false
-  addRunIdColumn: false
-  enableDataReconciliation: false
+  logicalSchema: ""
+  stateStoreType: loadDataIceberg
   isProfilingEnabled: false
-  tableName: flyte
-  stateStoreType: mysql_mariadb
+  updateStrategy: Overwrite
+  tableName: msil_transformed_layer.table_name_weather
+  warehousePath: s3://dlp-platform-engine-bucket/data/w1
+  catalogName: glue
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: false
+    enforceSchemaMethod: Warning
+    catalogType: glue
+  refreshInterval: None
 transformation:
   - alias: Spark_SQL_1
     type: SQL
-    description: spark_sql
-    query: select Reference_Transaction_ID,Merchant_Ref_ID,Transaction_Date,PG_Mode
-      from flyte
+    description: step
+    query: select * from temp
     sequenceNo: 2
     references:
-      - alias: Local_Storage_On_Prem_Data_Set_1
-        sqlReference: flyte
+      - alias: Weather_Data_Demo_-_Connection_1
+        sqlReference: temp
 controlPort:
   dataQualityRules: {}
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
       queryType: SQL
+timeout: 30
