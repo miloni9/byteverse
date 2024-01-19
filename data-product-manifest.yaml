@@ -5,6 +5,7 @@ jobType: Source Aligned Data Product
 alias: write_to_ice
 discoveryPort:
   name: Test Connection - with Iceberg - Miloni
+  shortDescription: Hiiii
 inputPorts:
   - alias: Weather_5
     isDynamic: true
