@@ -1,4 +1,4 @@
-version: 0.0.3
+version: 0.0.4
 jobId: "198"
 jobName: "Secondary Sales  cost - ADP "
 jobType: Aggregated Data Product
@@ -296,7 +296,7 @@ transformation:
     sequenceNo: 2
     references:
       - alias: Secondary_Sales_Cost_Testing_1
-        sqlReference: ""
+        sqlReference: name
 controlPort:
   dataQualityRules: {}
 outputPort:
