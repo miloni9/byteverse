@@ -1,4 +1,4 @@
-version: 0.0.8
+version: 0.0.9
 jobId: "166"
 jobName: Test Pyspark - State mngt iceberg-Miloni
 jobType: Source Aligned Data Product
