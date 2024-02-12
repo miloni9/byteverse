@@ -1,4 +1,4 @@
-version: 0.0.6
+version: 0.0.7
 jobId: "166"
 jobName: Test Pyspark - State mngt iceberg-Miloni
 jobType: Source Aligned Data Product
@@ -15,6 +15,7 @@ inputPorts:
         delimiter: ","
       enableDataReconciliation: false
       enforceSchema: false
+      connection: S3 with User
       dataSetUrn: urn:dv:dataset:3a0494b4-86e9-430f-afcb-877a0d9bea95
     type: inputDelimited
 productState:
