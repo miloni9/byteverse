@@ -1,60 +1,53 @@
-version: 0.0.6
-jobId: "1234"
-jobName: On Prem Test
+version: 0.0.2
+jobId: "360"
+jobName: Custom PySpark Extra Conf Miloni
 jobType: Source Aligned Data Product
-alias: abc
+alias: write_to_ice
 discoveryPort:
-  name: On Prem Test
+  name: Custom PySpark Extra Conf Miloni
 inputPorts:
-  - alias: Local_Storage_On_Prem_Data_Set_1
-    description: Local Storage On Prem Data Set
-    tags: []
-    extra: {}
-    syncType: pull
-    type: s3-csv
-    dataSetUrn: urn:dv:dataset:94136140-7933-4fbb-9270-a7fc96a79118
-    filter: ""
-    projection: []
-    persistDataFrame: false
-    entity:
+  - alias: Test_Data_Set_1
+    isDynamic: true
+    path: "##test_date##"
+    optional:
+      persistDataFrame: false
       advanceOptions:
-        mergeSchema: false
+        delimiter: test
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: Base S3 Connectivity
+      dataSetUrn: urn:dv:dataset:b26a1127-9bc2-42a5-aab7-d64bd20bf714
+    type: inputDelimited
 productState:
-  alias: abc
-  refreshInterval: 0 12 * * *
-  retentionVersions: ""
-  updateStrategy: Overwrite
-  logicalSchema:
-    properties:
-      Reference_Transaction_ID:
-        type: STRING
-        description: ""
-      Merchant_Ref_ID:
-        type: STRING
-        description: ""
-      Transaction_Date:
-        type: STRING
-        description: ""
-      PG_Mode:
-        type: STRING
-        description: ""
-  enforceSchemaMethod: ""
+  persistDataFrame: false
+  catalogType: glue
   enforceSchema: false
-  addRunIdColumn: false
-  enableDataReconciliation: false
+  stepName: write to ice
+  tableName: sales.weather_123_3212
+  warehousePath: s3://bp-spark-sql-library-test-acc/
+  catalogName: glue
+  type: readDataIceberg
+  isStateManagement: true
+  sequence: 3
+  alias: write_to_ice
+  refreshInterval: None
+  retentionVersions: ""
+  logicalSchema: ""
+  enforceSchemaMethod: ""
   isProfilingEnabled: false
-  tableName: flyte
-  stateStoreType: mysql_mariadb
 transformation:
-  - alias: Spark_SQL_1
-    type: SQL
-    description: spark_sql
-    query: select Reference_Transaction_ID,Merchant_Ref_ID,Transaction_Date,PG_Mode
-      from flyte
-    sequenceNo: 2
+  - alias: EMR_PySpark_1
+    arguments:
+      - "##test_date##"
+    pythonFilePath: sjkfnsjn
+    optional:
+      sparkExtraConf:
+        ab: ab
+    type: customPySparkEMRServerless
+    sequence: 2
     references:
-      - alias: Local_Storage_On_Prem_Data_Set_1
-        sqlReference: flyte
+      - alias: Test_Data_Set_1
+        sqlReference: temp
 controlPort:
   dataQualityRules: {}
 outputPort:
