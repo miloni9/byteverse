@@ -1,4 +1,4 @@
-version: 0.0.3
+version: 0.0.4
 jobId: "360"
 jobName: Custom PySpark Extra Conf Miloni
 jobType: Source Aligned Data Product
