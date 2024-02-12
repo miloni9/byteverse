@@ -1,8 +1,8 @@
-version: 0.0.2
+version: 0.0.3
 jobId: "360"
 jobName: Custom PySpark Extra Conf Miloni
 jobType: Source Aligned Data Product
-alias: write_to_ice
+alias: write_to_iceeee
 discoveryPort:
   name: Custom PySpark Extra Conf Miloni
 inputPorts:
@@ -22,14 +22,14 @@ productState:
   persistDataFrame: false
   catalogType: glue
   enforceSchema: false
-  stepName: write to ice
+  stepName: write to iceeee
   tableName: sales.weather_123_3212
   warehousePath: s3://bp-spark-sql-library-test-acc/
   catalogName: glue
   type: readDataIceberg
   isStateManagement: true
   sequence: 3
-  alias: write_to_ice
+  alias: write_to_iceeee
   refreshInterval: None
   retentionVersions: ""
   logicalSchema: ""
