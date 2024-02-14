@@ -1,4 +1,4 @@
-version: 0.0.1
+version: 0.0.2
 jobId: "365"
 jobName: DataProduct Test
 jobType: Source Aligned Data Product
@@ -23,7 +23,32 @@ productState:
   isDynamic: true
   alias: write_to_iceberg_test_dp
   retentionVersions: ""
-  logicalSchema: ""
+  logicalSchema:
+    properties:
+      city:
+        type: STRING
+        description: ""
+      region:
+        type: STRING
+        description: ""
+      lat:
+        type: STRING
+        description: ""
+      lon:
+        type: STRING
+        description: ""
+      tz_id:
+        type: STRING
+        description: ""
+      temp_c:
+        type: STRING
+        description: ""
+      last_updated:
+        type: STRING
+        description: ""
+      last_updated_epoch:
+        type: STRING
+        description: ""
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
