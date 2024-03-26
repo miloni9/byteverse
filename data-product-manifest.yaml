@@ -1,63 +1,61 @@
-version: 0.0.6
-jobId: "1234"
-jobName: On Prem Test
+version: 0.0.3
+jobId: "346"
+jobName: SADP PySpark
 jobType: Source Aligned Data Product
-alias: abc
+domain: sale
+alias: read_final_weather_data_daily_8Sept
 discoveryPort:
-  name: On Prem Test
+  name: SADP PySpark
 inputPorts:
-  - alias: Local_Storage_On_Prem_Data_Set_1
-    description: Local Storage On Prem Data Set
-    tags: []
-    extra: {}
-    syncType: pull
-    type: s3-csv
-    dataSetUrn: urn:dv:dataset:94136140-7933-4fbb-9270-a7fc96a79118
-    filter: ""
-    projection: []
-    persistDataFrame: false
-    entity:
+  - alias: Weather_Data_Demo_s3_user_Miloni_1
+    isDynamic: true
+    path: s3://byte-etl-externaldemo/weather_data/20230626110117.csv
+    optional:
+      persistDataFrame: false
       advanceOptions:
-        mergeSchema: false
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: s3-user-miloni
+      dataSetUrn: urn:dv:dataset:7e7c8a67-5082-441c-96c1-06497e66c3a8
+    type: inputDelimited
 productState:
-  alias: abc
-  refreshInterval: 0 12 * * *
-  retentionVersions: ""
-  updateStrategy: Overwrite
-  logicalSchema:
-    properties:
-      Reference_Transaction_ID:
-        type: STRING
-        description: ""
-      Merchant_Ref_ID:
-        type: STRING
-        description: ""
-      Transaction_Date:
-        type: STRING
-        description: ""
-      PG_Mode:
-        type: STRING
-        description: ""
-  enforceSchemaMethod: ""
+  persistDataFrame: false
+  catalogType: glue
   enforceSchema: false
-  addRunIdColumn: false
-  enableDataReconciliation: false
+  connection: Base S3 Connectivity
+  stepName: read final weather data daily 8Sept
+  tableName: s3Source.weather_daily
+  warehousePath: s3://bp-spark-sql-library-test-acc/
+  catalogName: glue
+  type: readDataIceberg
+  isStateManagement: true
+  sequence: 3
+  alias: read_final_weather_data_daily_8Sept
+  refreshInterval: None
+  retentionVersions: ""
+  logicalSchema: ""
+  enforceSchemaMethod: ""
   isProfilingEnabled: false
-  tableName: flyte
-  stateStoreType: mysql_mariadb
 transformation:
-  - alias: Spark_SQL_1
-    type: SQL
-    description: spark_sql
-    query: select Reference_Transaction_ID,Merchant_Ref_ID,Transaction_Date,PG_Mode
-      from flyte
-    sequenceNo: 2
-    references:
-      - alias: Local_Storage_On_Prem_Data_Set_1
-        sqlReference: flyte
+  - isDynamic: true
+    alias: EMR_PySpark_1
+    description: Run pyspark code
+    sequence: 2
+    arguments:
+      - s3://byte-etl-externaldemo/weather_data/20230626110117.csv
+    pythonFilePath: s3://bp-spark-sql-library-test-acc/custom-jobs/CustomPythonJobWriteParquet.py
+    inputDataFrameList:
+      - inputDataFrame: ""
+        tempViewName: ""
+    optional:
+      pythonEnvTarGZPath: s3://byte-etl-externaldemo/pyspark_serverless_test/pyspark_venv.tar.gz
+    type: customPySparkEMRServerless
 controlPort:
   dataQualityRules: {}
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
+      queryType: SQL
+    - channelType: Dataproduct
       queryType: SQL
