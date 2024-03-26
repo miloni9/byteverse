@@ -1,4 +1,4 @@
-version: 0.0.3
+version: 0.0.4
 jobId: "346"
 jobName: SADP PySpark
 jobType: Source Aligned Data Product
@@ -34,7 +34,95 @@ productState:
   alias: read_final_weather_data_daily_8Sept
   refreshInterval: None
   retentionVersions: ""
-  logicalSchema: ""
+  logicalSchema:
+    properties:
+      City:
+        type: STRING
+        description: ""
+      Region:
+        type: STRING
+        description: ""
+      Country:
+        type: STRING
+        description: ""
+      Latitude:
+        type: STRING
+        description: ""
+      Longitude:
+        type: STRING
+        description: ""
+      Timezone:
+        type: STRING
+        description: ""
+      Local Time:
+        type: STRING
+        description: ""
+      Cloud ID:
+        type: STRING
+        description: ""
+      Feels like Celcius:
+        type: STRING
+        description: ""
+      Feels like fahrenheit:
+        type: STRING
+        description: ""
+      Gust speed in kph:
+        type: STRING
+        description: ""
+      Gust speed in mph:
+        type: STRING
+        description: ""
+      Humidity:
+        type: STRING
+        description: ""
+      Is day time?:
+        type: STRING
+        description: ""
+      Last update:
+        type: STRING
+        description: ""
+      Last updated time in epoch:
+        type: STRING
+        description: ""
+      Precipitation in inch:
+        type: STRING
+        description: ""
+      Precipitation in mm:
+        type: STRING
+        description: ""
+      Pressure:
+        type: STRING
+        description: ""
+      Precipitation in mb:
+        type: STRING
+        description: ""
+      Temperature in celcius:
+        type: STRING
+        description: ""
+      Temperature in fahrenheit:
+        type: STRING
+        description: ""
+      UV:
+        type: STRING
+        description: ""
+      Visibility in km:
+        type: STRING
+        description: ""
+      Visibility in miles:
+        type: STRING
+        description: ""
+      Wind Degree:
+        type: STRING
+        description: ""
+      Wind Direction:
+        type: STRING
+        description: ""
+      Wind in kph:
+        type: STRING
+        description: ""
+      Wind in mph:
+        type: STRING
+        description: ""
   enforceSchemaMethod: ""
   isProfilingEnabled: false
 transformation:
