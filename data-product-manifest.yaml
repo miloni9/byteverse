@@ -1,11 +1,11 @@
-version: 0.0.2
-jobId: "626"
-jobName: Test Consumption - miloni
+version: 0.0.1
+jobId: "629"
+jobName: "test consumption redshift - miloni "
 jobType: Source Aligned Data Product
 domain: sale
-alias: writetoice12
+alias: write
 discoveryPort:
-  name: Test Consumption - miloni
+  name: "test consumption redshift - miloni "
 inputPorts:
   - alias: test-miloni-csv_1
     isDynamic: true
@@ -21,33 +21,22 @@ inputPorts:
     type: inputDelimited
 productState:
   isDynamic: true
-  alias: writetoice12
+  alias: write
   retentionVersions: ""
-  logicalSchema:
-    properties:
-      id:
-        type: STRING
-        description: ""
-      name:
-        type: STRING
-        description: ""
-  stateStoreType: loadDataIceberg
+  logicalSchema: ""
+  stateStoreType: writeDataFrameToPostgresTable
   isProfilingEnabled: false
-  updateStrategy: Overwrite
-  tableName: s3source.test_miloni
-  warehousePath: s3://byte-etl-externaldemo/test-miloni-ice/
-  catalogName: glue
+  connection: Postgres-AWS
+  tableName: test_miloni
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
     enforceSchema: false
-    enforceSchemaMethod: Warning
-    catalogType: glue
   refreshInterval: None
 transformation:
   - isDynamic: true
     alias: Spark_SQL_1
-    description: test
+    description: temp
     sequence: 2
     inputDataFrameList:
       - inputDataFrame: test-miloni-csv_1
