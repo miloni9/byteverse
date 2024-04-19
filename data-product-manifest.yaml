@@ -1,4 +1,4 @@
-version: 0.0.1
+version: 0.0.2
 jobId: "639"
 jobName: "Test consumption redshift - Miloni "
 jobType: Source Aligned Data Product
@@ -65,7 +65,7 @@ transformation:
     sequence: 2
     inputDataFrameList:
       - inputDataFrame: Test_Connection_redshift_connections-_Miloni_1
-        tempViewName: ""
+        tempViewName: temp
     query: select * from temp
     optional:
       persistDataFrame: false
