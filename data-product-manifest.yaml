@@ -1,11 +1,11 @@
-version: 0.0.1
+version: 0.0.3
 jobId: "629"
-jobName: "test consumption redshift - miloni "
+jobName: "test consumption postgres- miloni "
 jobType: Source Aligned Data Product
 domain: sale
-alias: write
+alias: writepostgres
 discoveryPort:
-  name: "test consumption redshift - miloni "
+  name: "test consumption postgres- miloni "
 inputPorts:
   - alias: test-miloni-csv_1
     isDynamic: true
@@ -21,9 +21,16 @@ inputPorts:
     type: inputDelimited
 productState:
   isDynamic: true
-  alias: write
+  alias: writepostgres
   retentionVersions: ""
-  logicalSchema: ""
+  logicalSchema:
+    properties:
+      id:
+        type: STRING
+        description: ""
+      name:
+        type: STRING
+        description: ""
   stateStoreType: writeDataFrameToPostgresTable
   isProfilingEnabled: false
   connection: Postgres-AWS
