@@ -1,63 +1,80 @@
-version: 0.0.6
-jobId: "1234"
-jobName: On Prem Test
+version: 0.0.1
+jobId: "639"
+jobName: "Test consumption redshift - Miloni "
 jobType: Source Aligned Data Product
-alias: abc
+domain: sale
+alias: redshift
 discoveryPort:
-  name: On Prem Test
+  name: "Test consumption redshift - Miloni "
 inputPorts:
-  - alias: Local_Storage_On_Prem_Data_Set_1
-    description: Local Storage On Prem Data Set
-    tags: []
-    extra: {}
-    syncType: pull
-    type: s3-csv
-    dataSetUrn: urn:dv:dataset:94136140-7933-4fbb-9270-a7fc96a79118
+  - alias: Test_Connection_redshift_connections-_Miloni_1
+    isDynamic: true
+    dataProductUrn: urn:dv:dataproduct:0c6a6e52-4f56-4603-bccc-a9269a6c118b
     filter: ""
-    projection: []
-    persistDataFrame: false
-    entity:
-      advanceOptions:
-        mergeSchema: false
+    projection: ""
+    optional:
+      persistDataFrame: false
+    type: dataproduct
 productState:
-  alias: abc
-  refreshInterval: 0 12 * * *
+  isDynamic: true
+  alias: redshift
   retentionVersions: ""
-  updateStrategy: Overwrite
   logicalSchema:
     properties:
-      Reference_Transaction_ID:
+      city:
         type: STRING
         description: ""
-      Merchant_Ref_ID:
+      region:
         type: STRING
         description: ""
-      Transaction_Date:
+      lat:
         type: STRING
         description: ""
-      PG_Mode:
+      lon:
         type: STRING
         description: ""
-  enforceSchemaMethod: ""
-  enforceSchema: false
-  addRunIdColumn: false
-  enableDataReconciliation: false
+      tz_id:
+        type: STRING
+        description: ""
+      temp_c:
+        type: STRING
+        description: ""
+      last_updated:
+        type: STRING
+        description: ""
+      last_updated_epoch:
+        type: STRING
+        description: ""
+  stateStoreType: writeDataFrameToRedshiftTable
   isProfilingEnabled: false
-  tableName: flyte
-  stateStoreType: mysql_mariadb
+  updateStrategy: ""
+  connection: redshift-miloni
+  tableName: select * from public.billing_1223
+  endPoint: s3.us-east-1.amazonaws.com
+  temporaryPathS3: s3://byte-etl-externaldemo/pyspark_serverless_test/temp/weather_lr
+  optional:
+    persistDataFrame: false
+    addRunIdColumn: false
+    enableDataReconciliation: false
+    enforceSchema: false
+  refreshInterval: None
 transformation:
-  - alias: Spark_SQL_1
-    type: SQL
-    description: spark_sql
-    query: select Reference_Transaction_ID,Merchant_Ref_ID,Transaction_Date,PG_Mode
-      from flyte
-    sequenceNo: 2
-    references:
-      - alias: Local_Storage_On_Prem_Data_Set_1
-        sqlReference: flyte
+  - isDynamic: true
+    alias: Spark_SQL_1
+    description: step name
+    sequence: 2
+    inputDataFrameList:
+      - inputDataFrame: Test_Connection_redshift_connections-_Miloni_1
+        tempViewName: ""
+    query: select * from temp
+    optional:
+      persistDataFrame: false
+    type: operationThroughSqlQuery
 controlPort:
   dataQualityRules: {}
 outputPort:
   subscriptionChannels:
     - channelType: Postgres
+      queryType: SQL
+    - channelType: Dataproduct
       queryType: SQL
