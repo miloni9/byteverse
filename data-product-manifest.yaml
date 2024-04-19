@@ -1,4 +1,4 @@
-version: 0.0.2
+version: 0.0.3
 jobId: "639"
 jobName: "Test consumption redshift - Miloni "
 jobType: Source Aligned Data Product
@@ -47,9 +47,9 @@ productState:
         description: ""
   stateStoreType: writeDataFrameToRedshiftTable
   isProfilingEnabled: false
-  updateStrategy: ""
+  updateStrategy: Overwrite
   connection: redshift-miloni
-  tableName: select * from public.billing_1223
+  tableName: billing_1223
   endPoint: s3.us-east-1.amazonaws.com
   temporaryPathS3: s3://byte-etl-externaldemo/pyspark_serverless_test/temp/weather_lr
   optional:
