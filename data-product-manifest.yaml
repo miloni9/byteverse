@@ -5,9 +5,9 @@ jobType: Source Aligned Data Product
 domain: sale
 alias: write_to_iceberg_consumptions
 discoveryPort:
-  name: Mari navi product - Miloni
+  name: Mari navi product - Miloni_1
 inputPorts:
-  - alias: Test_Consumption_-_miloni_1
+  - alias: Test_Consumption_-_miloni_2
     isDynamic: true
     dataProductUrn: urn:dv:dataproduct:113174e4-1296-4e75-a495-fcd180a9a1be
     filter: ""
