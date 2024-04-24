@@ -1,11 +1,11 @@
-version: 0.0.3
-jobId: "682"
-jobName: Test Consumption from Anokhi
+version: 0.0.1
+jobId: "685"
+jobName: Test consumptions - anokhi test 2 -miloni
 jobType: Source Aligned Data Product
 domain: sale
-alias: step_3_adp
+alias: write_to_iceberg_consumption
 discoveryPort:
-  name: Test Consumption from Anokhi
+  name: Test consumptions - anokhi test 2 -miloni
 inputPorts:
   - alias: Test_Consumption_-_miloni_1
     isDynamic: true
@@ -17,16 +17,9 @@ inputPorts:
     type: dataproduct
 productState:
   isDynamic: true
-  alias: step_3_adp
+  alias: write_to_iceberg_consumption
   retentionVersions: ""
-  logicalSchema:
-    properties:
-      id:
-        type: STRING
-        description: ""
-      name:
-        type: STRING
-        description: ""
+  logicalSchema: ""
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
@@ -36,19 +29,19 @@ productState:
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: false
+    enforceSchema: true
     enforceSchemaMethod: Warning
     catalogType: glue
   refreshInterval: None
 transformation:
   - isDynamic: true
     alias: Spark_SQL_1
-    description: step 2
+    description: read3
     sequence: 2
     inputDataFrameList:
       - inputDataFrame: Test_Consumption_-_miloni_1
-        tempViewName: sadp
-    query: select * from sadp
+        tempViewName: temp
+    query: select * from temp
     optional:
       persistDataFrame: false
     type: operationThroughSqlQuery
