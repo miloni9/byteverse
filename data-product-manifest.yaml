@@ -1,63 +1,48 @@
-version: 0.0.6
-jobId: "1234"
-jobName: On Prem Test
+version: 0.0.2
+jobId: "682"
+jobName: Test Consumption from Anokhi
 jobType: Source Aligned Data Product
-alias: abc
+domain: sale
+alias: ""
 discoveryPort:
-  name: On Prem Test
+  name: Test Consumption from Anokhi
 inputPorts:
-  - alias: Local_Storage_On_Prem_Data_Set_1
-    description: Local Storage On Prem Data Set
-    tags: []
-    extra: {}
-    syncType: pull
-    type: s3-csv
-    dataSetUrn: urn:dv:dataset:94136140-7933-4fbb-9270-a7fc96a79118
+  - alias: Test_Consumption_-_miloni_1
+    isDynamic: true
+    dataProductUrn: urn:dv:dataproduct:113174e4-1296-4e75-a495-fcd180a9a1be
     filter: ""
-    projection: []
-    persistDataFrame: false
-    entity:
-      advanceOptions:
-        mergeSchema: false
+    projection: ""
+    optional:
+      persistDataFrame: false
+    type: dataproduct
 productState:
-  alias: abc
-  refreshInterval: 0 12 * * *
+  isDynamic: true
+  alias: ""
   retentionVersions: ""
-  updateStrategy: Overwrite
-  logicalSchema:
-    properties:
-      Reference_Transaction_ID:
-        type: STRING
-        description: ""
-      Merchant_Ref_ID:
-        type: STRING
-        description: ""
-      Transaction_Date:
-        type: STRING
-        description: ""
-      PG_Mode:
-        type: STRING
-        description: ""
-  enforceSchemaMethod: ""
-  enforceSchema: false
-  addRunIdColumn: false
-  enableDataReconciliation: false
+  logicalSchema: ""
+  stateStoreType: loadDataIceberg
   isProfilingEnabled: false
-  tableName: flyte
-  stateStoreType: mysql_mariadb
+  tableName: ""
+  warehousePath: ""
+  catalogName: ""
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: true
+    enforceSchemaMethod: Warning
+    catalogType: glue
+  refreshInterval: None
 transformation:
-  - alias: Spark_SQL_1
-    type: SQL
-    description: spark_sql
-    query: select Reference_Transaction_ID,Merchant_Ref_ID,Transaction_Date,PG_Mode
-      from flyte
-    sequenceNo: 2
-    references:
-      - alias: Local_Storage_On_Prem_Data_Set_1
-        sqlReference: flyte
+  - isDynamic: true
+    alias: Spark_SQL_1
+    description: ""
+    sequence: 2
+    inputDataFrameList:
+      - inputDataFrame: Test_Consumption_-_miloni_1
+        tempViewName: ""
+    query: ""
+    optional:
+      persistDataFrame: false
+    type: operationThroughSqlQuery
 controlPort:
   dataQualityRules: {}
-outputPort:
-  subscriptionChannels:
-    - channelType: Postgres
-      queryType: SQL
