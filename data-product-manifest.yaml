@@ -17,7 +17,7 @@ inputPorts:
     type: dataproduct
 productState:
   isDynamic: true
-  alias: write_to_iceberg_consumptions
+  alias: write_to_iceberg_consumptions_1
   retentionVersions: ""
   logicalSchema:
     properties:
