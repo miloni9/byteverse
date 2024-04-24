@@ -1,4 +1,4 @@
-version: 0.0.3
+version: 0.0.4
 jobId: "639"
 jobName: "Test consumption redshift - Miloni "
 jobType: Source Aligned Data Product
@@ -72,9 +72,3 @@ transformation:
     type: operationThroughSqlQuery
 controlPort:
   dataQualityRules: {}
-outputPort:
-  subscriptionChannels:
-    - channelType: Postgres
-      queryType: SQL
-    - channelType: Dataproduct
-      queryType: SQL
