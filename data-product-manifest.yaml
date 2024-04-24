@@ -1,11 +1,11 @@
-version: 0.0.5
+version: 0.0.6
 jobId: "685"
-jobName: Test consumptions - anokhi test 2 -miloni
+jobName: Mari navi product - Miloni
 jobType: Source Aligned Data Product
 domain: sale
-alias: write_to_iceberg_consumption_1
+alias: write_to_iceberg_consumptions
 discoveryPort:
-  name: Test consumptions - anokhi test 2 -miloni
+  name: Mari navi product - Miloni
 inputPorts:
   - alias: Test_Consumption_-_miloni_1
     isDynamic: true
@@ -17,7 +17,7 @@ inputPorts:
     type: dataproduct
 productState:
   isDynamic: true
-  alias: write_to_iceberg_consumption_1
+  alias: write_to_iceberg_consumptions
   retentionVersions: ""
   logicalSchema:
     properties:
