@@ -1,9 +1,9 @@
-version: 0.0.3
+version: 0.0.4
 jobId: "685"
 jobName: Test consumptions - anokhi test 2 -miloni
 jobType: Source Aligned Data Product
 domain: sale
-alias: write_to_iceberg_consumption-1
+alias: write_to_iceberg_consumption_1
 discoveryPort:
   name: Test consumptions - anokhi test 2 -miloni
 inputPorts:
@@ -17,7 +17,7 @@ inputPorts:
     type: dataproduct
 productState:
   isDynamic: true
-  alias: write_to_iceberg_consumption-1
+  alias: write_to_iceberg_consumption_1
   retentionVersions: ""
   logicalSchema:
     properties:
