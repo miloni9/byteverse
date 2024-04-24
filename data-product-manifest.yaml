@@ -1,4 +1,4 @@
-version: 0.0.1
+version: 0.0.2
 jobId: "685"
 jobName: Test consumptions - anokhi test 2 -miloni
 jobType: Source Aligned Data Product
@@ -19,7 +19,14 @@ productState:
   isDynamic: true
   alias: write_to_iceberg_consumption
   retentionVersions: ""
-  logicalSchema: ""
+  logicalSchema:
+    properties:
+      id:
+        type: STRING
+        description: ""
+      name:
+        type: STRING
+        description: ""
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
@@ -29,7 +36,7 @@ productState:
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: true
+    enforceSchema: false
     enforceSchemaMethod: Warning
     catalogType: glue
   refreshInterval: None
