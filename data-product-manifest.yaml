@@ -3,7 +3,7 @@ jobId: "685"
 jobName: Mari navi product - Miloni
 jobType: Source Aligned Data Product
 domain: sale
-alias: write_to_iceberg_consumptions
+alias: write_to_iceberg_consumptions_1
 discoveryPort:
   name: Mari navi product - Miloni_1
 inputPorts:
