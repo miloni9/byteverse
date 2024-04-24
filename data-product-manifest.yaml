@@ -1,9 +1,9 @@
-version: 0.0.2
+version: 0.0.3
 jobId: "682"
 jobName: Test Consumption from Anokhi
 jobType: Source Aligned Data Product
 domain: sale
-alias: ""
+alias: step_3_adp
 discoveryPort:
   name: Test Consumption from Anokhi
 inputPorts:
@@ -17,30 +17,38 @@ inputPorts:
     type: dataproduct
 productState:
   isDynamic: true
-  alias: ""
+  alias: step_3_adp
   retentionVersions: ""
-  logicalSchema: ""
+  logicalSchema:
+    properties:
+      id:
+        type: STRING
+        description: ""
+      name:
+        type: STRING
+        description: ""
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
-  tableName: ""
-  warehousePath: ""
-  catalogName: ""
+  updateStrategy: Overwrite
+  tableName: s3Source.sadp_anokhi
+  warehousePath: s3://bp-spark-sql-library-test-acc/
+  catalogName: glue
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: true
+    enforceSchema: false
     enforceSchemaMethod: Warning
     catalogType: glue
   refreshInterval: None
 transformation:
   - isDynamic: true
     alias: Spark_SQL_1
-    description: ""
+    description: step 2
     sequence: 2
     inputDataFrameList:
       - inputDataFrame: Test_Consumption_-_miloni_1
-        tempViewName: ""
-    query: ""
+        tempViewName: sadp
+    query: select * from sadp
     optional:
       persistDataFrame: false
     type: operationThroughSqlQuery
