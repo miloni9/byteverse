@@ -1,4 +1,4 @@
-version: 0.0.4
+version: 0.0.5
 jobId: "639"
 jobName: "Test consumption redshift - Miloni "
 jobType: Source Aligned Data Product
