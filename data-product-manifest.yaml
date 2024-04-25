@@ -1,4 +1,4 @@
-version: 0.0.2
+version: 0.0.3
 jobId: "690"
 jobName: test ayush DP subscription - ayush
 jobType: Source Aligned Data Product
@@ -27,7 +27,7 @@ productState:
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: s3sources.ayushweather
+  tableName: s3source.ayushweather
   warehousePath: s3://bp-spark-sql-library-test-acc/
   catalogName: glue
   optional:
