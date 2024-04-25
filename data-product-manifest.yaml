@@ -1,4 +1,4 @@
-version: 0.0.3
+version: 0.0.4
 jobId: "690"
 jobName: test ayush DP subscription - ayush
 jobType: Source Aligned Data Product
@@ -44,8 +44,8 @@ transformation:
     sequence: 2
     inputDataFrameList:
       - inputDataFrame: Weather_ayush_1
-        tempViewName: temp
-    query: select city from temp
+        tempViewName: temp1
+    query: select city from temp1
     optional:
       persistDataFrame: false
     type: operationThroughSqlQuery
