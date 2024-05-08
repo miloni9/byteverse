@@ -1,4 +1,4 @@
-version: 0.0.4
+version: 0.0.5
 jobId: "758"
 jobName: SADP mysql test
 jobType: Source Aligned Data Product
@@ -42,7 +42,7 @@ productState:
         description: ""
   stateStoreType: loadDataFileToTable
   isProfilingEnabled: false
-  updateStrategy: Overwrite
+  updateStrategy: Append
   connection: AyushMySQL
   temporaryPath: /data/tmp/testmysql
   tableName: testmysql
