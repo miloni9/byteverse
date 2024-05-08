@@ -1,4 +1,4 @@
-version: 0.0.5
+version: 0.0.13
 jobId: "758"
 jobName: SADP mysql test
 jobType: Source Aligned Data Product
@@ -42,11 +42,12 @@ productState:
         description: ""
   stateStoreType: loadDataFileToTable
   isProfilingEnabled: false
-  updateStrategy: Append
+  updateStrategy: Deleteinsert
   connection: AyushMySQL
   temporaryPath: /data/tmp/testmysql
   tableName: testmysql
   optional:
+    deleteQuery: DELete from testmysql where id=4
     header: true
     persistDataFrame: false
     addRunIdColumn: false
@@ -61,7 +62,7 @@ transformation:
     inputDataFrameList:
       - inputDataFrame: csv_onprem_miloni_1
         tempViewName: temp
-    query: select * from temp
+    query: select * from temp where id!=4
     optional:
       persistDataFrame: false
       loggingOptions:
