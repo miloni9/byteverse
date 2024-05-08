@@ -1,63 +1,71 @@
-version: 0.0.6
-jobId: "1234"
-jobName: On Prem Test
+version: 0.0.4
+jobId: "758"
+jobName: SADP mysql test
 jobType: Source Aligned Data Product
-alias: abc
+domain: hr
+alias: testwritemode
 discoveryPort:
-  name: On Prem Test
+  name: SADP mysql test
 inputPorts:
-  - alias: Local_Storage_On_Prem_Data_Set_1
-    description: Local Storage On Prem Data Set
-    tags: []
-    extra: {}
-    syncType: pull
-    type: s3-csv
-    dataSetUrn: urn:dv:dataset:94136140-7933-4fbb-9270-a7fc96a79118
-    filter: ""
-    projection: []
-    persistDataFrame: false
-    entity:
+  - alias: csv_onprem_miloni_1
+    isDynamic: true
+    path: /data/tmp/input_data/incr_1.csv
+    optional:
+      persistDataFrame: false
       advanceOptions:
-        mergeSchema: false
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: on-prem-Miloni
+      dataSetUrn: urn:dv:dataset:aac5d786-d6da-472d-bcf7-408c88e3445f
+    type: inputDelimited
 productState:
-  alias: abc
-  refreshInterval: 0 12 * * *
+  isDynamic: true
+  alias: testwritemode
   retentionVersions: ""
-  updateStrategy: Overwrite
   logicalSchema:
     properties:
-      Reference_Transaction_ID:
+      id:
         type: STRING
         description: ""
-      Merchant_Ref_ID:
+      name:
         type: STRING
         description: ""
-      Transaction_Date:
+      modified:
         type: STRING
         description: ""
-      PG_Mode:
+      value:
         type: STRING
         description: ""
-  enforceSchemaMethod: ""
-  enforceSchema: false
-  addRunIdColumn: false
-  enableDataReconciliation: false
+      city:
+        type: STRING
+        description: ""
+  stateStoreType: loadDataFileToTable
   isProfilingEnabled: false
-  tableName: flyte
-  stateStoreType: mysql_mariadb
+  updateStrategy: Overwrite
+  connection: AyushMySQL
+  temporaryPath: /data/tmp/testmysql
+  tableName: testmysql
+  optional:
+    header: true
+    persistDataFrame: false
+    addRunIdColumn: false
+    enableDataReconciliation: false
+    enforceSchema: false
+  refreshInterval: None
 transformation:
-  - alias: Spark_SQL_1
-    type: SQL
-    description: spark_sql
-    query: select Reference_Transaction_ID,Merchant_Ref_ID,Transaction_Date,PG_Mode
-      from flyte
-    sequenceNo: 2
-    references:
-      - alias: Local_Storage_On_Prem_Data_Set_1
-        sqlReference: flyte
+  - isDynamic: true
+    alias: Spark_SQL_1
+    description: sql
+    sequence: 2
+    inputDataFrameList:
+      - inputDataFrame: csv_onprem_miloni_1
+        tempViewName: temp
+    query: select * from temp
+    optional:
+      persistDataFrame: false
+      loggingOptions:
+        printSchema: true
+    type: operationThroughSqlQuery
 controlPort:
   dataQualityRules: {}
-outputPort:
-  subscriptionChannels:
-    - channelType: Postgres
-      queryType: SQL
