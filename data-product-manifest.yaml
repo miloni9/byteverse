@@ -1,145 +1,53 @@
-version: 0.0.3
-jobId: "210"
-jobName: Weather Daily
+version: 0.0.1
+jobId: "883"
+jobName: Secondary Sales Details MPC
 jobType: Source Aligned Data Product
-alias: step_3_to_adp
+developerId: d29d36ef-7c3a-4d30-bbf9-951dddffa9f2
+domain: finance
+alias: write_to_redshift
 discoveryPort:
-  name: Weather Daily
+  name: Secondary Sales Details MPC
 inputPorts:
-  - alias: Weather_API_Daily_1
+  - alias: Secondary_Sales_MPC_1
     isDynamic: true
-    dataProductUrn: urn:dv:dataproduct:75836ba4-cce4-4d25-bc3d-cb96d397f7f4
-    projection: ""
-    filter: ""
-    warehousePath: "***s3StateBucket***"
-    type: readDataIceberg
-    catalogName: glue
+    connection: Postgres MPC
+    tableName/query: secondary_sales_details_zen
     optional:
       persistDataFrame: false
-      advanceOptions:
-        endPoint: s3.undefined.amazonaws.com
-        accessKey: abc
-        secretKey: abc
-      dataProductUrn: urn:dv:dataproduct:75836ba4-cce4-4d25-bc3d-cb96d397f7f4
-    tableName: select * from glue.***catalogReference***.weather_daily
+      enableDataReconciliation: false
+      enforceSchema: false
+      dataSetUrn: urn:dv:dataset:42e202eb-98f9-4547-994d-8d1e92fb6a05
+    type: readPostGreSqlDbUsingJdbc
 productState:
   isDynamic: true
-  alias: step_3_to_adp
+  alias: write_to_redshift
   retentionVersions: ""
-  logicalSchema:
-    properties:
-      City:
-        type: STRING
-        description: ""
-      Region:
-        type: STRING
-        description: ""
-      Country:
-        type: STRING
-        description: ""
-      Latitude:
-        type: STRING
-        description: ""
-      Longitude:
-        type: STRING
-        description: ""
-      Timezone:
-        type: STRING
-        description: ""
-      Local Time:
-        type: STRING
-        description: ""
-      Cloud ID:
-        type: STRING
-        description: ""
-      Feels like Celcius:
-        type: STRING
-        description: ""
-      Feels like fahrenheit:
-        type: STRING
-        description: ""
-      Gust speed in kph:
-        type: STRING
-        description: ""
-      Gust speed in mph:
-        type: STRING
-        description: ""
-      Humidity:
-        type: STRING
-        description: ""
-      Is day time?:
-        type: STRING
-        description: ""
-      Last update:
-        type: STRING
-        description: ""
-      Last updated time in epoch:
-        type: STRING
-        description: ""
-      Precipitation in inch:
-        type: STRING
-        description: ""
-      Precipitation in mm:
-        type: STRING
-        description: ""
-      Pressure:
-        type: STRING
-        description: ""
-      Precipitation in mb:
-        type: STRING
-        description: ""
-      Temperature in celcius:
-        type: STRING
-        description: ""
-      Temperature in fahrenheit:
-        type: STRING
-        description: ""
-      UV:
-        type: STRING
-        description: ""
-      Visibility in km:
-        type: STRING
-        description: ""
-      Visibility in miles:
-        type: STRING
-        description: ""
-      Wind Degree:
-        type: STRING
-        description: ""
-      Wind Direction:
-        type: STRING
-        description: ""
-      Wind in kph:
-        type: STRING
-        description: ""
-      Wind in mph:
-        type: STRING
-        description: ""
-  stateStoreType: loadDataIceberg
+  logicalSchema: ""
+  stateStoreType: writeDataFrameToRedshiftTable
   isProfilingEnabled: false
-  updateStrategy: Overwrite
-  tableName: s3source.weather_daily
-  warehousePath: s3://bp-spark-sql-library-test-acc/adp
-  catalogName: glue
+  updateStrategy: TruncateAndOverwrite
+  connection: redshift-miloni
+  tableName: secondary_sales_mpc
+  endPoint: s3.us-east-1.amazonaws.com
+  temporaryPathS3: s3a://bp-spark-sql-library-test-acc/testRedshiftUpload/
   optional:
+    s3connections: s3 with Role miloni
     persistDataFrame: false
+    addRunIdColumn: false
     enableDataReconciliation: false
-    enforceSchema: true
-    enforceSchemaMethod: Warning
-    catalogType: glue
-  refreshInterval: None
+    enforceSchema: false
+  refreshInterval: 0 10 * * *
 transformation:
-  - alias: Spark_SQL_1
-    type: SQL
-    description: step 2
-    query: select * from sadp
-    sequenceNo: 2
-    references:
-      - alias: Weather_API_Daily_1
-        sqlReference: sadp
+  - isDynamic: true
+    alias: Spark_SQL_1
+    description: transform data
+    sequence: 2
+    inputDataFrameList:
+      - inputDataFrame: Secondary_Sales_MPC_1
+        tempViewName: mpc_sales
+    query: select * from mpc_sales
+    optional:
+      persistDataFrame: false
+    type: operationThroughSqlQuery
 controlPort:
   dataQualityRules: {}
-outputPort:
-  subscriptionChannels:
-    - channelType: Postgres
-      queryType: SQL
