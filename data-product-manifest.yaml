@@ -1,4 +1,4 @@
-version: 0.0.4
+version: 0.0.5
 jobId: "882"
 jobName: Secondary Sales Details
 jobType: Source Aligned Data Product
@@ -254,7 +254,7 @@ productState:
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: s3source.secondary_sales_details
+  tableName: s3source.secondary_sales_details_zen
   warehousePath: s3://bp-spark-sql-library-test-acc/
   catalogName: glue
   optional:
