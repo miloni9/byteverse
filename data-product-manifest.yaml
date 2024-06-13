@@ -1,139 +1,278 @@
-version: 0.0.1
-jobId: "526"
-jobName: weather sadp - miloni copy
+version: 0.0.4
+jobId: "882"
+jobName: Secondary Sales Details
 jobType: Source Aligned Data Product
-domain: sale
-alias: step_3_ice_sadp
+developerId: d29d36ef-7c3a-4d30-bbf9-951dddffa9f2
+domain: finance
+alias: write_to_sales_denorm
 discoveryPort:
-  name: weather sadp - miloni copy
+  name: Secondary Sales Details
 inputPorts:
-  - alias: weather_day_1
+  - alias: Secondary_Sales_1
     isDynamic: true
-    path: s3://byte-etl-externaldemo/weather_data/20230626130122.csv
+    path: s3://bp-spark-sql-library-test-acc/secondary_sales_parquet/
     optional:
       persistDataFrame: false
       advanceOptions:
-        delimiter: ","
+        mergeSchema: true
       enableDataReconciliation: false
       enforceSchema: false
-      connection: S3 with User
-      dataSetUrn: urn:dv:dataset:3a0494b4-86e9-430f-afcb-877a0d9bea95
-    type: inputDelimited
+      connection: Base S3 Connectivity
+      dataSetUrn: urn:dv:dataset:5a075ca4-46b2-4988-ba1b-16c0cdf30f4f
+    type: inputParquet
 productState:
   isDynamic: true
-  alias: step_3_ice_sadp
+  alias: write_to_sales_denorm
   retentionVersions: ""
   logicalSchema:
     properties:
-      City:
+      region:
         type: STRING
         description: ""
-      Region:
+      zsmcode:
         type: STRING
         description: ""
-      Country:
+      zsmname:
         type: STRING
         description: ""
-      Latitude:
+      ahcode:
         type: STRING
         description: ""
-      Longitude:
+      ahname:
         type: STRING
         description: ""
-      Timezone:
+      asmcode:
         type: STRING
         description: ""
-      Local Time:
+      asmname:
         type: STRING
         description: ""
-      Cloud ID:
+      socode:
         type: STRING
         description: ""
-      Feels like Celcius:
+      soname:
         type: STRING
         description: ""
-      Feels like fahrenheit:
+      statename:
         type: STRING
         description: ""
-      Gust speed in kph:
+      town:
         type: STRING
         description: ""
-      Gust speed in mph:
+      stockistcode:
         type: STRING
         description: ""
-      Humidity:
+      stockistname:
         type: STRING
         description: ""
-      Is day time?:
+      stockisttype:
         type: STRING
         description: ""
-      Last update:
+      ssmcode:
         type: STRING
         description: ""
-      Last updated time in epoch:
+      ssmname:
         type: STRING
         description: ""
-      Precipitation in inch:
+      ssmclass:
         type: STRING
         description: ""
-      Precipitation in mm:
+      ssmsubclass:
         type: STRING
         description: ""
-      Pressure:
+      ssmcompcode:
         type: STRING
         description: ""
-      Precipitation in mb:
+      ssmstatus:
         type: STRING
         description: ""
-      Temperature in celcius:
+      retailerid:
         type: STRING
         description: ""
-      Temperature in fahrenheit:
+      retailercode:
         type: STRING
         description: ""
-      UV:
+      retailername:
         type: STRING
         description: ""
-      Visibility in km:
+      nature_of_business:
         type: STRING
         description: ""
-      Visibility in miles:
+      type_of_outlet:
         type: STRING
         description: ""
-      Wind Degree:
+      outlet_class:
         type: STRING
         description: ""
-      Wind Direction:
+      rtrcmpcode:
         type: STRING
         description: ""
-      Wind in kph:
+      reachcode:
         type: STRING
         description: ""
-      Wind in mph:
+      giscode:
+        type: STRING
+        description: ""
+      gsttinnumber:
+        type: STRING
+        description: ""
+      year:
+        type: STRING
+        description: ""
+      month:
+        type: STRING
+        description: ""
+      billno:
+        type: STRING
+        description: ""
+      billdate:
+        type: DATETIME
+        description: ""
+      bgcode:
+        type: STRING
+        description: ""
+      bgname:
+        type: STRING
+        description: ""
+      categoryid:
+        type: STRING
+        description: ""
+      categorycode:
+        type: STRING
+        description: ""
+      category:
+        type: STRING
+        description: ""
+      asbrandid:
+        type: STRING
+        description: ""
+      brandcode:
+        type: STRING
+        description: ""
+      brand:
+        type: STRING
+        description: ""
+      variantid:
+        type: STRING
+        description: ""
+      variantcode:
+        type: STRING
+        description: ""
+      variant:
+        type: STRING
+        description: ""
+      skuid:
+        type: STRING
+        description: ""
+      skucode:
+        type: STRING
+        description: ""
+      sku:
+        type: STRING
+        description: ""
+      productid:
+        type: STRING
+        description: ""
+      productcode:
+        type: STRING
+        description: ""
+      productname:
+        type: STRING
+        description: ""
+      batchno:
+        type: STRING
+        description: ""
+      productupc:
+        type: STRING
+        description: ""
+      drishtiorderno:
+        type: STRING
+        description: ""
+      pono:
+        type: STRING
+        description: ""
+      podate:
+        type: DATETIME
+        description: ""
+      sfaorderno:
+        type: STRING
+        description: ""
+      sfaordate:
+        type: DATETIME
+        description: ""
+      sfalat:
+        type: STRING
+        description: ""
+      sfalng:
+        type: STRING
+        description: ""
+      starttime:
+        type: STRING
+        description: ""
+      endtime:
+        type: STRING
+        description: ""
+      pcs:
+        type: STRING
+        description: ""
+      cases:
+        type: STRING
+        description: ""
+      value_ptr:
+        type: STRING
+        description: ""
+      salesvalue:
+        type: STRING
+        description: ""
+      value_pts:
+        type: STRING
+        description: ""
+      newproduct:
+        type: STRING
+        description: ""
+      test:
+        type: STRING
+        description: ""
+      state:
+        type: STRING
+        description: ""
+      district:
+        type: STRING
+        description: ""
+      focusbrand:
+        type: STRING
+        description: ""
+      design:
+        type: STRING
+        description: ""
+      bucode:
+        type: STRING
+        description: ""
+      buname:
         type: STRING
         description: ""
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: s3Source.weather_sadp
+  tableName: s3source.secondary_sales_details
   warehousePath: s3://bp-spark-sql-library-test-acc/
   catalogName: glue
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: true
+    enforceSchema: false
     enforceSchemaMethod: Warning
     catalogType: glue
   refreshInterval: None
 transformation:
   - isDynamic: true
     alias: Spark_SQL_1
-    description: step 2
+    description: transform data
     sequence: 2
     inputDataFrameList:
-      - inputDataFrame: weather_day_1
-        tempViewName: ""
-    query: select * from sadp
+      - inputDataFrame: Secondary_Sales_1
+        tempViewName: sale
+    query: select * from sale
     optional:
       persistDataFrame: false
     type: operationThroughSqlQuery
