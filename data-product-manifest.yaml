@@ -1,10 +1,10 @@
 version: 0.0.3
 jobId: "210"
-jobName: SADP Test- Miloni
+jobName: Weather Daily
 jobType: Source Aligned Data Product
 alias: step_3_to_adp
 discoveryPort:
-  name: SADP Test- Miloni
+  name: Weather Daily
 inputPorts:
   - alias: Weather_API_Daily_1
     isDynamic: true
@@ -118,7 +118,7 @@ productState:
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: s3Source.adp_weather
+  tableName: s3source.weather_daily
   warehousePath: s3://bp-spark-sql-library-test-acc/adp
   catalogName: glue
   optional:
