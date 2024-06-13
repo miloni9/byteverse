@@ -1,145 +1,307 @@
-version: 0.0.9
-jobId: "208"
-jobName: SADP to SADP Sale to operation
+version: 0.0.1
+jobId: "884"
+jobName: Secondary Sales Details iceberg
 jobType: Source Aligned Data Product
-alias: step_3
+developerId: d29d36ef-7c3a-4d30-bbf9-951dddffa9f2
+domain: finance
+alias: write_to_redshift
 discoveryPort:
-  name: SADP to SADP Sale to operation
+  name: Secondary Sales Details iceberg
 inputPorts:
-  - alias: Test_Connection_-_with_Iceberg_2_-_Miloni_1
+  - alias: Secondary_Sales_Details_1
     isDynamic: true
-    dataProductUrn: urn:dv:dataproduct:d4e755ac-acae-4d10-a4cf-09472205afac
-    projection: ""
+    dataProductUrn: urn:dv:dataproduct:956fbff3-8b5e-48fe-a11c-147c4c5788e7
     filter: ""
-    warehousePath: "***s3StateBucket***"
-    type: readDataIceberg
-    catalogName: glue
+    projection: ""
     optional:
       persistDataFrame: false
-      advanceOptions:
-        endPoint: s3.undefined.amazonaws.com
-        accessKey: abc
-        secretKey: abc
-      dataProductUrn: urn:dv:dataproduct:d4e755ac-acae-4d10-a4cf-09472205afac
-    tableName: select * from glue.s3source.weather_123_3212
+    type: dataproduct
 productState:
   isDynamic: true
-  alias: step_3
+  alias: write_to_redshift
   retentionVersions: ""
   logicalSchema:
     properties:
-      City:
+      pk_id:
         type: STRING
         description: ""
-      Region:
+      granularity:
         type: STRING
         description: ""
-      Country:
+      rowid:
         type: STRING
         description: ""
-      Latitude:
+      formatting:
         type: STRING
         description: ""
-      Longitude:
+      createddate:
         type: STRING
         description: ""
-      Timezone:
+      modifieddate:
         type: STRING
         description: ""
-      Local Time:
+      createdby:
         type: STRING
         description: ""
-      Cloud ID:
+      modifiedby:
         type: STRING
         description: ""
-      Feels like Celcius:
+      createdip:
         type: STRING
         description: ""
-      Feels like fahrenheit:
+      modifiedip:
         type: STRING
         description: ""
-      Gust speed in kph:
+      region:
         type: STRING
         description: ""
-      Gust speed in mph:
+      zsmcode:
         type: STRING
         description: ""
-      Humidity:
+      zsmname:
         type: STRING
         description: ""
-      Is day time?:
+      ahcode:
         type: STRING
         description: ""
-      Last update:
+      ahname:
         type: STRING
         description: ""
-      Last updated time in epoch:
+      asmcode:
         type: STRING
         description: ""
-      Precipitation in inch:
+      asmname:
         type: STRING
         description: ""
-      Precipitation in mm:
+      socode:
         type: STRING
         description: ""
-      Pressure:
+      soname:
         type: STRING
         description: ""
-      Precipitation in mb:
+      statename:
         type: STRING
         description: ""
-      Temperature in celcius:
+      town:
         type: STRING
         description: ""
-      Temperature in fahrenheit:
+      stockistcode:
         type: STRING
         description: ""
-      UV:
+      stockistname:
         type: STRING
         description: ""
-      Visibility in km:
+      stockisttype:
         type: STRING
         description: ""
-      Visibility in miles:
+      ssmcode:
         type: STRING
         description: ""
-      Wind Degree:
+      ssmname:
         type: STRING
         description: ""
-      Wind Direction:
+      ssmclass:
         type: STRING
         description: ""
-      Wind in kph:
+      ssmsubclass:
         type: STRING
         description: ""
-      Wind in mph:
+      ssmcompcode:
         type: STRING
         description: ""
-  stateStoreType: loadDataIceberg
+      ssmstatus:
+        type: STRING
+        description: ""
+      retailerid:
+        type: STRING
+        description: ""
+      retailercode:
+        type: STRING
+        description: ""
+      retailername:
+        type: STRING
+        description: ""
+      nature_of_business:
+        type: STRING
+        description: ""
+      type_of_outlet:
+        type: STRING
+        description: ""
+      outlet_class:
+        type: STRING
+        description: ""
+      rtrcmpcode:
+        type: STRING
+        description: ""
+      reachcode:
+        type: STRING
+        description: ""
+      giscode:
+        type: STRING
+        description: ""
+      gsttinnumber:
+        type: STRING
+        description: ""
+      year:
+        type: STRING
+        description: ""
+      month:
+        type: STRING
+        description: ""
+      billno:
+        type: STRING
+        description: ""
+      billdate:
+        type: DATETIME
+        description: ""
+      bgcode:
+        type: STRING
+        description: ""
+      bgname:
+        type: STRING
+        description: ""
+      categoryid:
+        type: STRING
+        description: ""
+      categorycode:
+        type: STRING
+        description: ""
+      category:
+        type: STRING
+        description: ""
+      asbrandid:
+        type: STRING
+        description: ""
+      brandcode:
+        type: STRING
+        description: ""
+      brand:
+        type: STRING
+        description: ""
+      variantid:
+        type: STRING
+        description: ""
+      variantcode:
+        type: STRING
+        description: ""
+      variant:
+        type: STRING
+        description: ""
+      skuid:
+        type: STRING
+        description: ""
+      skucode:
+        type: STRING
+        description: ""
+      sku:
+        type: STRING
+        description: ""
+      productid:
+        type: STRING
+        description: ""
+      productcode:
+        type: STRING
+        description: ""
+      productname:
+        type: STRING
+        description: ""
+      batchno:
+        type: STRING
+        description: ""
+      productupc:
+        type: STRING
+        description: ""
+      drishtiorderno:
+        type: STRING
+        description: ""
+      pono:
+        type: STRING
+        description: ""
+      podate:
+        type: DATETIME
+        description: ""
+      sfaorderno:
+        type: STRING
+        description: ""
+      sfaordate:
+        type: DATETIME
+        description: ""
+      sfalat:
+        type: STRING
+        description: ""
+      sfalng:
+        type: STRING
+        description: ""
+      starttime:
+        type: STRING
+        description: ""
+      endtime:
+        type: STRING
+        description: ""
+      pcs:
+        type: STRING
+        description: ""
+      cases:
+        type: STRING
+        description: ""
+      value_ptr:
+        type: STRING
+        description: ""
+      salesvalue:
+        type: STRING
+        description: ""
+      value_pts:
+        type: STRING
+        description: ""
+      newproduct:
+        type: STRING
+        description: ""
+      test:
+        type: STRING
+        description: ""
+      state:
+        type: STRING
+        description: ""
+      district:
+        type: STRING
+        description: ""
+      focusbrand:
+        type: STRING
+        description: ""
+      design:
+        type: STRING
+        description: ""
+      bucode:
+        type: STRING
+        description: ""
+      buname:
+        type: STRING
+        description: ""
+  stateStoreType: writeDataFrameToRedshiftTable
   isProfilingEnabled: false
-  updateStrategy: Overwrite
-  tableName: s3Source.delta_sadp_2
-  warehousePath: s3://byte-etl-externaldemo/sadp_delta_ice/
-  catalogName: glue
+  updateStrategy: TruncateAndOverwrite
+  connection: redshift-miloni
+  tableName: secondary_sales_mpc
+  endPoint: s3.us-east-1.amazonaws.com
+  temporaryPathS3: s3://bp-spark-sql-library-test-acc/testRedshiftUpload/
   optional:
+    s3connections: s3 with Role miloni
     persistDataFrame: false
+    addRunIdColumn: false
     enableDataReconciliation: false
     enforceSchema: false
-    enforceSchemaMethod: Warning
-    catalogType: glue
-  refreshInterval: None
+  refreshInterval: 0 10 * * *
 transformation:
-  - alias: Spark_SQL_1
-    type: SQL
-    description: "step 2 "
-    query: select * from sadp
-    sequenceNo: 2
-    references:
-      - alias: Test_Connection_-_with_Iceberg_2_-_Miloni_1
-        sqlReference: sadp
+  - isDynamic: true
+    alias: Spark_SQL_1
+    description: transform data
+    sequence: 2
+    inputDataFrameList:
+      - inputDataFrame: Secondary_Sales_Details_1
+        tempViewName: sales
+    query: select * from sales
+    optional:
+      persistDataFrame: false
+    type: operationThroughSqlQuery
 controlPort:
   dataQualityRules: {}
-outputPort:
-  subscriptionChannels:
-    - channelType: Postgres
-      queryType: SQL
