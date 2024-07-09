@@ -1,63 +1,133 @@
-version: 0.0.6
-jobId: "1234"
-jobName: On Prem Test
+version: 0.0.2
+jobId: "123"
+jobName: Predictive Maintenance System
 jobType: Source Aligned Data Product
-alias: abc
+developerId: 28d152b5-9253-4a1c-9ea3-ea35f2a51243
+requestDataproductID: 84847c0b-5b32-43fd-b4e4-f05033bbfae2
+domain: manufacturing
+alias: Predictive_Maintenance_System_Data_Product
 discoveryPort:
-  name: On Prem Test
+  name: Predictive Maintenance System
 inputPorts:
-  - alias: Local_Storage_On_Prem_Data_Set_1
-    description: Local Storage On Prem Data Set
-    tags: []
-    extra: {}
-    syncType: pull
-    type: s3-csv
-    dataSetUrn: urn:dv:dataset:94136140-7933-4fbb-9270-a7fc96a79118
-    filter: ""
-    projection: []
-    persistDataFrame: false
-    entity:
+  - alias: Sensor_Data_1
+    isDynamic: true
+    path: gs://manufacturing_domain/maintenance_system_dataset/sensor_data_100.csv
+    optional:
+      persistDataFrame: false
       advanceOptions:
-        mergeSchema: false
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: Manufacturing GCS
+      dataSetUrn: urn:dv:dataset:437e90f6-7f69-4ada-9a93-2fd9f41af6fb
+    type: inputDelimited
+  - alias: Production_Data_1
+    isDynamic: true
+    path: gs://manufacturing_domain/maintenance_system_dataset/production_data_100.csv
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: Manufacturing GCS
+      dataSetUrn: urn:dv:dataset:7795f591-8260-4b5f-a942-c94a95af727a
+    type: inputDelimited
+  - alias: Operational_Data_1
+    isDynamic: true
+    path: gs://manufacturing_domain/maintenance_system_dataset/operational_data_100.csv
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: Manufacturing GCS
+      dataSetUrn: urn:dv:dataset:4e70a6b5-3a59-4d62-a686-42769c37db92
+    type: inputDelimited
+  - alias: Maintenance_Data_1
+    isDynamic: true
+    path: gs://manufacturing_domain/maintenance_system_dataset/maintenance_data_100.csv
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: Manufacturing GCS
+      dataSetUrn: urn:dv:dataset:715cf17c-99f1-4cd1-884a-ae0951d98641
+    type: inputDelimited
+  - alias: Environmental_Data_1
+    isDynamic: true
+    path: gs://manufacturing_domain/maintenance_system_dataset/environmental_data_100.csv
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: Manufacturing GCS
+      dataSetUrn: urn:dv:dataset:a168467f-e39f-4019-a8dd-ca8f8946dcd2
+    type: inputDelimited
 productState:
-  alias: abc
-  refreshInterval: 0 12 * * *
+  isDynamic: true
+  alias: Predictive_Maintenance_System_Data_Product
   retentionVersions: ""
-  updateStrategy: Overwrite
-  logicalSchema:
-    properties:
-      Reference_Transaction_ID:
-        type: STRING
-        description: ""
-      Merchant_Ref_ID:
-        type: STRING
-        description: ""
-      Transaction_Date:
-        type: STRING
-        description: ""
-      PG_Mode:
-        type: STRING
-        description: ""
-  enforceSchemaMethod: ""
-  enforceSchema: false
-  addRunIdColumn: false
-  enableDataReconciliation: false
+  logicalSchema: ""
+  stateStoreType: loadDataIceberg
   isProfilingEnabled: false
-  tableName: flyte
-  stateStoreType: mysql_mariadb
+  updateStrategy: Overwrite
+  tableName: iceberg_db.predictive_maintenance_system
+  warehousePath: gs://manufacturing_domain/manufacturing_warehouse/
+  catalogName: biglake
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: false
+    enforceSchemaMethod: Warning
+    catalogType: biglake
+    loggingOptions:
+      printSchema: true
+  refreshInterval: 30 6 * * *
 transformation:
-  - alias: Spark_SQL_1
-    type: SQL
-    description: spark_sql
-    query: select Reference_Transaction_ID,Merchant_Ref_ID,Transaction_Date,PG_Mode
-      from flyte
-    sequenceNo: 2
-    references:
-      - alias: Local_Storage_On_Prem_Data_Set_1
-        sqlReference: flyte
+  - isDynamic: true
+    alias: TransformationJoin
+    description: transform to join
+    sequence: 6
+    inputDataFrameList:
+      - inputDataFrame: Operational_Data_1
+        tempViewName: operational_data
+      - inputDataFrame: Environmental_Data_1
+        tempViewName: environmental_data
+      - inputDataFrame: Sensor_Data_1
+        tempViewName: sensor_data
+      - inputDataFrame: Production_Data_1
+        tempViewName: production_data
+      - inputDataFrame: Maintenance_Data_1
+        tempViewName: maintenance_data
+    query: SELECT      full_data.*,      pd.production_volume, pd.production_speed,
+      pd.defect_rate
+      FROM      (SELECT          integrated_data.*,          md.maintenance_date,
+      md.maintenance_type,
+      md.components_replaced      FROM          (SELECT              combined_data.*,              ed.temperature
+      AS environmental_temperature, ed.humidity,
+      ed.dust_level          FROM              (SELECT                  sd.timestamp,
+      sd.machine_id, sd.vibration, sd.temperature AS sensor_temperature,
+      sd.pressure, sd.acoustic,                 od.utilization,
+      od.operational_hours, od.load, od.temperature AS
+      operational_temperature              FROM                  sensor_data
+      sd              JOIN                  operational_data od ON sd.timestamp
+      = od.timestamp AND sd.machine_id = od.machine_id)
+      combined_data          LEFT JOIN              environmental_data ed ON
+      combined_data.timestamp = ed.timestamp) integrated_data      LEFT
+      JOIN          maintenance_data md ON integrated_data.machine_id =
+      md.machine_id AND DATE(integrated_data.timestamp) = md.maintenance_date)
+      full_data JOIN      production_data pd ON full_data.timestamp =
+      pd.timestamp AND full_data.machine_id = pd.machine_id;
+    optional:
+      persistDataFrame: false
+      loggingOptions:
+        printSchema: true
+    type: operationThroughSqlQuery
 controlPort:
   dataQualityRules: {}
-outputPort:
-  subscriptionChannels:
-    - channelType: Postgres
-      queryType: SQL
