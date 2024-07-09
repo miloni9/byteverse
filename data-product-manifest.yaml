@@ -1,4 +1,4 @@
-version: 0.0.4
+version: 0.0.7
 jobId: "123"
 jobName: Predictive Maintenance System
 jobType: Source Aligned Data Product
@@ -73,7 +73,62 @@ productState:
   isDynamic: true
   alias: Predictive_Maintenance_System_Data_Product
   retentionVersions: ""
-  logicalSchema: ""
+  logicalSchema:
+    properties:
+      sensor_timestamp:
+        type: DATETIME
+        description: ""
+      machine_id:
+        type: STRING
+        description: ""
+      vibration:
+        type: STRING
+        description: ""
+      sensor_temperature:
+        type: STRING
+        description: ""
+      pressure:
+        type: STRING
+        description: ""
+      acoustic:
+        type: STRING
+        description: ""
+      utilization:
+        type: STRING
+        description: ""
+      operational_hours:
+        type: STRING
+        description: ""
+      load:
+        type: STRING
+        description: ""
+      environmental_temperature:
+        type: STRING
+        description: ""
+      humidity:
+        type: STRING
+        description: ""
+      dust_level:
+        type: STRING
+        description: ""
+      maintenance_date:
+        type: STRING
+        description: ""
+      maintenance_type:
+        type: STRING
+        description: ""
+      components_replaced:
+        type: STRING
+        description: ""
+      production_volume:
+        type: STRING
+        description: ""
+      production_speed:
+        type: STRING
+        description: ""
+      defect_rate:
+        type: STRING
+        description: ""
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
@@ -120,11 +175,12 @@ transformation:
       sd              JOIN                  operational_data od ON sd.timestamp
       = od.timestamp AND sd.machine_id = od.machine_id)
       combined_data          LEFT JOIN              environmental_data ed ON
-      combined_data.timestamp = ed.timestamp) integrated_data      LEFT
+      combined_data.sensor_timestamp = ed.timestamp) integrated_data      LEFT
       JOIN          maintenance_data md ON integrated_data.machine_id =
-      md.machine_id AND DATE(integrated_data.timestamp) = md.maintenance_date)
-      full_data JOIN      production_data pd ON full_data.timestamp =
-      pd.timestamp AND full_data.machine_id = pd.machine_id;"
+      md.machine_id AND DATE(integrated_data.sensor_timestamp) =
+      md.maintenance_date) full_data JOIN      production_data pd ON
+      full_data.sensor_timestamp = pd.timestamp AND full_data.machine_id =
+      pd.machine_id;"
     optional:
       persistDataFrame: false
       loggingOptions:
