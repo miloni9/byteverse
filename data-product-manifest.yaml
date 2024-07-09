@@ -1,4 +1,4 @@
-version: 0.0.3
+version: 0.0.4
 jobId: "123"
 jobName: Predictive Maintenance System
 jobType: Source Aligned Data Product
@@ -112,10 +112,10 @@ transformation:
       md.components_replaced      FROM          (SELECT              combined_d\
       ata.*,              ed.temperature AS environmental_temperature,
       ed.humidity,
-      ed.dust_level          FROM              (SELECT                  sd.time\
-      stamp, sd.machine_id, sd.vibration, sd.temperature AS sensor_temperature,
-      sd.pressure, sd.acoustic,                 od.utilization,
-      od.operational_hours,
+      ed.dust_level          FROM              (SELECT                  cast(sd\
+      .timestamp as timestamp) sensor_timestamp, sd.machine_id, sd.vibration,
+      sd.temperature AS sensor_temperature, sd.pressure,
+      sd.acoustic,                 od.utilization, od.operational_hours,
       od.load              FROM                  sensor_data
       sd              JOIN                  operational_data od ON sd.timestamp
       = od.timestamp AND sd.machine_id = od.machine_id)
