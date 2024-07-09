@@ -1,4 +1,4 @@
-version: 0.0.2
+version: 0.0.3
 jobId: "123"
 jobName: Predictive Maintenance System
 jobType: Source Aligned Data Product
@@ -105,17 +105,18 @@ transformation:
         tempViewName: production_data
       - inputDataFrame: Maintenance_Data_1
         tempViewName: maintenance_data
-    query: SELECT      full_data.*,      pd.production_volume, pd.production_speed,
-      pd.defect_rate
-      FROM      (SELECT          integrated_data.*,          md.maintenance_date,
-      md.maintenance_type,
-      md.components_replaced      FROM          (SELECT              combined_data.*,              ed.temperature
-      AS environmental_temperature, ed.humidity,
-      ed.dust_level          FROM              (SELECT                  sd.timestamp,
-      sd.machine_id, sd.vibration, sd.temperature AS sensor_temperature,
+    query: " SELECT      full_data.*,      pd.production_volume,
+      pd.production_speed, pd.defect_rate
+      FROM      (SELECT          integrated_data.*,          md.maintenance_dat\
+      e, md.maintenance_type,
+      md.components_replaced      FROM          (SELECT              combined_d\
+      ata.*,              ed.temperature AS environmental_temperature,
+      ed.humidity,
+      ed.dust_level          FROM              (SELECT                  sd.time\
+      stamp, sd.machine_id, sd.vibration, sd.temperature AS sensor_temperature,
       sd.pressure, sd.acoustic,                 od.utilization,
-      od.operational_hours, od.load, od.temperature AS
-      operational_temperature              FROM                  sensor_data
+      od.operational_hours,
+      od.load              FROM                  sensor_data
       sd              JOIN                  operational_data od ON sd.timestamp
       = od.timestamp AND sd.machine_id = od.machine_id)
       combined_data          LEFT JOIN              environmental_data ed ON
@@ -123,7 +124,7 @@ transformation:
       JOIN          maintenance_data md ON integrated_data.machine_id =
       md.machine_id AND DATE(integrated_data.timestamp) = md.maintenance_date)
       full_data JOIN      production_data pd ON full_data.timestamp =
-      pd.timestamp AND full_data.machine_id = pd.machine_id;
+      pd.timestamp AND full_data.machine_id = pd.machine_id;"
     optional:
       persistDataFrame: false
       loggingOptions:
