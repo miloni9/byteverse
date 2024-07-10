@@ -1,4 +1,4 @@
-version: 0.0.8
+version: 0.0.9
 jobId: "123"
 jobName: Predictive Maintenance System
 jobType: Source Aligned Data Product
@@ -77,58 +77,76 @@ productState:
     properties:
       sensor_timestamp:
         type: DATETIME
-        description: ""
+        description: The timestamp of when the sensor data was recorded.
+        isPII: false
       machine_id:
         type: STRING
-        description: ""
+        description: Unique identifier for the machine.
+        isPII: false
       vibration:
         type: STRING
-        description: ""
+        description: Vibration level of the machine.
+        isPII: false
       sensor_temperature:
         type: STRING
-        description: ""
+        description: Temperature reading from the sensor.
+        isPII: false
       pressure:
         type: STRING
-        description: ""
+        description: Pressure level in the machine.
+        isPII: false
       acoustic:
         type: STRING
-        description: ""
+        description: Acoustic level around the machine.
+        isPII: false
       utilization:
         type: STRING
-        description: ""
+        description: Utilization percentage of the machine.
+        isPII: false
       operational_hours:
         type: STRING
-        description: ""
+        description: Total operational hours of the machine.
+        isPII: false
       load:
         type: STRING
-        description: ""
+        description: Current load on the machine.
+        isPII: false
       environmental_temperature:
         type: STRING
-        description: ""
+        description: Ambient temperature around the machine.
+        isPII: false
       humidity:
         type: STRING
-        description: ""
+        description: Humidity level in the environment.
+        isPII: false
       dust_level:
         type: STRING
-        description: ""
+        description: Dust level in the environment.
+        isPII: false
       maintenance_date:
         type: STRING
-        description: ""
+        description: Date of the last maintenance.
+        isPII: false
       maintenance_type:
         type: STRING
-        description: ""
+        description: Type of maintenance performed.
+        isPII: false
       components_replaced:
         type: STRING
-        description: ""
+        description: List of components replaced during maintenance.
+        isPII: false
       production_volume:
         type: STRING
-        description: ""
+        description: Volume of production output.
+        isPII: false
       production_speed:
         type: STRING
-        description: ""
+        description: Speed of production process.
+        isPII: false
       defect_rate:
         type: STRING
-        description: ""
+        description: Rate of defective products produced.
+        isPII: false
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
