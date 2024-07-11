@@ -1,4 +1,4 @@
-version: 0.0.9
+version: 0.0.15
 jobId: "123"
 jobName: Predictive Maintenance System
 jobType: Source Aligned Data Product
@@ -11,64 +11,64 @@ discoveryPort:
 inputPorts:
   - alias: Sensor_Data_1
     isDynamic: true
-    path: gs://manufacturing_domain/maintenance_system_dataset/sensor_data_100.csv
+    path: gs://manufacturing_domain/maintenance_system_dataset/sensor_data/
     optional:
       persistDataFrame: false
       advanceOptions:
-        delimiter: ","
+        mergeSchema: true
       enableDataReconciliation: false
       enforceSchema: false
       connection: Manufacturing GCS
-      dataSetUrn: urn:dv:dataset:437e90f6-7f69-4ada-9a93-2fd9f41af6fb
-    type: inputDelimited
-  - alias: Production_Data_1
-    isDynamic: true
-    path: gs://manufacturing_domain/maintenance_system_dataset/production_data_100.csv
-    optional:
-      persistDataFrame: false
-      advanceOptions:
-        delimiter: ","
-      enableDataReconciliation: false
-      enforceSchema: false
-      connection: Manufacturing GCS
-      dataSetUrn: urn:dv:dataset:7795f591-8260-4b5f-a942-c94a95af727a
-    type: inputDelimited
-  - alias: Operational_Data_1
-    isDynamic: true
-    path: gs://manufacturing_domain/maintenance_system_dataset/operational_data_100.csv
-    optional:
-      persistDataFrame: false
-      advanceOptions:
-        delimiter: ","
-      enableDataReconciliation: false
-      enforceSchema: false
-      connection: Manufacturing GCS
-      dataSetUrn: urn:dv:dataset:4e70a6b5-3a59-4d62-a686-42769c37db92
-    type: inputDelimited
+      dataSetUrn: urn:dv:dataset:c1b0f47b-2b79-4fc7-a6ef-743108412d7b
+    type: inputParquet
   - alias: Maintenance_Data_1
     isDynamic: true
-    path: gs://manufacturing_domain/maintenance_system_dataset/maintenance_data_100.csv
+    path: gs://manufacturing_domain/maintenance_system_dataset/maintenance_data/
     optional:
       persistDataFrame: false
       advanceOptions:
-        delimiter: ","
+        mergeSchema: true
       enableDataReconciliation: false
       enforceSchema: false
       connection: Manufacturing GCS
-      dataSetUrn: urn:dv:dataset:715cf17c-99f1-4cd1-884a-ae0951d98641
-    type: inputDelimited
+      dataSetUrn: urn:dv:dataset:0e43dba7-cbbf-4a2a-a1ed-3d3b662ae35e
+    type: inputParquet
+  - alias: Operational_Data_1
+    isDynamic: true
+    path: gs://manufacturing_domain/maintenance_system_dataset/operational_data/
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        mergeSchema: true
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: Manufacturing GCS
+      dataSetUrn: urn:dv:dataset:c1d7a3b1-0fcc-42d1-872f-51e00c9e4393
+    type: inputParquet
   - alias: Environmental_Data_1
     isDynamic: true
-    path: gs://manufacturing_domain/maintenance_system_dataset/environmental_data_100.csv
+    path: gs://manufacturing_domain/maintenance_system_dataset/environmental_data/
     optional:
       persistDataFrame: false
       advanceOptions:
-        delimiter: ","
+        mergeSchema: true
       enableDataReconciliation: false
       enforceSchema: false
       connection: Manufacturing GCS
-      dataSetUrn: urn:dv:dataset:a168467f-e39f-4019-a8dd-ca8f8946dcd2
-    type: inputDelimited
+      dataSetUrn: urn:dv:dataset:1a60a60a-fb51-4de5-8da3-893ea41989bc
+    type: inputParquet
+  - alias: Production_Data_1
+    isDynamic: true
+    path: gs://manufacturing_domain/maintenance_system_dataset/production_data/
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        mergeSchema: true
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: Manufacturing GCS
+      dataSetUrn: urn:dv:dataset:3adeb8d9-e60b-41f8-a52e-530d26d266a1
+    type: inputParquet
 productState:
   isDynamic: true
   alias: Predictive_Maintenance_System_Data_Product
@@ -161,6 +161,7 @@ productState:
     catalogType: biglake
     loggingOptions:
       printSchema: true
+      showData: true
   refreshInterval: 30 6 * * *
 transformation:
   - isDynamic: true
@@ -168,16 +169,16 @@ transformation:
     description: transform to join
     sequence: 6
     inputDataFrameList:
-      - inputDataFrame: Operational_Data_1
-        tempViewName: operational_data
-      - inputDataFrame: Environmental_Data_1
-        tempViewName: environmental_data
       - inputDataFrame: Sensor_Data_1
         tempViewName: sensor_data
-      - inputDataFrame: Production_Data_1
-        tempViewName: production_data
+      - inputDataFrame: Operational_Data_1
+        tempViewName: operational_data
       - inputDataFrame: Maintenance_Data_1
         tempViewName: maintenance_data
+      - inputDataFrame: Environmental_Data_1
+        tempViewName: environmental_data
+      - inputDataFrame: Production_Data_1
+        tempViewName: production_data
     query: " SELECT      full_data.*,      pd.production_volume,
       pd.production_speed, pd.defect_rate
       FROM      (SELECT          integrated_data.*,          md.maintenance_dat\
