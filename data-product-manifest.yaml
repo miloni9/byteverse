@@ -1,4 +1,4 @@
-version: 0.0.17
+version: 0.0.18
 jobId: "123"
 jobName: Predictive Maintenance System
 jobType: Source Aligned Data Product
@@ -150,8 +150,8 @@ productState:
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: maintenance_db.predictive_maintenance_system
-  warehousePath: gs://manufacturing_domain/manufacturing_warehouse/
+  tableName: iceberg_db.predictive_maintenance_system
+  warehousePath: gs://dabur_poc_inutdata/iceberg_warehouse/
   catalogName: biglake
   optional:
     persistDataFrame: false
