@@ -1,4 +1,4 @@
-version: 0.0.19
+version: 0.0.21
 jobId: "123"
 jobName: Predictive Maintenance System
 jobType: Source Aligned Data Product
@@ -148,7 +148,7 @@ productState:
         description: Rate of defective products produced.
         isPII: false
   stateStoreType: loadDataIceberg
-  isProfilingEnabled: false
+  isProfilingEnabled: true
   updateStrategy: Overwrite
   tableName: maintenance_db.predictive_maintenance_system
   warehousePath: gs://manufacturing_domain/manufacturing_warehouse
@@ -206,4 +206,16 @@ transformation:
         printSchema: true
     type: operationThroughSqlQuery
 controlPort:
-  dataQualityRules: {}
+  dataQualityRules:
+    RecordCountCheck:
+      productState:
+        expression: ">="
+        number: 10
+        referenceAlias: Predictive_Maintenance_System_Data_Product
+    NullValueCheck:
+      productState:
+        checks:
+          - column: sensor_temperature
+            expression: <=
+            number: 0
+        referenceAlias: Predictive_Maintenance_System_Data_Product
