@@ -1,4 +1,4 @@
-version: 0.0.22
+version: 0.0.23
 jobId: "123"
 jobName: Predictive Maintenance System
 jobType: Source Aligned Data Product
@@ -211,11 +211,4 @@ controlPort:
       productState:
         expression: ">="
         number: 10
-        referenceAlias: Predictive_Maintenance_System_Data_Product
-    NullValueCheck:
-      productState:
-        checks:
-          - column: sensor_temperature
-            expression: <=
-            number: 0
         referenceAlias: Predictive_Maintenance_System_Data_Product
