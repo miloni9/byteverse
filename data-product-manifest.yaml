@@ -1,51 +1,50 @@
-version: 0.0.3
-jobId: "883"
-jobName: Secondary Sales Details MPC
+jobId: "983"
+jobName: Test DP
 jobType: Source Aligned Data Product
-developerId: d29d36ef-7c3a-4d30-bbf9-951dddffa9f2
-domain: finance
-alias: write_to_redshift
+developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
+domain: logistics
+alias: write_delta
 discoveryPort:
-  name: Secondary Sales Details MPC
+  name: Test DP
 inputPorts:
-  - alias: Secondary_Sales_MPC_1
+  - alias: logistics_dataset_1
     isDynamic: true
-    connection: Postgres MPC
-    tableName/query: s3source.secondary_sales_details_zen
+    path: wasbs://bytedevdata@byteazuredev.blob.core.windows.net/content_master/
     optional:
       persistDataFrame: false
+      advanceOptions:
+        mergeSchema: true
       enableDataReconciliation: false
       enforceSchema: false
-      dataSetUrn: urn:dv:dataset:42e202eb-98f9-4547-994d-8d1e92fb6a05
-    type: readPostGreSqlDbUsingJdbc
+      connection: testing
+      dataSetUrn: urn:dv:dataset:8c25db64-4b0e-4922-89ff-f596fd3be7e1
+    type: inputParquet
 productState:
   isDynamic: true
-  alias: write_to_redshift
+  alias: write_delta
   retentionVersions: ""
   logicalSchema: ""
-  stateStoreType: writeDataFrameToRedshiftTable
+  stateStoreType: writeDataFrameToDeltaTable
   isProfilingEnabled: false
-  updateStrategy: TruncateAndOverwrite
-  connection: redshift-miloni
-  tableName: secondary_sales_mpc
-  endPoint: s3.us-east-1.amazonaws.com
-  temporaryPathS3: s3a://bp-spark-sql-library-test-acc/testRedshiftUpload/
+  updateStrategy: Overwrite
+  tableWritePath: wasbs://bytedevdata@byteazuredev.blob.core.windows.net/output_delta/
   optional:
-    s3connections: s3 with Role miloni
     persistDataFrame: false
-    addRunIdColumn: false
     enableDataReconciliation: false
     enforceSchema: false
-  refreshInterval: 0 10 * * *
+    loggingOptions:
+      printSchema: true
+      count: true
+  refreshInterval: None
 transformation:
   - isDynamic: true
     alias: Spark_SQL_1
-    description: transform data
+    description: select data
     sequence: 2
     inputDataFrameList:
-      - inputDataFrame: Secondary_Sales_MPC_1
-        tempViewName: mpc_sales
-    query: select * from mpc_sales
+      - inputDataFrame: logistics_dataset_1
+        tempViewName: temp
+    query: select * from temp
     optional:
       persistDataFrame: false
     type: operationThroughSqlQuery
