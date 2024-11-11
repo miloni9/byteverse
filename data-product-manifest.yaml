@@ -1,136 +1,63 @@
-version: 0.0.4
-jobId: "216"
-jobName: adp to adp - miloni
-jobType: Aggregated Data Product
-domain: sale
-alias: step_3_ice_adp
+jobId: "989"
+jobName: Test Iceberg postgres
+jobType: Source Aligned Data Product
+developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
+domain: logistics
+alias: write_to_iceberg
 discoveryPort:
-  name: adp to adp - miloni
+  name: Test Iceberg postgres
 inputPorts:
-  - alias: sadp_to_adp_-_miloni_1
+  - alias: dataset_1
     isDynamic: true
-    dataProductUrn: urn:dv:dataproduct:3ff3fae9-3041-439b-b553-cb985481ee10
-    filter: ""
-    projection: ""
+    path: wasbs://bytedevdata@byteazuredev.blob.core.windows.net/content_master/
     optional:
       persistDataFrame: false
-      jsonSchema: "{}"
-    type: dataproduct
+      advanceOptions:
+        mergeSchema: true
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: blobconnection
+      dataSetUrn: urn:dv:dataset:cc966c98-38e2-4882-87b7-d21fcd91c207
+    type: inputParquet
 productState:
   isDynamic: true
-  alias: step_3_ice_adp
+  alias: write_to_iceberg
   retentionVersions: ""
   logicalSchema:
     properties:
-      City:
+      ContentID:
         type: STRING
         description: ""
-      Region:
+      Title:
         type: STRING
         description: ""
-      Country:
-        type: STRING
-        description: ""
-      Latitude:
-        type: STRING
-        description: ""
-      Longitude:
-        type: STRING
-        description: ""
-      Timezone:
-        type: STRING
-        description: ""
-      Local Time:
-        type: STRING
-        description: ""
-      Cloud ID:
-        type: STRING
-        description: ""
-      Feels like Celcius:
-        type: STRING
-        description: ""
-      Feels like fahrenheit:
-        type: STRING
-        description: ""
-      Gust speed in kph:
-        type: STRING
-        description: ""
-      Gust speed in mph:
-        type: STRING
-        description: ""
-      Humidity:
-        type: STRING
-        description: ""
-      Is day time?:
-        type: STRING
-        description: ""
-      Last update:
-        type: STRING
-        description: ""
-      Last updated time in epoch:
-        type: STRING
-        description: ""
-      Precipitation in inch:
-        type: STRING
-        description: ""
-      Precipitation in mm:
-        type: STRING
-        description: ""
-      Pressure:
-        type: STRING
-        description: ""
-      Precipitation in mb:
-        type: STRING
-        description: ""
-      Temperature in celcius:
-        type: STRING
-        description: ""
-      Temperature in fahrenheit:
-        type: STRING
-        description: ""
-      UV:
-        type: STRING
-        description: ""
-      Visibility in km:
-        type: STRING
-        description: ""
-      Visibility in miles:
-        type: STRING
-        description: ""
-      Wind Degree:
-        type: STRING
-        description: ""
-      Wind Direction:
-        type: STRING
-        description: ""
-      Wind in kph:
-        type: STRING
-        description: ""
-      Wind in mph:
+      ContentType:
         type: STRING
         description: ""
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: s3Source.sadp_adp_weather
-  warehousePath: s3://bp-spark-sql-library-test-acc/
-  catalogName: glue
+  tableName: iceberg.test1
+  warehousePath: wasbs://bytedevdata@byteazuredev.blob.core.windows.net/data/iceberg_warehouse/
+  catalogName: postgres
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: true
+    enforceSchema: false
     enforceSchemaMethod: Warning
-    catalogType: glue
+    catalogType: postgres
+    loggingOptions:
+      printSchema: true
   refreshInterval: None
 transformation:
   - isDynamic: true
     alias: Spark_SQL_1
-    description: sadp step 2
+    description: read 22
     sequence: 2
     inputDataFrameList:
-      - inputDataFrame: sadp_to_adp_-_miloni_1
-        tempViewName: sadp
-    query: select * from sadp
+      - inputDataFrame: dataset_1
+        tempViewName: temp
+    query: select * from temp
     optional:
       persistDataFrame: false
     type: operationThroughSqlQuery
