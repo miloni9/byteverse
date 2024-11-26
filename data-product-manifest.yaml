@@ -238,12 +238,6 @@ productState:
         description: Operation
         sourceColumn: "-"
         sourceTable: "-"
-      source_column:
-        type: STRING
-        description: ""
-      source_table:
-        type: STRING
-        description: ""
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
