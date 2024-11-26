@@ -3,7 +3,7 @@ jobName: saf_sbo_form_dp2-uni
 jobType: Source Aligned Data Product
 developerId: d29d36ef-7c3a-4d30-bbf9-951dddffa9f2
 domain: sale
-alias: write_saf_sbo_form_dp
+alias: write_saf_sbo_form_dp2
 discoveryPort:
   name: saf_sbo_form_dp2-uni
 inputPorts:
@@ -19,7 +19,7 @@ inputPorts:
     type: readPostGreSqlDbUsingJdbc
 productState:
   isDynamic: true
-  alias: write_saf_sbo_form_dp
+  alias: write_saf_sbo_form_dp2
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -116,4 +116,4 @@ controlPort:
       productState:
         expression: ">"
         number: 1
-        referenceAlias: write_saf_sbo_form_dp
+        referenceAlias: write_saf_sbo_form_dp2
