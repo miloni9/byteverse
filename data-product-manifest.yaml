@@ -1,138 +1,112 @@
-jobId: "983"
-jobName: Test DP
+jobId: "1186"
+jobName: saf_sbo_form_dp-uni
 jobType: Source Aligned Data Product
-developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
-domain: logistics
-alias: write_delta
+developerId: d29d36ef-7c3a-4d30-bbf9-951dddffa9f2
+domain: sale
+alias: write_saf_sbo_form_dp
 discoveryPort:
-  name: Test DP
+  name: saf_sbo_form_dp-uni
 inputPorts:
-  - alias: logistics_dataset_1
+  - alias: saf_sbo_form_dp_1
     isDynamic: true
-    path: wasbs://bytedevdata@byteazuredev.blob.core.windows.net/content_master/
+    connection: Uni-Postgres-dont-use
+    tableName/query: select * from saf_sbo_form_dp limit 10
     optional:
       persistDataFrame: false
-      advanceOptions:
-        mergeSchema: true
       enableDataReconciliation: false
       enforceSchema: false
-      connection: testing
-      dataSetUrn: urn:dv:dataset:8c25db64-4b0e-4922-89ff-f596fd3be7e1
-    type: inputParquet
+      dataSetUrn: urn:dv:dataset:d8df7387-0adc-4d48-8ca2-ab38cae98b89
+    type: readPostGreSqlDbUsingJdbc
 productState:
   isDynamic: true
-  alias: write_delta
+  alias: write_saf_sbo_form_dp
   retentionVersions: ""
   logicalSchema:
     properties:
-      City:
+      id_factory:
+        type: NUMBER
+        description: Factory ID
+        sourceColumn: "-"
+        sourceTable: "-"
+      id_form:
         type: STRING
-        description: ""
-      Region:
+        description: Form ID
+        sourceColumn: "-"
+        sourceTable: "-"
+      de_title:
         type: STRING
-        description: ""
-      Country:
+        description: Title description
+        sourceColumn: "-"
+        sourceTable: "-"
+      de_description:
         type: STRING
-        description: ""
-      Latitude:
+        description: Detailed description
+        sourceColumn: "-"
+        sourceTable: "-"
+      de_kind:
         type: STRING
-        description: ""
-      Longitude:
+        description: Kind or type of description
+        sourceColumn: "-"
+        sourceTable: "-"
+      fl_active:
+        type: NUMBER
+        description: Flag indicating if active
+        sourceColumn: "-"
+        sourceTable: "-"
+      dt_created:
         type: STRING
-        description: ""
-      Timezone:
+        description: Creation timestamp
+        sourceColumn: "-"
+        sourceTable: "-"
+      fl_deleted:
+        type: NUMBER
+        description: Flag indicating if deleted
+        sourceColumn: "-"
+        sourceTable: "-"
+      dt_modified:
         type: STRING
-        description: ""
-      Local Time:
+        description: Modification timestamp
+        sourceColumn: "-"
+        sourceTable: "-"
+      id_form_old:
         type: STRING
-        description: ""
-      Cloud ID:
+        description: Old form ID
+        sourceColumn: "-"
+        sourceTable: "-"
+      __deleted:
         type: STRING
-        description: ""
-      Feels like Celcius:
+        description: Soft delete flag
+        sourceColumn: "-"
+        sourceTable: "-"
+      __op:
         type: STRING
-        description: ""
-      Feels like fahrenheit:
-        type: STRING
-        description: ""
-      Gust speed in kph:
-        type: STRING
-        description: ""
-      Gust speed in mph:
-        type: STRING
-        description: ""
-      Humidity:
-        type: STRING
-        description: ""
-      Is day time?:
-        type: STRING
-        description: ""
-      Last update:
-        type: STRING
-        description: ""
-      Last updated time in epoch:
-        type: STRING
-        description: ""
-      Precipitation in inch:
-        type: STRING
-        description: ""
-      Precipitation in mm:
-        type: STRING
-        description: ""
-      Pressure:
-        type: STRING
-        description: ""
-      Precipitation in mb:
-        type: STRING
-        description: ""
-      Temperature in celcius:
-        type: STRING
-        description: ""
-      Temperature in fahrenheit:
-        type: STRING
-        description: ""
-      UV:
-        type: STRING
-        description: ""
-      Visibility in km:
-        type: STRING
-        description: ""
-      Visibility in miles:
-        type: STRING
-        description: ""
-      Wind Degree:
-        type: STRING
-        description: ""
-      Wind Direction:
-        type: STRING
-        description: ""
-      Wind in kph:
-        type: STRING
-        description: ""
-      Wind in mph:
-        type: STRING
-        description: ""
-  stateStoreType: writeDataFrameToDeltaTable
+        description: Operation type
+        sourceColumn: "-"
+        sourceTable: "-"
+  stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableWritePath: wasbs://bytedevdata@byteazuredev.blob.core.windows.net/output_delta/
+  tableName: s3source.saf_sbo_form_dp
+  warehousePath: s3://bp-spark-sql-library-test-acc/
+  catalogName: glue
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
     enforceSchema: false
+    enforceSchemaMethod: Warning
+    catalogType: glue
     loggingOptions:
       printSchema: true
-      count: true
   refreshInterval: None
 transformation:
   - isDynamic: true
     alias: Spark_SQL_1
-    description: select data
+    description: transform saf_sbo_form_dp
     sequence: 2
     inputDataFrameList:
-      - inputDataFrame: logistics_dataset_1
-        tempViewName: temp
-    query: select * from temp
+      - inputDataFrame: saf_sbo_form_dp_1
+        tempViewName: saf_sbo_form_dp
+    query: select * from saf_sbo_form_dp
     optional:
       persistDataFrame: false
     type: operationThroughSqlQuery
