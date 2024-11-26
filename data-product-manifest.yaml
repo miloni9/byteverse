@@ -10,7 +10,7 @@ inputPorts:
   - alias: saf_sbo_form_dp_1
     isDynamic: true
     connection: Uni-Postgres-dont-use
-    tableName/query: select * from saf_sbo_form_dp limit 10
+    tableName/query: select * from iceberg.saf_sbo_form_dp limit 10
     optional:
       persistDataFrame: false
       enableDataReconciliation: false
@@ -26,7 +26,7 @@ productState:
       id_factory:
         type: NUMBER
         description: Factory ID
-        sourceColumn: "-"
+        sourceColumn: _
         sourceTable: "-"
       id_form:
         type: STRING
