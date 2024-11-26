@@ -86,7 +86,7 @@ productState:
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: s3source.saf_sbo_form_dp
+  tableName: s3source.saf_sbo_form_dp2
   warehousePath: s3://bp-spark-sql-library-test-acc/
   catalogName: glue
   optional:
