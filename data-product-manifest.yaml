@@ -1,25 +1,25 @@
-jobId: "1186"
-jobName: saf_sbo_form_dp-uni
+jobId: "1189"
+jobName: am_standard_dp-uni
 jobType: Source Aligned Data Product
 developerId: d29d36ef-7c3a-4d30-bbf9-951dddffa9f2
 domain: sale
-alias: write_saf_sbo_form_dp
+alias: write_data
 discoveryPort:
-  name: saf_sbo_form_dp-uni
+  name: am_standard_dp-uni
 inputPorts:
-  - alias: saf_sbo_form_dp_1
+  - alias: am_standard_dp_1
     isDynamic: true
     connection: Uni-Postgres-dont-use
-    tableName/query: select * from saf_sbo_form_dp limit 10
+    tableName/query: select * from iceberg.am_standard_dp
     optional:
       persistDataFrame: false
       enableDataReconciliation: false
       enforceSchema: false
-      dataSetUrn: urn:dv:dataset:d8df7387-0adc-4d48-8ca2-ab38cae98b89
+      dataSetUrn: urn:dv:dataset:93fcae7f-dece-4c72-bebf-c7b1e22874af
     type: readPostGreSqlDbUsingJdbc
 productState:
   isDynamic: true
-  alias: write_saf_sbo_form_dp
+  alias: write_data
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -28,61 +28,222 @@ productState:
         description: Factory ID
         sourceColumn: "-"
         sourceTable: "-"
-      id_form:
+      id_tag:
         type: STRING
-        description: Form ID
+        description: Tag ID
         sourceColumn: "-"
         sourceTable: "-"
-      de_title:
+      id_line:
+        type: NUMBER
+        description: Line ID
+        sourceColumn: "-"
+        sourceTable: "-"
+      id_machine:
+        type: NUMBER
+        description: Machine ID
+        sourceColumn: "-"
+        sourceTable: "-"
+      id_pillar:
+        type: NUMBER
+        description: Pillar ID
+        sourceColumn: "-"
+        sourceTable: "-"
+      id_type:
         type: STRING
-        description: Title description
+        description: Type ID
+        sourceColumn: "-"
+        sourceTable: "-"
+      nm_cost:
+        type: STRING
+        description: Cost
+        sourceColumn: "-"
+        sourceTable: "-"
+      de_origin:
+        type: STRING
+        description: Origin Description
+        sourceColumn: "-"
+        sourceTable: "-"
+      fl_number:
+        type: NUMBER
+        description: Number
+        sourceColumn: "-"
+        sourceTable: "-"
+      fl_state:
+        type: NUMBER
+        description: State
+        sourceColumn: "-"
+        sourceTable: "-"
+      id_reason_rejection:
+        type: NUMBER
+        description: Reason Rejection ID
+        sourceColumn: "-"
+        sourceTable: "-"
+      de_reason_rejection:
+        type: STRING
+        description: Reason Rejection Description
         sourceColumn: "-"
         sourceTable: "-"
       de_description:
         type: STRING
-        description: Detailed description
+        description: Description
         sourceColumn: "-"
         sourceTable: "-"
-      de_kind:
-        type: STRING
-        description: Kind or type of description
-        sourceColumn: "-"
-        sourceTable: "-"
-      fl_active:
+      id_type_anomalia:
         type: NUMBER
-        description: Flag indicating if active
+        description: Type Anomalia ID
         sourceColumn: "-"
         sourceTable: "-"
-      dt_created:
+      id_subtype:
         type: STRING
-        description: Creation timestamp
+        description: Subtype ID
+        sourceColumn: "-"
+        sourceTable: "-"
+      id_subtype_problema:
+        type: STRING
+        description: Subtype Problema ID
+        sourceColumn: "-"
+        sourceTable: "-"
+      de_solution:
+        type: STRING
+        description: Solution Description
+        sourceColumn: "-"
+        sourceTable: "-"
+      de_solution_hist:
+        type: STRING
+        description: Solution History
+        sourceColumn: "-"
+        sourceTable: "-"
+      fl_state_linea:
+        type: NUMBER
+        description: State Line
+        sourceColumn: "-"
+        sourceTable: "-"
+      id_user_detected:
+        type: NUMBER
+        description: User Detected ID
+        sourceColumn: "-"
+        sourceTable: "-"
+      id_user_responsible:
+        type: NUMBER
+        description: User Responsible ID
+        sourceColumn: "-"
+        sourceTable: "-"
+      id_user_executor:
+        type: NUMBER
+        description: User Executor ID
+        sourceColumn: "-"
+        sourceTable: "-"
+      dt_deadline:
+        type: STRING
+        description: Deadline
+        sourceColumn: "-"
+        sourceTable: "-"
+      dt_assigned:
+        type: STRING
+        description: Assigned Date
+        sourceColumn: "-"
+        sourceTable: "-"
+      fl_priority:
+        type: NUMBER
+        description: Priority
+        sourceColumn: "-"
+        sourceTable: "-"
+      nm_rating_info:
+        type: NUMBER
+        description: Rating Information
+        sourceColumn: "-"
+        sourceTable: "-"
+      nm_rating_info_realizacion:
+        type: NUMBER
+        description: Rating Information Realization
         sourceColumn: "-"
         sourceTable: "-"
       fl_deleted:
         type: NUMBER
-        description: Flag indicating if deleted
+        description: Deleted Flag
+        sourceColumn: "-"
+        sourceTable: "-"
+      dt_performed:
+        type: STRING
+        description: Performed Date
+        sourceColumn: "-"
+        sourceTable: "-"
+      dt_created_search:
+        type: STRING
+        description: Created Search Date
+        sourceColumn: "-"
+        sourceTable: "-"
+      fl_shift:
+        type: NUMBER
+        description: Shift
+        sourceColumn: "-"
+        sourceTable: "-"
+      dt_created:
+        type: STRING
+        description: Created Date
         sourceColumn: "-"
         sourceTable: "-"
       dt_modified:
         type: STRING
-        description: Modification timestamp
+        description: Modified Date
         sourceColumn: "-"
         sourceTable: "-"
-      id_form_old:
+      dt_state_modified:
         type: STRING
-        description: Old form ID
+        description: State Modified Date
+        sourceColumn: "-"
+        sourceTable: "-"
+      fe_estimate_fin:
+        type: STRING
+        description: Estimated Finish Date
+        sourceColumn: "-"
+        sourceTable: "-"
+      de_action:
+        type: STRING
+        description: Action Description
+        sourceColumn: "-"
+        sourceTable: "-"
+      de_remarks:
+        type: STRING
+        description: Remarks
+        sourceColumn: "-"
+        sourceTable: "-"
+      nm_duration_estimate:
+        type: STRING
+        description: Duration Estimate
+        sourceColumn: "-"
+        sourceTable: "-"
+      fl_action:
+        type: NUMBER
+        description: Action Flag
+        sourceColumn: "-"
+        sourceTable: "-"
+      id_type_accion:
+        type: STRING
+        description: Type Action ID
+        sourceColumn: "-"
+        sourceTable: "-"
+      fl_sent_dms:
+        type: NUMBER
+        description: Sent DMS Flag
         sourceColumn: "-"
         sourceTable: "-"
       __deleted:
         type: STRING
-        description: Soft delete flag
+        description: Deleted Indicator
         sourceColumn: "-"
         sourceTable: "-"
       __op:
         type: STRING
-        description: Operation type
+        description: Operation
         sourceColumn: "-"
         sourceTable: "-"
+      source_column:
+        type: STRING
+        description: ""
+      source_table:
+        type: STRING
+        description: ""
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
@@ -95,25 +256,18 @@ productState:
     enforceSchema: false
     enforceSchemaMethod: Warning
     catalogType: glue
-    loggingOptions:
-      printSchema: true
   refreshInterval: None
 transformation:
   - isDynamic: true
     alias: Spark_SQL_1
-    description: transform saf_sbo_form_dp
+    description: sql
     sequence: 2
     inputDataFrameList:
-      - inputDataFrame: saf_sbo_form_dp_1
-        tempViewName: saf_sbo_form_dp
-    query: select * from saf_sbo_form_dp
+      - inputDataFrame: am_standard_dp_1
+        tempViewName: temp
+    query: select * from temp
     optional:
       persistDataFrame: false
     type: operationThroughSqlQuery
 controlPort:
-  dataQualityRules:
-    RecordCountCheck:
-      productState:
-        expression: ">"
-        number: 1
-        referenceAlias: write_saf_sbo_form_dp
+  dataQualityRules: {}
