@@ -41,7 +41,7 @@ productState:
     enableDataReconciliation: false
     enforceSchema: false
     enforceSchemaMethod: Warning
-    catalogType: glue
+    catalogType: postgres
   refreshInterval: None
 transformation:
   - isDynamic: true
