@@ -1,61 +1,55 @@
-jobId: "989"
-jobName: Test Iceberg postgres
+jobId: "985"
+jobName: test22
 jobType: Source Aligned Data Product
 developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
-domain: logistics
-alias: write_to_iceberg
+domain: cloud_global_service
+alias: write_to_ice
 discoveryPort:
-  name: Test Iceberg postgres
+  name: test22
 inputPorts:
-  - alias: dataset_1
+  - alias: s3_set_1
     isDynamic: true
-    path: wasbs://bytedevdata@byteazuredev.blob.core.windows.net/content_master/
+    path: s3a://byte-etl-externaldemo/weather_test_billing_csv/part-00000-50a5c9ab-2fe7-4f7f-8a91-a10d81f99bfb-c000.csv
     optional:
       persistDataFrame: false
       advanceOptions:
-        mergeSchema: true
+        delimiter: ","
       enableDataReconciliation: false
       enforceSchema: false
-      connection: blobconnection
-      dataSetUrn: urn:dv:dataset:cc966c98-38e2-4882-87b7-d21fcd91c207
-    type: inputParquet
+      connection: s3
+      dataSetUrn: urn:dv:dataset:988eaa49-d330-467e-afb4-b1a68e773e13
+    type: inputDelimited
 productState:
   isDynamic: true
-  alias: write_to_iceberg
+  alias: write_to_ice
   retentionVersions: ""
   logicalSchema:
     properties:
-      ContentID:
+      name:
         type: STRING
-        description: ""
-      Title:
-        type: STRING
-        description: ""
-      ContentType:
-        type: STRING
-        description: ""
+        description: Creation timestamp
+        sourceColumn: "-"
+        sourceTable: "-"
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: iceberg.test1
-  warehousePath: wasbs://bytedevdata@byteazuredev.blob.core.windows.net/data/iceberg_warehouse/
-  catalogName: postgres
+  tableName: iceberg.testeks
+  warehousePath: s3a://byte-etl-externaldemo/test-miloni-ice/
+  catalogName: iceberg
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
     enforceSchema: false
     enforceSchemaMethod: Warning
-    catalogType: postgres
-    loggingOptions:
-      printSchema: true
+    catalogType: glue
   refreshInterval: None
 transformation:
   - isDynamic: true
     alias: Spark_SQL_1
-    description: read 22
+    description: test
     sequence: 2
     inputDataFrameList:
-      - inputDataFrame: dataset_1
+      - inputDataFrame: s3_set_1
         tempViewName: temp
     query: select * from temp
     optional:
