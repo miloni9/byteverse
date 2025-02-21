@@ -1,11 +1,11 @@
-jobId: "986"
-jobName: test22 copy
+jobId: "987"
+jobName: test22 copy copy
 jobType: Source Aligned Data Product
 developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
 domain: cloud_global_service
-alias: write_to_ice2
+alias: write_to_ice112
 discoveryPort:
-  name: test22 copy
+  name: test22 copy copy
 inputPorts:
   - alias: s3_set_1
     isDynamic: true
@@ -21,7 +21,7 @@ inputPorts:
     type: inputDelimited
 productState:
   isDynamic: true
-  alias: write_to_ice2
+  alias: write_to_ice112
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -33,7 +33,7 @@ productState:
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: iceberg.testeks2
+  tableName: iceberg.testeks112
   warehousePath: s3a://byte-etl-externaldemo/test-miloni-ice/
   catalogName: iceberg
   optional:
