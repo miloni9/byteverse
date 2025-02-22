@@ -33,7 +33,7 @@ productState:
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: iceberg.testeks112
+  tableName: s3source.testeks112
   warehousePath: s3a://byte-etl-externaldemo/test-miloni-ice/
   catalogName: glue
   optional:
