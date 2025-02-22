@@ -35,13 +35,13 @@ productState:
   updateStrategy: Overwrite
   tableName: iceberg.testeks112
   warehousePath: s3a://byte-etl-externaldemo/test-miloni-ice/
-  catalogName: iceberg
+  catalogName: glue
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
     enforceSchema: false
     enforceSchemaMethod: Warning
-    catalogType: postgres
+    catalogType: glue
   refreshInterval: None
 transformation:
   - isDynamic: true
