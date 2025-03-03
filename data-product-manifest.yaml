@@ -1,40 +1,40 @@
-jobId: "987"
-jobName: test22 copy copy
+jobId: "986"
+jobName: testwwe
 jobType: Source Aligned Data Product
 developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
 domain: cloud_global_service
-alias: write_to_ice112
+alias: write
 discoveryPort:
-  name: test22 copy copy
+  name: testwwe
 inputPorts:
-  - alias: s3_set_1
+  - alias: s3_dataset_1
     isDynamic: true
-    path: s3a://byte-etl-externaldemo/weather_test_billing_csv/part-00000-50a5c9ab-2fe7-4f7f-8a91-a10d81f99bfb-c000.csv
+    path: s3://byte-etl-externaldemo/test-miloni/test_miloni_20240418.csv
     optional:
       persistDataFrame: false
       advanceOptions:
         delimiter: ","
       enableDataReconciliation: false
       enforceSchema: false
-      connection: s3
-      dataSetUrn: urn:dv:dataset:988eaa49-d330-467e-afb4-b1a68e773e13
+      connection: s3connection
+      dataSetUrn: urn:dv:dataset:da2b2a5d-c8a1-4f45-98b2-5dc638424667
     type: inputDelimited
 productState:
   isDynamic: true
-  alias: write_to_ice112
+  alias: write
   retentionVersions: ""
   logicalSchema:
     properties:
-      name:
+      factoryId:
         type: STRING
-        description: Creation timestamp
-        sourceColumn: "-"
-        sourceTable: "-"
+        description: Factory ID
+        sourceColumn: factoryId
+        sourceTable: Line Loss
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: s3source.testeks112
-  warehousePath: s3a://byte-etl-externaldemo/test-miloni-ice/
+  tableName: s3source.testeksglue
+  warehousePath: s3://bp-spark-sql-library-test-acc/
   catalogName: glue
   optional:
     persistDataFrame: false
@@ -49,7 +49,7 @@ transformation:
     description: test
     sequence: 2
     inputDataFrameList:
-      - inputDataFrame: s3_set_1
+      - inputDataFrame: s3_dataset_1
         tempViewName: temp
     query: select * from temp
     optional:
